@@ -1,0 +1,19 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index"			
+		},
+		{
+			"path": "pages/answer/index"
+		},
+		{
+			"path": "pages/report/index"
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	}
+}

@@ -1,0 +1,6 @@
+$font: 22, 23, 30, 10, 13;
+@each $item in $font {
+	.font-#{$item} {
+		font-size: #{$item}px;
+	}
+}

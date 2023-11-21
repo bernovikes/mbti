@@ -1,0 +1,6 @@
+@import './__color.scss';
+@each $name, $val in $color {
+	.color-#{$name} {
+		color: $val;
+	}
+}
