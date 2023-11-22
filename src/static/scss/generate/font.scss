@@ -1,4 +1,4 @@
-$font: 22, 23, 30, 10, 13;
+$font: 22, 23, 30, 10, 13, 20, 18;
 @each $item in $font {
 	.font-#{$item} {
 		font-size: #{$item}px;
