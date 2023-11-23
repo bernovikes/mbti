@@ -145,15 +145,17 @@
 		}
 	}
 	// 提交数据
-	const submit = () => {
+	const submit = async () => {
 		if (disable_submit) {
 			return false
 		}
 		disable_submit = true
 		const options = chooseHistory.value.map(item => {
 			const split = item.choose_value.split('_')
+			const id = split[0]
 			return {
-				id: split[0],
+				id,
+				factor: detail.question.find(i => i.id === +id)?.question_tag,
 				val: split[1],
 			}
 		})
@@ -166,14 +168,25 @@
 				},
 				visitor_code: tempUser
 			}
-			const { code, msg, data } = postAnswerData(params)
+			const { code, msg, data } = await  postAnswerData(params)
 			disable_submit = false
+			const qs = new URLSearchParams({
+				no: data,
+				tempUser
+			})
+			console.log(code, code === http.SUCCESS)
 			if (code === http.SUCCESS) {
+				console.log(qs)
+				uni.redirectTo({
+					url: `/pages/report/index?${qs}`
+				})
+			} else {
 				uni.showToast({
 					title: msg
 				})
 			}
 		} catch (e) {
+			console.log(e)
 			//TODO handle the exception
 		}
 	}
