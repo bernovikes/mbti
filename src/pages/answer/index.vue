@@ -25,12 +25,12 @@
 		</view>
 		<view class="flex items-center">
 			<view v-if="chooseHistory.length" @click="getPrevResult" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">上一题</view>
-			<view v-if="doned" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">查看结果</view>
+			<view v-if="doned" @click="submit" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">查看结果</view>
 		</view>
 	</view>
 </template>
 <script setup>
-	import { getQuestionBank } from '@/api/api.js'
+	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { onMounted, reactive, ref, computed, toRaw } from 'vue'
 	import http from '@/enum/http.js'
 	let initHistory = ref([])
@@ -42,12 +42,16 @@
 	const doned = ref(false)
 	const chooseHistory = ref([])
 	const choose_value = ref('')
+	let disable_submit = false
 	let timer = ''
+	let detail = ''
+	const tempUser = uni.getStorageSync('tempUser')
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
 	const fetchDetail = async () => {
 		try {
 			const { data, code } = await getQuestionBank(6)
 			if (code === http.SUCCESS) {
+				detail = data
 				const { question } = data
 				total.value = question.length
 				initStack(question)
@@ -81,6 +85,7 @@
 			}
 		})
 	}
+	// 答题记录写入
 	const historyStack = (value = '', index = 0, replace = false) => {
 		const params = {
 			ask_item: toRaw(ask_item.value),
@@ -94,7 +99,6 @@
 		} else {
 			chooseHistory.value[index] = operate
 		}
-		// console.log(chooseHistory.value)
 	}
 	const resetYieldAnswer = () => {
 		if (clickPrev.value) {
@@ -108,18 +112,20 @@
 		currentIndex.value = object.currentIndex
 		total.value = object.total
 	}
+	// 点击上一题
 	const getPrevResult = () => {
 		const prev = doned.value ? chooseHistory.value.splice(-2).shift() : chooseHistory.value.pop()
 		clickPrev.value = true
 		doned.value = false
 		prev && mountData(prev)
 	}
+	// 选择答案
 	const chooseAnswer = (id, value) => {
 		choose_value.value = `${id}_${value}`
 		doned.value = chooseHistory.value.length >= initHistory.value.length - 1
 		// 如果答题进行到最后一题,重新选择答案,则替换最后一题的记录
 		if (doned.value) {
-			historyStack(choose_value.value, total.value.length - 1, true)
+			historyStack(choose_value.value, initHistory.value.length - 1, true)
 			return false
 		}
 		resetYieldAnswer()
@@ -138,8 +144,38 @@
 			}, 500)
 		}
 	}
+	// 提交数据
 	const submit = () => {
-		
+		if (disable_submit) {
+			return false
+		}
+		disable_submit = true
+		const options = chooseHistory.value.map(item => {
+			const split = item.choose_value.split('_')
+			return {
+				id: split[0],
+				val: split[1],
+			}
+		})
+		try {
+			const params = {
+				question_bank_id: detail.id,
+				rule_type: detail.rule_type,
+				options_data: {
+					options
+				},
+				visitor_code: tempUser
+			}
+			const { code, msg, data } = postAnswerData(params)
+			disable_submit = false
+			if (code === http.SUCCESS) {
+				uni.showToast({
+					title: msg
+				})
+			}
+		} catch (e) {
+			//TODO handle the exception
+		}
 	}
 	onMounted(() => {
 		fetchDetail()
