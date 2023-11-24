@@ -1,6 +1,10 @@
-$font: 22, 23, 30, 10, 13, 20, 18;
+$font: 22, 23, 30, 10, 13, 20, 18, 15, 26, 11;
 @each $item in $font {
 	.font-#{$item} {
 		font-size: #{$item}px;
 	}
+}
+.font-dina {
+	font-family: DINAlternate, DINAlternate, 'Microsoft YaHei light', 'Microsoft YaHei',
+		'Source Han Sans SC', ' Noto Sans CJK SC', sans-serif;
 }
