@@ -38,3 +38,9 @@ export function createOrder(data) {
 export function createPayConfig(data) {
 	return request(`/api/pay/create/order`, 'POST', data)
 }
+/**
+ * 查询支付流水状态
+ */
+export function traceCheck(no) {
+	return request(`/api/pay/check/${no}`, 'get')
+}

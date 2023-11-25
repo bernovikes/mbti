@@ -217,9 +217,11 @@
 			<!--  -->
 			<comment />
 			<!--  -->
-			<pay-btn></pay-btn>
+			<template v-if="!detail?.is_pay">
+				<pay-btn></pay-btn>
+			</template>
 			<!--  -->
-			<template v-if="detail">
+			<template v-if="!detail?.is_pay">
 				<pay-dialog></pay-dialog>
 			</template>
 		</view>
@@ -232,18 +234,21 @@
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import payDialog from './components/pay/dialog.vue'
-	import { fetchAnswerData, createOrder, createPayConfig } from '@/api/api.js'
-	import { onLoad } from '@dcloudio/uni-app'
+	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
+	import { onLoad, onUnload } from '@dcloudio/uni-app'
 	import { ref, computed, provide, getCurrentInstance } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import http from '@/enum/http.js'
+	import { isMobile, isWechat } from '@/common/lib.js'
 	const detail = ref({})
+	let payIntervalTimer = ''
 	const tempUser = uni.getStorageSync('tempUser')
 	const { ctx: { $page } } = getCurrentInstance()
 	provide('detail', detail)
 	const fetchDetail = async () => {
 		try {
 			const { data } = await fetchAnswerData($page.options.no)
+			data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
 			detail.value = data
 		} catch (e) {
 			//TODO handle the exception
@@ -267,6 +272,7 @@
 		try {
 			const { code, data } = await createOrder(params)
 			if (code === http.SUCCESS) {
+				uni.setStorageSync('trace_no', data.trace_no)
 				const pay_params = { trace_no: data.trace_no, env }
 				const pay_res = await createPayConfig(pay_params)
 				const urlparams_obj = new URLSearchParams({ ...$page.options })
@@ -278,9 +284,33 @@
 					}).catch(() => {})
 				}
 			}
-		} catch (e) {			
+		} catch (e) {
 			//TODO handle the exception
 		}
+	})
+	//轮询查询订单状态
+	//移动端非微信浏览器,发起支付成功或失败跳到callback页面由callback页面发起轮询通知，pc扫码支付打开页面发起通知
+	if (!(isMobile() && isWechat()) && !payIntervalTimer) {
+		payIntervalTimer = setInterval(async () => {
+			const trace_no = uni.getStorageSync('trace_no')
+			const pay_callback = uni.getStorageSync('pay_callback')
+			if (pay_callback) {
+				try {
+					const { code, data } = await traceCheck(trace_no)
+					if (code === http.SUCCESS && data?.pay_status) {
+						uni.removeStorageSync('pay_callback')
+						uni.removeStorageSync('trace_no')
+						fetchDetail()
+						clearInterval(payIntervalTimer)
+					}
+				} catch (e) {
+					//TODO handle the exception
+				}
+			}
+		}, 3000)
+	}
+	onUnload(() => {
+		clearInterval(payIntervalTimer)
 	})
 </script>
 <style lang="scss" scoped>
