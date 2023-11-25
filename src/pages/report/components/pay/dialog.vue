@@ -33,23 +33,15 @@
 					</label>
 				</radio-group>
 				<!--  -->
-				<view class="btn white flex items-center justify-center mt-28 lh-22">立即解锁</view>
+				<view @click="submit" class="btn white flex items-center justify-center mt-28 lh-22">立即解锁</view>
 			</view>
 		</view>
 	</uni-popup>
 </template>
 <script setup>
-	import { onMounted, ref, reactive, toRefs, watch } from 'vue'
+	import { onMounted, ref, reactive, toRefs, watch, inject } from 'vue'
+	const detailData = inject('detail')
 	const goods = ref({})
-	const props = defineProps({
-		goods: {
-			type: Object,
-			default () {
-				return {}
-			}
-		}
-	})
-	const { goods: propsGoods } = toRefs(props)
 	const pop = ref('')
 	const pay_type = ref('wechat')
 	const list = reactive([{
@@ -71,12 +63,19 @@
 	}
 	onMounted(() => {
 		uni.$on('open_pay_dialog', () => {
-			pop.value.open()
+			pop.value?.open()
 		})
 	})
-	watch(propsGoods, (nval) => {
-		goods.value = nval.find(item => item.type === 'all')?.goods
+	watch(detailData, (nval) => {
+		goods.value = nval.question_bank_goods.find(item => item.type === 'all')?.goods
 	}, { deep: true })
+	const submit = () => {
+		pop.value.close()
+		uni.$emit('callpay', {
+			goods_id: goods.value?.id,
+			pay_method: pay_type.value
+		})
+	}
 </script>
 
 <style scoped lang="scss">

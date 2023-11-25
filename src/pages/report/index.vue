@@ -220,7 +220,7 @@
 			<pay-btn></pay-btn>
 			<!--  -->
 			<template v-if="detail">
-				<pay-dialog :goods="detail?.question_bank_goods"></pay-dialog>
+				<pay-dialog></pay-dialog>
 			</template>
 		</view>
 		<!--  -->
@@ -232,13 +232,18 @@
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import payDialog from './components/pay/dialog.vue'
-	import { fetchAnswerData } from '@/api/api.js'
+	import { fetchAnswerData, createOrder, createPayConfig } from '@/api/api.js'
 	import { onLoad } from '@dcloudio/uni-app'
-	import { ref, computed } from 'vue'
+	import { ref, computed, provide, getCurrentInstance } from 'vue'
+	import { payEnvCheck, payGetWay } from './order.js'
+	import http from '@/enum/http.js'
 	const detail = ref({})
-	const fetchDetail = async (no) => {
+	const tempUser = uni.getStorageSync('tempUser')
+	const { ctx: { $page } } = getCurrentInstance()
+	provide('detail', detail)
+	const fetchDetail = async () => {
 		try {
-			const { data } = await fetchAnswerData(no)
+			const { data } = await fetchAnswerData($page.options.no)
 			detail.value = data
 		} catch (e) {
 			//TODO handle the exception
@@ -248,7 +253,34 @@
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
 	onLoad((options) => {
-		fetchDetail(options?.no)
+		fetchDetail()
+	})
+	uni.$on('callpay', async (argv) => {
+		const { goods_id, pay_method } = argv
+		const env = payEnvCheck(pay_method)
+		const params = {
+			answer_id: detail.value.id,
+			visitor_code: tempUser,
+			goods_id,
+			pay_method
+		}
+		try {
+			const { code, data } = await createOrder(params)
+			if (code === http.SUCCESS) {
+				const pay_params = { trace_no: data.trace_no, env }
+				const pay_res = await createPayConfig(pay_params)
+				const urlparams_obj = new URLSearchParams({ ...$page.options })
+				const callback = `pages/callback/callback?${urlparams_obj}`
+				const result = payGetWay(env, [pay_res.data, callback])
+				if (result instanceof Promise) {
+					result.then((res) => {
+						fetchDetail()
+					}).catch(() => {})
+				}
+			}
+		} catch (e) {			
+			//TODO handle the exception
+		}
 	})
 </script>
 <style lang="scss" scoped>

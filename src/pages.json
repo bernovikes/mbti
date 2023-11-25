@@ -1,13 +1,15 @@
 {
-	"pages": [
-		{
-			"path": "pages/index/index"			
+	"pages": [{
+			"path": "pages/index/index"
 		},
 		{
 			"path": "pages/answer/index"
 		},
 		{
 			"path": "pages/report/index"
+		},
+		{
+			"path": "pages/callback/index"
 		}
 	],
 	"globalStyle": {

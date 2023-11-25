@@ -1,19 +1,25 @@
 <template>
-	<view class="x-block-bg mb-30">
+	<view class="x-block-bg  mb-30">
 		<view class="x-body-h1 width-fit">
 			<slot name="h1"></slot>
 		</view>
-		<slot name="h2"></slot>
-		<view class="pl-20 pr-20 pb-30 pt-22" v-if="bodySlot">
-			<slot name="body"></slot>
-		</view>
-		<slot name="nopadding"></slot>
+		<lock>
+			<slot name="h2"></slot>
+			<view class="pl-20 pr-20 pb-30 pt-22" v-if="bodySlot">
+				<slot name="body"></slot>
+			</view>
+			<slot name="nopadding"></slot>
+		</lock>
 	</view>
 </template>
 
 <script>
 	import { ref } from 'vue'
+	import lock from './pay/lock.vue'
 	export default {
+		components: {
+			lock
+		},
 		setup(ctx, props) {
 			const bodySlot = ref(props.slots.body)
 			return {
