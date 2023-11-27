@@ -44,3 +44,9 @@ export function createPayConfig(data) {
 export function traceCheck(no) {
 	return request(`/api/pay/check/${no}`, 'get')
 }
+/*
+ * 订单查询
+ */
+export function fetchOrderDetail(no) {
+	return request(`/api/orders/${no}`, 'GET')
+}

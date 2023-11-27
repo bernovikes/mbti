@@ -10,8 +10,21 @@
 		},
 		{
 			"path": "pages/callback/index"
+		},
+		{
+			"path": "pages/ucenter/ucenter"
+		},
+		{
+			"path": "pages/order/index"
 		}
 	],
+	"tabBar": {
+		"custom": true,
+		"list": [
+			{ "pagePath": "pages/index/index", "visible": false },
+			{ "pagePath": "pages/ucenter/ucenter", "visible": false }
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#F8F8F8",
