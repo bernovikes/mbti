@@ -50,3 +50,22 @@ export function traceCheck(no) {
 export function fetchOrderDetail(no) {
 	return request(`/api/orders/${no}`, 'GET')
 }
+/** 
+ * 答题列表
+ */
+export function fetchAnswerList(data) {
+	return request(`/api/answers`, 'GET', data)
+}
+/*
+ * 发送短信验证码
+ */
+export function sendSms(phone) {
+	return request(`/api/login/sms/${phone}`, 'POST')
+}
+
+/*
+ * 发送短信验证码
+ */
+export function phoneLogin(data) {
+	return request(`/api/login/phone/login`, 'POST', data)
+}

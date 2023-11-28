@@ -91,7 +91,7 @@
 			const { data } = await fetchOrderDetail(order_sn.value)
 			if (data?.no) {
 				uni.redirectTo({
-					url: `/pages/report/report?no=${data?.no}`
+					url: `/pages/report/index?no=${data?.no}`
 				})
 				return false
 			}

@@ -3,8 +3,10 @@
 	import { onLaunch } from '@dcloudio/uni-app'
 	onLaunch(async () => {
 		try {
-			const { data: { temp } } = await getVisitorToken()
-			uni.setStorageSync('tempUser', temp)
+			if (!uni.getStorageSync('tempUser')) {
+				const { data: { temp } } = await getVisitorToken()
+				uni.setStorageSync('tempUser', temp)
+			}
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -17,5 +19,9 @@
 
 	uni-page-body {
 		height: 100%;
+	}
+
+	uni-toast {
+		z-index: 10001;
 	}
 </style>

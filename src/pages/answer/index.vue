@@ -33,6 +33,7 @@
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { onMounted, reactive, ref, computed, toRaw } from 'vue'
 	import http from '@/enum/http.js'
+	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
 	let yieldfnCall = ''
 	let ask_item = ref({})
@@ -168,13 +169,15 @@
 				},
 				visitor_code: tempUser
 			}
-			const { code, msg, data } = await  postAnswerData(params)
+			if (login_user) {
+				params['user_id'] = login_user?.id
+			}
+			const { code, msg, data } = await postAnswerData(params)
 			disable_submit = false
 			const qs = new URLSearchParams({
 				no: data,
 				tempUser
 			})
-			console.log(code, code === http.SUCCESS)
 			if (code === http.SUCCESS) {
 				console.log(qs)
 				uni.redirectTo({

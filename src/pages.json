@@ -16,6 +16,21 @@
 		},
 		{
 			"path": "pages/order/index"
+		},
+		{
+			"path": "pages/testRecord/testRecord"
+		},
+		{
+			"path": "pages/login/login"
+		},
+		{
+			"path": "pages/article/article"
+		},
+		{
+			"path": "pages/setting/setting"
+		},
+		{
+			"path": "pages/aboutus/aboutus"
 		}
 	],
 	"tabBar": {

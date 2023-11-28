@@ -69,7 +69,7 @@
 	import { reactive, ref } from 'vue'
 	const kefuRef = ref('')
 	const range = ref([])
-	const userInfo = ref({})
+	const userInfo = reactive(uni.getStorageSync('login_user'))
 	const locationUrl = (url) => {
 		uni.navigateTo({
 			url: url
@@ -79,7 +79,7 @@
 			label: '联系客服',
 			arrow: true,
 			icon: 4,
-			fn: () => kefuRef.open()
+			fn: () => kefuRef.value.open()
 		},
 		{
 			label: '意见反馈',
@@ -121,87 +121,6 @@
 			url: '/pages/order/index'
 		})
 	}
-	// import { LoginEntry } from '../../common/js/lib'	
-	// export default {
-	// 	data() {
-	// 		const $this = this
-	// 		return {
-	// 			range: [],
-	// 			userInfo: {},
-	// 			menu: [{
-	// 					label: '赠送记录',
-	// 					arrow: true,
-	// 					icon: 3,
-	// 					fn: () => locationUrl('/pages/order/send')
-	// 				},
-	// 				{
-	// 					label: '联系客服',
-	// 					arrow: true,
-	// 					icon: 4,
-	// 					fn: () => $this.$refs.kefu.open()
-	// 				},
-	// 				{
-	// 					label: '意见反馈',
-	// 					arrow: true,
-	// 					icon: 5,
-	// 					fn: () => locationUrl('/pages/feedback/feedback')
-	// 				},
-	// 				{
-	// 					label: '企业团体',
-	// 					arrow: true,
-	// 					icon: 6,
-	// 					fn() {
-	// 						uni.navigateTo({
-	// 							url: '/pages/index/officed'
-	// 						})
-	// 					}
-	// 				},
-	// 				{
-	// 					label: '设置',
-	// 					arrow: true,
-	// 					icon: 7,
-	// 					fn() {
-	// 						$this.goSetting()
-	// 					}
-	// 				},
-	// 			]
-	// 		}
-	// 	},
-	// 	methods: {
-	// 		callfun(item) {
-	// 			item.fn()
-	// 		},
-	// 		goSetting() {
-	// 			uni.navigateTo({
-	// 				url: '/pages/setting/setting'
-	// 			})
-	// 		},
-	// 		goLogin() {
-	// 			uni.navigateTo({
-	// 				url: '/pages/login/login'
-	// 			})
-	// 		},
-	// 		goRecord() {
-	// 			uni.redirectTo({
-	// 				url: '/pages/testRecord/testRecord'
-	// 			})
-	// 		},
-	// 		goOrder() {
-	// 			uni.redirectTo({
-	// 				url: '/pages/order/index'
-	// 			})
-	// 		}
-	// 	},
-	// 	async mounted() {
-	// 		try {
-	// 			this.userInfo = await LoginEntry()
-	// 		} catch (e) {
-	// 			//TODO handle the exception
-	// 		}
-	// 		this.range.push(this.menu.slice(0, 2))
-	// 		this.range.push(this.menu.slice(2))
-	// 	}
-	// }
 </script>
 
 <style lang="scss" scoped>
