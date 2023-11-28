@@ -8,10 +8,11 @@
 </template>
 
 <script setup>
-	import { reactive, ref, getCurrentInstance } from 'vue'
+	import { reactive, ref } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
-	const { ctx: { $: { $pageInstance: { ctx } } } } = getCurrentInstance()
-	const currentUrl = ref(`/${ctx.route}`)
+	import { useRoute } from 'vue-router'
+	const route = useRoute()	
+	const currentUrl = ref(`/${route.meta.route}`)
 	const menu = reactive([
 		{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
 		{ label: '我的', icon: 'icon-user', url: '/pages/ucenter/ucenter' }

@@ -226,6 +226,7 @@
 			</template>
 		</view>
 		<!--  -->
+		<redpack ref="redpackRef" />
 	</view>
 </template>
 <script setup>
@@ -236,18 +237,23 @@
 	import payDialog from './components/pay/dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
 	import { onLoad, onUnload } from '@dcloudio/uni-app'
-	import { ref, computed, provide, getCurrentInstance } from 'vue'
+	import { ref, computed, provide, onMounted, onBeforeUnmount } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import http from '@/enum/http.js'
 	import { isMobile, isWechat } from '@/common/lib.js'
+	import { useRoute } from 'vue-router'
+	import redpack from './components/redpack.vue'
+	const route = useRoute()
 	const detail = ref({})
+	const redpackRef = ref('')
 	let payIntervalTimer = ''
 	const tempUser = uni.getStorageSync('tempUser')
-	const { ctx: { $page } } = getCurrentInstance()
+	const login_user = uni.getStorageSync('login_user')
+	const user_id = login_user?.id
 	provide('detail', detail)
 	const fetchDetail = async () => {
 		try {
-			const { data } = await fetchAnswerData($page.options.no)
+			const { data } = await fetchAnswerData(route.query.no)
 			data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
 			detail.value = data
 		} catch (e) {
@@ -257,8 +263,43 @@
 	const factorList = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'factor'))
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
+	const queryString = new URLSearchParams({ ...route.query })
+	// 离开当前页面,弹出红包
+	const backvoid = () => {
+		uni.showModal({
+			title: '距获得解读只差最后一步',
+			content: "98%的用户认为结果的准确性远远超出预期",
+			confirmText: '继续支付',
+			cancelText: '残忍离开'
+		}).then(res => {
+			if (res.cancel) {
+				redpackRef.value.open()
+			}
+		})
+	}
 	onLoad((options) => {
 		fetchDetail()
+		uni.$on('destroy', () => {
+			backvoid()
+		})
+	})
+	onBeforeUnmount(() => {
+		if (!isMobile()) {
+			return false
+		}
+		if (detail.is_pay) {
+			return false
+		}
+		if (route.path === '/pages/report/index') {
+			return false
+		}
+		uni.navigateTo({
+			url: `/pages/report/index?${queryString}`,
+			success(res) {
+				uni.$emit('destroy', { data: true })
+				// res.eventChannel.emit('destroy', { data: true })
+			}
+		})
 	})
 	uni.$on('callpay', async (argv) => {
 		const { goods_id, pay_method } = argv
@@ -269,13 +310,22 @@
 			goods_id,
 			pay_method
 		}
+		if (argv?.redpack) {
+			params['coupon_id'] = argv.redpack
+		}
+		if (user_id) {
+			params['user_id'] = user_id
+		}
 		try {
 			const { code, data } = await createOrder(params)
 			if (code === http.SUCCESS) {
 				uni.setStorageSync('trace_no', data.trace_no)
 				const pay_params = { trace_no: data.trace_no, env }
+				if (user_id) {
+					pay_params['user_id'] = user_id
+				}
 				const pay_res = await createPayConfig(pay_params)
-				const urlparams_obj = new URLSearchParams({ ...$page.options })
+				const urlparams_obj = queryString
 				const callback = `pages/callback/callback?${urlparams_obj}`
 				const result = payGetWay(env, [pay_res.data, callback])
 				if (result instanceof Promise) {
@@ -285,6 +335,7 @@
 				}
 			}
 		} catch (e) {
+			console.log(e)
 			//TODO handle the exception
 		}
 	})
@@ -309,6 +360,7 @@
 			}
 		}, 3000)
 	}
+	// 
 	onUnload(() => {
 		clearInterval(payIntervalTimer)
 	})

@@ -14,3 +14,7 @@ export function weiboConfig() {
 export function douyinConfig() {
 	return request('https://res.vkunshan.com/config/douyin.json')
 }
+
+export function userProtocol() {
+	return request('https://res.vkunshan.com/config/protocol.json')
+}

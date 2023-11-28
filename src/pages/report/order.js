@@ -68,6 +68,7 @@ export const wechatJsSdkPay = (data) => {
 	})
 }
 export const payGetWay = (type, argv) => {
+	console.log(type, argv)
 	const fn = {
 		wechat_website_pay: wechatH5Pay,
 		alipay_h5: aliPayH5,
