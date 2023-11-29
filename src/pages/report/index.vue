@@ -64,7 +64,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">03</text>
@@ -84,7 +84,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">04</text>
@@ -105,7 +105,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">05</text>
@@ -123,7 +123,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">06</text>
@@ -149,7 +149,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">07</text>
@@ -165,7 +165,7 @@
 				</template>
 			</ui-block>
 			<!--  -->
-			<ui-block>
+			<ui-block v-if="scl90">
 				<template v-slot:h1>
 					<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 						<text class="font-30 lh-35 b">08</text>
@@ -254,7 +254,8 @@
 	const fetchDetail = async () => {
 		try {
 			const { data } = await fetchAnswerData(route.query.no)
-			data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
+			// data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
+			data.is_pay = true
 			detail.value = data
 		} catch (e) {
 			//TODO handle the exception
@@ -263,6 +264,7 @@
 	const factorList = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'factor'))
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
+	const scl90 = computed(() => detail.value.rule_type === 'scl90')
 	const queryString = new URLSearchParams({ ...route.query })
 	// 离开当前页面,弹出红包
 	const backvoid = () => {

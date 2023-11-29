@@ -4,7 +4,7 @@
 		<view class="white font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
 		<!--  -->
 		<view class="flex mt-22 x-grid justify-between">
-			<view class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
+			<view @click="goTest(detail[0].id)" class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
 				<view class="color-22396b f6 lh-17 b">
 					<view>SCL-90</view>
 					<view>
@@ -16,7 +16,7 @@
 				<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">90题</view>
 			</view>
 			<view class="x-grid-right flex flex-column h-100">
-				<view class="x-grid-right-top  pt-12 pl-12 pb-14  border-box flex flex-column  w-100">
+				<view @click="goTest(detail[1].id)" class="x-grid-right-top  pt-12 pl-12 pb-14  border-box flex flex-column  w-100">
 					<view class="color-22396b f6 lh-17 b">
 						<view>SDS-抑郁</view>
 						<view>
@@ -25,18 +25,18 @@
 						</view>
 					</view>
 					<view class="color-c9d0d6 font-10 lh-14 mt1">10909人测过</view>
-					<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">90题</view>
+					<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">20题</view>
 				</view>
-				<view class="x-grid-right-bottom pt-12 pl-12 pb-14  border-box flex flex-column mt-auto w-100">
+				<view @click="goTest(detail[2].id)" class="x-grid-right-bottom pt-12 pl-12 pb-14  border-box flex flex-column mt-auto w-100">
 					<view class="color-22396b f6 lh-17 b">
-						<view>PDQ-4人</view>
+						<view>抑郁程度测试</view>
 						<view>
-							<view class="dib">格障碍测试</view>
+							<view class="dib">（SDS）</view>
 							<view class="icon-arrow dib v-mid ml-12"></view>
 						</view>
 					</view>
 					<view class="color-c9d0d6 font-10 lh-14 mt1">10909人测过</view>
-					<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">90题</view>
+					<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">50题</view>
 				</view>
 			</view>
 		</view>
@@ -64,9 +64,25 @@
 </template>
 
 <script setup>
+	import { fetchTopic } from '@/api/api.js'
+	import { onMounted, ref } from 'vue'
+	const detail = ref({})
 	const goOrderQuery = () => {
 		uni.navigateTo({
 			url: '/pages/order/index'
+		})
+	}
+	onMounted(async () => {
+		try {
+			const { data } = await fetchTopic(5)
+			detail.value = data
+		} catch (e) {
+			//TODO handle the exception
+		}
+	})
+	const goTest = (id) => {
+		uni.navigateTo({
+			url: `/pages/answer/index?id=${id}`
 		})
 	}
 </script>

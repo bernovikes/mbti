@@ -69,3 +69,10 @@ export function sendSms(phone) {
 export function phoneLogin(data) {
 	return request(`/api/login/phone/login`, 'POST', data)
 }
+
+/** 
+ * 获取专题详情
+ */
+export function fetchTopic(id) {
+	return request(`/api/topics/${id}`, 'GET')
+}

@@ -19,7 +19,7 @@
 			<view class="mt-22 font-17 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
 			<!--  -->
 			<view class="mt-24">
-				<view :class="{'active':choose_value===ask_item.id+'_'+item.value}" @click="chooseAnswer(ask_item.id,item.value)" v-for="item in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
+				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
 			</view>
 			<!--  -->
 		</view>
@@ -31,7 +31,8 @@
 </template>
 <script setup>
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
-	import { onMounted, reactive, ref, computed, toRaw } from 'vue'
+	import { reactive, ref, computed, toRaw } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
 	import http from '@/enum/http.js'
 	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
@@ -48,9 +49,9 @@
 	let detail = ''
 	const tempUser = uni.getStorageSync('tempUser')
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
-	const fetchDetail = async () => {
+	const fetchDetail = async (id) => {
 		try {
-			const { data, code } = await getQuestionBank(6)
+			const { data, code } = await getQuestionBank(id)
 			if (code === http.SUCCESS) {
 				detail = data
 				const { question } = data
@@ -121,8 +122,8 @@
 		prev && mountData(prev)
 	}
 	// 选择答案
-	const chooseAnswer = (id, value) => {
-		choose_value.value = `${id}_${value}`
+	const chooseAnswer = (id, value, index) => {
+		choose_value.value = `${id}_${value}_${index}`
 		doned.value = chooseHistory.value.length >= initHistory.value.length - 1
 		// 如果答题进行到最后一题,重新选择答案,则替换最后一题的记录
 		if (doned.value) {
@@ -179,7 +180,6 @@
 				tempUser
 			})
 			if (code === http.SUCCESS) {
-				console.log(qs)
 				uni.redirectTo({
 					url: `/pages/report/index?${qs}`
 				})
@@ -193,8 +193,8 @@
 			//TODO handle the exception
 		}
 	}
-	onMounted(() => {
-		fetchDetail()
+	onLoad((option) => {
+		fetchDetail(option?.id)
 	})
 </script>
 <style lang="scss" scoped>
