@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-30">
+	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-50">
 		<view class="font-18 white lh-25 b">抑郁症测试</view>
 		<view class="white font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
 		<!--  -->

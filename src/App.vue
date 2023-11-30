@@ -24,4 +24,11 @@
 	uni-toast {
 		z-index: 10001;
 	}
+
+	@media screen and (min-width: 768px) {
+		body {			
+			max-width: 428px;
+			margin: 0 auto;
+		}
+	}
 </style>

@@ -2,7 +2,7 @@
 	<view class="x-bg min-vh-100 pl-18 pr-18 ">
 		<view class="pt-30">
 			<view class="white">
-				<view class="font-20 x-title lh-28">抑郁程度测试（SdS）</view>
+				<view class="font-20 x-title lh-28">{{title}}</view>
 				<view class="f7 lh-17">测试去了解最真实的自己</view>
 			</view>
 		</view>
@@ -19,13 +19,14 @@
 			<view class="mt-22 font-17 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
 			<!--  -->
 			<view class="mt-24">
-				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
+				<!-- :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" -->
+				<view hover-class="active" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
 			</view>
 			<!--  -->
 		</view>
 		<view class="flex items-center">
 			<view v-if="chooseHistory.length" @click="getPrevResult" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">上一题</view>
-			<view v-if="doned" @click="submit" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">查看结果</view>
+			<view v-if="doned" @click="submit" class="f6 fw5 mt3 ml-auto lh-20  white btn-submit flex items-center justify-center">查看结果</view>
 		</view>
 	</view>
 </template>
@@ -45,8 +46,9 @@
 	const chooseHistory = ref([])
 	const choose_value = ref('')
 	let disable_submit = false
-	let timer = ''
+	// let timer = ''
 	let detail = ''
+	const title = ref('')
 	const tempUser = uni.getStorageSync('tempUser')
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
 	const fetchDetail = async (id) => {
@@ -54,6 +56,7 @@
 			const { data, code } = await getQuestionBank(id)
 			if (code === http.SUCCESS) {
 				detail = data
+				title.value = data.title
 				const { question } = data
 				total.value = question.length
 				initStack(question)
@@ -131,19 +134,21 @@
 			return false
 		}
 		resetYieldAnswer()
-		if (timer) {
-			return false
-		}
+		// if (timer) {
+		// 	return false
+		// }
 		// 如果未完成答题
 		if (!doned.value) {
-			timer = setTimeout(() => {
-				historyStack(choose_value.value)
-				if (timer) {
-					getYieldNext()
-				}
-				clearTimeout(timer)
-				timer = ''
-			}, 500)
+			historyStack(choose_value.value)
+			getYieldNext()
+			// timer = setTimeout(() => {
+			// 	historyStack(choose_value.value)
+			// 	if (timer) {
+			// 		getYieldNext()
+			// 	}
+			// 	clearTimeout(timer)
+			// 	timer = ''
+			// }, 500)
 		}
 	}
 	// 提交数据
@@ -228,7 +233,8 @@
 	.x-answer-item {
 		border-radius: 8px;
 		height: 46px;
-		background: #f0f7fc;
+		--width: 0%;
+		background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%) 0 0 / var(--width) 100% no-repeat #f0f7fc;
 		color: #27282b;
 	}
 
@@ -236,15 +242,25 @@
 		margin-bottom: 22px;
 	}
 
-	.active.x-answer-item {
-		background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%);
+	.active {
+		--width: 100%;
 		color: white;
+		transition: all .5s ease-in-out;
+	}
+
+	.btn-submit,
+	.btn {
+		border-radius: 16px;
+		height: 32px;
 	}
 
 	.btn {
 		width: 86px;
-		height: 32px;
 		box-shadow: 2px 2px 8px 0 rgba(105, 99, 122, 0.17);
-		border-radius: 16px;
+	}
+
+	.btn-submit {
+		background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%);
+		width: 103px;
 	}
 </style>
