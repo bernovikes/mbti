@@ -19,8 +19,7 @@
 			<view class="mt-22 font-17 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
 			<!--  -->
 			<view class="mt-24">
-				<!-- :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" -->
-				<view hover-class="active" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
+				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
 			</view>
 			<!--  -->
 		</view>
@@ -46,7 +45,7 @@
 	const chooseHistory = ref([])
 	const choose_value = ref('')
 	let disable_submit = false
-	// let timer = ''
+	let timer = ''
 	let detail = ''
 	const title = ref('')
 	const tempUser = uni.getStorageSync('tempUser')
@@ -134,21 +133,19 @@
 			return false
 		}
 		resetYieldAnswer()
-		// if (timer) {
-		// 	return false
-		// }
+		if (timer) {
+			return false
+		}
 		// 如果未完成答题
-		if (!doned.value) {
-			historyStack(choose_value.value)
-			getYieldNext()
-			// timer = setTimeout(() => {
-			// 	historyStack(choose_value.value)
-			// 	if (timer) {
-			// 		getYieldNext()
-			// 	}
-			// 	clearTimeout(timer)
-			// 	timer = ''
-			// }, 500)
+		if (!doned.value) {			
+			timer = setTimeout(() => {
+				historyStack(choose_value.value)
+				if (timer) {
+					getYieldNext()
+				}
+				clearTimeout(timer)
+				timer = ''
+			}, 500)
 		}
 	}
 	// 提交数据
@@ -242,7 +239,7 @@
 		margin-bottom: 22px;
 	}
 
-	.active {
+	.active.x-answer-item {
 		--width: 100%;
 		color: white;
 		transition: all .5s ease-in-out;

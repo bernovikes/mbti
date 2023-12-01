@@ -31,7 +31,7 @@
 
 <style lang="scss" scoped>
 	.x-block-bg {
-		background: linear-gradient(to bottom, #D6E4FF, #FFFFFF 23%) no-repeat;
+		background: linear-gradient(to bottom, #D6E4FF, #FFFFFF 100px) no-repeat;
 		border-radius: 14px;
 	}
 </style>

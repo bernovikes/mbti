@@ -4,7 +4,7 @@
 			<view class="font-22 lh-30">抑郁测试报告SCL—90</view>
 			<view class="f6 lh-20">恭喜完成测试！</view>
 			<view class="x-header-line mt3 mb-20"></view>
-			<view class="f7 lh-20">2023-09-15 13:26</view>
+			<view class="f7 lh-20">{{detail.created_at}}</view>
 		</view>
 		<view class="mt-20 pl-14 pr-14">
 			<view class="x-header-block mb-30 pb-22 pt3 w-100">
@@ -13,10 +13,9 @@
 					<view class="white lh-22 ml2">测试程度</view>
 				</view>
 				<!--  -->
-				<view class="pl-20">
+				<view class="pl-20 b">
 					<view class="pt3 lh-22 color-404246">测试结果：健康</view>
 					<view class="font-23 mt2 lh-32">平均分 {{detail.report?.total_avg}}</view>
-					<view class="f7  color-464240 lh-17">恭喜你已经超越 <text class="color-6fa0ff">91%</text> 的用户了～</view>
 				</view>
 			</view>
 			<!--  -->
@@ -56,9 +55,9 @@
 				</template>
 				<template v-slot:body>
 					<view class="x-answer-body pl-20 pr-20 pt-10 pb-10">
-						<view v-for="(item,index) in 3" :key="index" class="font-13 flex items-center justify-between">
-							<view class="color-4c5264 lh-26 fw5">答题率</view>
-							<view class="lh-17 color-6e9fff">100%</view>
+						<view v-for="(item,index) in speed" :key="index" class="font-13 flex items-center justify-between">
+							<view class="color-4c5264 lh-26 fw5">{{item.label}}</view>
+							<view class="lh-17 color-6e9fff">{{item.value}}</view>
 						</view>
 					</view>
 				</template>
@@ -117,6 +116,7 @@
 					</view>
 				</template>
 				<template v-slot:body>
+					<l-echart ref="chart"></l-echart>
 					<view class="f6 fw4 lh-28 color-50545e">
 						<view>在 <text class="color-6fa0ff">心理健康方面</text> 得分较高，<text class="color-6fa0ff">{{detail.report?.top_factor}}</text> 表现较为明显，且部分项目接近或超过阳性标准，这些行为和情感表现或多或少已经影响了你的生活和工作，可以根据以下内容的分析来进行针对性的调节。</view>
 					</view>
@@ -135,6 +135,9 @@
 					</view>
 				</template>
 				<template v-slot:h2>
+					<view class="pl-24 mt-24 pr-24">
+						<l-echart ref="lineChart"></l-echart>
+					</view>
 					<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 						<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
 					</view>
@@ -230,21 +233,30 @@
 	</view>
 </template>
 <script setup>
-	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue';
+	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
 	import uiBlock from './components/ui-block.vue'
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import payDialog from './components/pay/dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
 	import { onLoad, onUnload } from '@dcloudio/uni-app'
-	import { ref, computed, provide, onMounted, onBeforeUnmount } from 'vue'
+	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import http from '@/enum/http.js'
 	import { isMobile, isWechat } from '@/common/lib.js'
 	import { useRoute } from 'vue-router'
 	import redpack from './components/redpack.vue'
+	import { radar } from './radar'
+	import line from './line'
+	const chart = ref('')
+	const lineChart = ref('')
 	const route = useRoute()
 	const detail = ref({})
+	const speed = ref([
+		{ 'label': '答题率', 'value': '100%' },
+		{ 'label': '答题时间', 'value': '6分32秒' },
+		{ 'label': '参考范围', 'value': '5-30分钟' }
+	])
 	const redpackRef = ref('')
 	let payIntervalTimer = ''
 	const tempUser = uni.getStorageSync('tempUser')
@@ -257,6 +269,9 @@
 			// data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
 			data.is_pay = true
 			detail.value = data
+			watch(chart, (nval) => {
+				drawradar()
+			})
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -279,8 +294,10 @@
 			}
 		})
 	}
-	onLoad((options) => {
+	onMounted(() => {
 		fetchDetail()
+	})
+	onLoad((options) => {
 		uni.$on('destroy', () => {
 			backvoid()
 		})
@@ -299,7 +316,6 @@
 			url: `/pages/report/index?${queryString}`,
 			success(res) {
 				uni.$emit('destroy', { data: true })
-				// res.eventChannel.emit('destroy', { data: true })
 			}
 		})
 	})
@@ -366,6 +382,29 @@
 	onUnload(() => {
 		clearInterval(payIntervalTimer)
 	})
+
+	const drawradar = () => {
+		try {
+			const module = detail.value.report.detail.find(item => item.componentName === 'factor')
+			const config = module?.config
+			const avg = config.map(item => item.avg)
+			const standard = config.map(item => item.standard)
+			const factor = config.map(item => item.factor)
+			const maxNumber = Math.max(...config.map(item => item.sum))
+			const charData = factor.map(item => config.find(i => i.factor == item)?.sum)
+			const indicator = factor.map(item => {
+				return {
+					name: item,
+					max: maxNumber
+				}
+			})
+			radar([{ value: charData }], maxNumber, chart.value, indicator)
+			line(avg, factor, lineChart.value, standard)
+		} catch (e) {
+			console.log(e)
+			//TODO handle the exception
+		}
+	}
 </script>
 <style lang="scss" scoped>
 	.x-bg {

@@ -59,27 +59,54 @@
 		<!--  -->
 		<view class="font-11 fw4 color-cedef3 lh-18 tc">本测评可免费作答 测评结果需付费查看，测评为虚拟商品服务 购买后概不退费，敬请谅解</view>
 		<!--  -->
+		<xpops ref="unpaydialog">
+			<view class="f7 fw4 lh-17">亲，您有测评报告未解锁，快去</view>
+			<view class="f7 fw4 lh-17">查看你的专属报告吧！</view>
+			<template v-slot:btn>
+				<view @click="goUnpayOrder()" class="white font-13 fw5 cm-dialog-btn width-fit center">立即查看</view>
+			</template>
+		</xpops>
+		<!--  -->
 		<xTabBar />
 	</view>
 </template>
 
 <script setup>
-	import { fetchTopic } from '@/api/api.js'
+	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { onMounted, ref } from 'vue'
+	import xpops from './components/pops/pops.vue'
 	const detail = ref({})
+	const unpaydialog = ref('')
+	let unpaid_no = ''
+	const tempUser = uni.getStorageSync('tempUser') || '';
 	const goOrderQuery = () => {
 		uni.navigateTo({
 			url: '/pages/order/index'
 		})
 	}
-	onMounted(async () => {
-		try {
-			const { data } = await fetchTopic(5)
+	onMounted(() => {
+		fetchTopic(5).then(({ data }) => {
 			detail.value = data
-		} catch (e) {
-			//TODO handle the exception
+		})
+		if (!uni.getStorageSync('idx_unpay_dialog') && tempUser) {
+			fetchAnswerList({ tempUser }).then(({ data }) => {
+				if (data.length) {
+					const firstOrder = data[0]
+					if (!firstOrder.order.length) {
+						unpaydialog.value.open()
+						unpaid_no = firstOrder.order_no
+						uni.setStorageSync('idx_unpay_dialog', true)
+					}
+				}
+			})
 		}
 	})
+	const goUnpayOrder = () => {
+		uni.navigateTo({
+			url: `/pages/report/index?no=${unpaid_no}`
+		})
+		unpaydialog.value.close()
+	}
 	const goTest = (id) => {
 		uni.navigateTo({
 			url: `/pages/answer/index?id=${id}`
@@ -153,5 +180,12 @@
 
 	.btn-index-item {
 		border-radius: 12px;
+	}
+
+	.cm-dialog-btn {
+		background: linear-gradient(247deg, #7FBFFE 0%, #9D91FE 100%);
+		box-shadow: 0 2px 7px 0 rgba(100, 100, 197, 0.13);
+		border-radius: 14px;
+		padding: 5px 44px;
 	}
 </style>
