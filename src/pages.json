@@ -31,6 +31,9 @@
 		},
 		{
 			"path": "pages/aboutus/aboutus"
+		},
+		{
+			"path": "pages/feedback/feedback"
 		}
 	],
 	"tabBar": {

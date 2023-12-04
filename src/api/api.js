@@ -76,3 +76,10 @@ export function phoneLogin(data) {
 export function fetchTopic(id) {
 	return request(`/api/topics/${id}`, 'GET')
 }
+
+/** 
+ * 提交意见反馈
+ */
+export function postFeedback(data) {
+	return request(`/api/feedback`, 'POST', data)
+}

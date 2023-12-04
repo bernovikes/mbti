@@ -1,14 +1,20 @@
 <template>
 	<view>
-		<view class="x-header-block mb-30 pb-22 pt3 w-100 scl90">
+		<view class="mb-30 pb-22 pt3 w-100 scl90 x-header-block">
 			<view class="x-body-h1 pr-20 width-fit flex pl-10 pt-6 pb-6 items-center">
 				<view class="icon-header-block"></view>
 				<view class="white lh-22 ml2">测试程度</view>
 			</view>
 			<!--  -->
-			<view class="pl-20 b">
-				<view class="pt3 lh-22 color-404246">测试结果：{{total_avg_text}}</view>
-				<view class="font-23 mt2 lh-32">平均分 {{total_avg}}</view>
+			<view class="pl-20 pr-24 b flex">
+				<view>
+					<view class="pt3 lh-22 color-404246">测试结果：{{total_avg_text}}</view>
+					<view class="font-23 mt2 lh-32">平均分 {{total_avg}}</view>
+				</view>
+				<view class="flex ml-auto">
+					<view class="x-bubble-chat mt2 mr1 width-fit white font-10 fw4 lh-13 grid place-center pl-6 pr2">{{chat}}</view>
+					<view class="x-header-ip"></view>
+				</view>
 			</view>
 		</view>
 		<ui-block>
@@ -227,6 +233,21 @@
 	const speed = inject('speed')
 	const total_avg_text = computed(() => detail.value.is_pay ? detail.value?.report?.total_avg_text : '???')
 	const total_avg = computed(() => detail?.value?.is_pay ? detail?.value?.report?.total_avg : '???')
+	const chat = computed(() => {
+		if (!detail.value?.is_pay) {
+			return '快来查看结果吧';
+		}
+		const total_avg = detail?.value?.report?.total_avg
+		if (total_avg <= 2.9) {
+			return '需要注意身心哦';
+		}
+		if (total_avg >= 3 && total_avg <= 3.8) {
+			return '需要改善身心哦';
+		}
+		if (total_avg >= 3.9) {
+			return '需要及时就医哦';
+		}
+	})
 	const drawradar = () => {
 		try {
 			const module = detail.value.report.detail.find(item => item.componentName === 'factor')
@@ -254,5 +275,15 @@
 	})
 </script>
 
-<style>
+<style scoped lang="scss">
+	.x-bubble-chat {
+		height: 17px;
+		background: url(https://res.vkunshan.com/depressed/report/chat.png) left 0 top 0 / 100% 100% no-repeat;
+	}
+
+	.x-header-ip {
+		background: url(https://res.vkunshan.com/depressed/report/ip.png) 0 0 / 100% no-repeat;
+		width: 47px;
+		height: 90px;
+	}
 </style>

@@ -1,5 +1,6 @@
 <template>
 	<view class="min-vh-100 pt-65 pb-30 x-bg">
+		<share />
 		<view class="pl-14 white">
 			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">恭喜完成测试！</view>
@@ -25,6 +26,7 @@
 </template>
 <script setup>
 	import sds from './sds.vue'
+	import share from './components/share.vue'
 	import scl90Page from './scl90.vue'
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
@@ -198,10 +200,6 @@
 	:deep(.x-header-block) {
 		border-radius: 14px;
 		background: white;
-	}
-
-	:deep(.scl90.x-header-block) {
-		background: url(https://res.vkunshan.com/depressed/report/ip.png) bottom 22px right 22px / 47px 90px no-repeat white;
 	}
 
 	:deep(.x-answer-body) {
