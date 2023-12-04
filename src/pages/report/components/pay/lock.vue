@@ -1,6 +1,6 @@
 <template>
 	<view class="relative">
-		<view v-if="!detail.is_pay" class="bg-white x-lock-bg flex items-center justify-center absolute top-0 left-0 right-0 bottom-0">
+		<view v-if="!detail.is_pay" class="bg-white x-lock-bg flex items-center justify-center absolute z-999 top-0 left-0 right-0 bottom-0">
 			<view @click="openPayDialog" class="white btn flex items-center justify-center lh-22">
 				<view class="icon-lock mr2" />解锁分析报告
 			</view>

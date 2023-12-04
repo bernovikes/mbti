@@ -9,11 +9,11 @@
 			<view class="pl-20 b">
 				<view class="flex pr-30 mt-20">
 					<view class="flex flex-column">
-						<view class="color-77797f  lh-22">结果分：{{detail.report?.total_sum}}分</view>
-						<view class="mt2 font-19 color-404246 lh-26 b">结果：{{detail.report?.degree_title}}</view>
+						<view class="color-77797f  lh-22">结果分：{{total_sum}}</view>
+						<view class="mt2 font-19 color-404246 lh-26 b">结果：{{degree_title}}</view>
 						<view class="f7 lh-17 fw5 mt-auto color-848587">关注您的身心健康</view>
 					</view>
-					<view :style="{'--width':detail.report?.total_sum+'%'}" class="color-5992ff x-circle ml-auto grid place-center font-18 lh-25">{{detail.report?.total_sum}}分</view>
+					<view :style="{'--width':detail.report?.total_sum+'%'}" class="color-5992ff x-circle ml-auto grid place-center font-18 lh-25">{{total_sum}}</view>
 				</view>
 			</view>
 		</view>
@@ -149,9 +149,9 @@
 					<view v-for="(item,index) in appendix?.section" :key="index" class="x-illustrate-item">
 						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
-						</view>						
+						</view>
 						<view class="pt-26 pl-20 pr-20" v-if="item.h2">
-							<view  class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.h2}}</view>
+							<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.h2}}</view>
 						</view>
 						<view class="pt-12 pl-20 pr-20" v-if="item.content">
 							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
@@ -200,6 +200,8 @@
 	const result_analysis = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'result_analysis'))
 	const degree = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'degree'))
 	const prompt = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'alert'))
+	const total_sum = computed(() => detail.value.is_pay ? `${detail.value.report?.total_sum}分` : '???')
+	const degree_title = computed(() => detail.value.is_pay ? detail.value?.degree_title : '???')
 	const drawradar = () => {
 		const { config } = factorList.value
 		const charData = config.map(item => item.sum)

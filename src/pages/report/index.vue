@@ -1,13 +1,13 @@
 <template>
 	<view class="min-vh-100 pt-65 pb-30 x-bg">
 		<view class="pl-14 white">
-			<view class="font-22 lh-30">抑郁测试报告SCL—90</view>
+			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">恭喜完成测试！</view>
 			<view class="x-header-line mt3 mb-20"></view>
 			<view class="f7 lh-20">{{detail.created_at}}</view>
 		</view>
 		<view class="mt-20 pl-14 pr-14">
-			<sds />
+			<scl90-page></scl90-page>
 			<!--  -->
 			<comment />
 			<!--  -->
@@ -23,8 +23,9 @@
 		<redpack ref="redpackRef" />
 	</view>
 </template>
-<script setup>	
+<script setup>
 	import sds from './sds.vue'
+	import scl90Page from './scl90.vue'
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import payDialog from './components/pay/dialog.vue'
@@ -36,10 +37,6 @@
 	import { isMobile, isWechat } from '@/common/lib.js'
 	import { useRoute } from 'vue-router'
 	import redpack from './components/redpack.vue'
-	import { radar } from './radar'
-	import line from './line'
-	const chart = ref('')
-	const lineChart = ref('')
 	const route = useRoute()
 	const detail = ref({})
 	const speed = ref([
@@ -47,6 +44,7 @@
 		{ 'label': '答题时间', 'value': '6分32秒' },
 		{ 'label': '参考范围', 'value': '5-30分钟' }
 	])
+	provide('speed', speed)
 	const redpackRef = ref('')
 	let payIntervalTimer = ''
 	const tempUser = uni.getStorageSync('tempUser')
@@ -62,8 +60,8 @@
 	const fetchDetail = async () => {
 		try {
 			const { data } = await fetchAnswerData(route.query.no)
-			// data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
-			data.is_pay = true
+			data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
+			// data.is_pay = true
 			detail.value = data
 			watch(chart, (nval) => {
 				drawradar()
@@ -71,8 +69,7 @@
 		} catch (e) {
 			//TODO handle the exception
 		}
-	}		
-	const scl90 = computed(() => detail.value.rule_type === 'scl90')
+	}
 	const queryString = new URLSearchParams({ ...route.query })
 	// 离开当前页面,弹出红包
 	const backvoid = () => {
@@ -175,29 +172,6 @@
 	onUnload(() => {
 		clearInterval(payIntervalTimer)
 	})
-
-	const drawradar = () => {
-		try {
-			const module = detail.value.report.detail.find(item => item.componentName === 'factor')
-			const config = module?.config
-			const avg = config.map(item => item.avg)
-			const standard = config.map(item => item.standard)
-			const factor = config.map(item => item.factor)
-			const maxNumber = Math.max(...config.map(item => item.sum))
-			const charData = factor.map(item => config.find(i => i.factor == item)?.sum)
-			const indicator = factor.map(item => {
-				return {
-					name: item,
-					max: maxNumber
-				}
-			})
-			radar([{ value: charData }], maxNumber, chart.value, indicator)
-			line(avg, factor, lineChart.value, standard)
-		} catch (e) {
-			console.log(e)
-			//TODO handle the exception
-		}
-	}
 </script>
 <style lang="scss" scoped>
 	.x-bg {
@@ -226,11 +200,11 @@
 		background: white;
 	}
 
-	.scl90.x-header-block {
+	:deep(.scl90.x-header-block) {
 		background: url(https://res.vkunshan.com/depressed/report/ip.png) bottom 22px right 22px / 47px 90px no-repeat white;
 	}
 
-	.x-answer-body {
+	:deep(.x-answer-body) {
 		background: rgba(159, 191, 255, .3);
 		border-radius: 6px;
 	}

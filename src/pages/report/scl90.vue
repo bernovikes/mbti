@@ -1,27 +1,17 @@
 <template>
 	<view>
-		<view class="x-header-block mb-30 pb-22 pt3 w-100" :class="{'scl90':scl90}">
+		<view class="x-header-block mb-30 pb-22 pt3 w-100 scl90">
 			<view class="x-body-h1 pr-20 width-fit flex pl-10 pt-6 pb-6 items-center">
 				<view class="icon-header-block"></view>
-				<view class="white lh-22 ml2">{{scl90?'测试程度':'结果总览'}}</view>
+				<view class="white lh-22 ml2">测试程度</view>
 			</view>
 			<!--  -->
 			<view class="pl-20 b">
-				<template v-if="scl90">
-					<view class="pt3 lh-22 color-404246">测试结果：健康</view>
-					<view class="font-23 mt2 lh-32">平均分 {{detail.report?.total_avg}}</view>
-				</template>
-				<view class="flex pr-30 mt-20" v-if="!scl90">
-					<view class="flex flex-column">
-						<view class="color-77797f  lh-22">结果分：{{detail.report?.total_sum}}分</view>
-						<view class="mt2 font-19 color-404246 lh-26 b">结果：{{detail.report?.degree_title}}</view>
-						<view class="f7 lh-17 fw5 mt-auto color-848587">关注您的身心健康</view>
-					</view>
-					<view :style="{'--width':detail.report?.total_sum+'%'}" class="color-5992ff x-circle ml-auto grid place-center font-18 lh-25">{{detail.report?.total_sum}}分</view>
-				</view>
+				<view class="pt3 lh-22 color-404246">测试结果：{{total_avg_text}}</view>
+				<view class="font-23 mt2 lh-32">平均分 {{total_avg}}</view>
 			</view>
 		</view>
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">01</text>
@@ -65,7 +55,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">03</text>
@@ -85,7 +75,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">04</text>
@@ -106,7 +96,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">05</text>
@@ -125,7 +115,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">06</text>
@@ -154,7 +144,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">07</text>
@@ -170,7 +160,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">08</text>
@@ -195,7 +185,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block v-if="scl90">
+		<ui-block>
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">09</text>
@@ -222,7 +212,46 @@
 	</view>
 </template>
 
-<script>
+<script setup>
+	import uiBlock from './components/ui-block.vue'
+	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
+	import { radar } from './radar'
+	import line from './line'
+	import { inject, computed, onMounted, watch, ref } from 'vue'
+	const chart = ref('')
+	const lineChart = ref('')
+	const detail = inject('detail')
+	const factorList = inject('factorList')
+	const illustrate = inject('illustrate')
+	const appendix = inject('appendix')
+	const speed = inject('speed')
+	const total_avg_text = computed(() => detail.value.is_pay ? detail.value?.report?.total_avg_text : '???')
+	const total_avg = computed(() => detail?.value?.is_pay ? detail?.value?.report?.total_avg : '???')
+	const drawradar = () => {
+		try {
+			const module = detail.value.report.detail.find(item => item.componentName === 'factor')
+			const config = module?.config
+			const avg = config.map(item => item.avg)
+			const standard = config.map(item => item.standard)
+			const factor = config.map(item => item.factor)
+			const maxNumber = Math.max(...config.map(item => item.sum))
+			const charData = factor.map(item => config.find(i => i.factor == item)?.sum)
+			const indicator = factor.map(item => {
+				return {
+					name: item,
+					max: maxNumber
+				}
+			})
+			radar([{ value: charData }], maxNumber, chart.value, indicator)
+			line(avg, factor, lineChart.value, standard)
+		} catch (e) {
+			console.log(e)
+			//TODO handle the exception
+		}
+	}
+	watch(detail, () => {
+		drawradar()
+	})
 </script>
 
 <style>
