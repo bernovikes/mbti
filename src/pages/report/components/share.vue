@@ -1,13 +1,18 @@
 <template>
 	<view class="fixed right-0 z-9999">
+		<!-- preload -->
+		<view class="dn">
+			<image src="https://res.vkunshan.com/depressed/report/poster/person-bg.png" />
+			<image src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image>
+		</view>
 		<view class="tr">
 			<view @click="openPoster" class="x-red-top-share"></view>
 			<view>
-				<view class="x-block-share dib"></view>
+				<view @click="openPersonPoster" class="x-block-share dib"></view>
 			</view>
 		</view>
 		<poster ref="posterRef" />
-		<person />
+		<person ref="personRef" />
 	</view>
 </template>
 
@@ -16,8 +21,12 @@
 	import person from './share/person.vue'
 	import { ref } from 'vue'
 	const posterRef = ref('')
+	const personRef = ref('')
 	const openPoster = () => {
 		posterRef.value.open()
+	}
+	const openPersonPoster = () => {
+		personRef.value.open()
 	}
 </script>
 

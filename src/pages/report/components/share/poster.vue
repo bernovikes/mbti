@@ -6,11 +6,17 @@
 		<view>
 			<view class="pl-22 pr-22">
 				<view @click.stop="empty" class="bg-white pl-10 pr-10 pt-10 x-body">
-					<image mode="widthFix" class="db w-100 center" src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image>
+					<view class="relative">
+						<image mode="widthFix" class="db w-100 center" src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image>
+						<view class="f7 absolute x-date-text fw4 white lh-17">{{date}}</view>
+					</view>
 					<view class="flex items-center">
 						<image class="x-logo" src="https://res.vkunshan.com/depressed/report/poster/logo.png" />
 						<view class="font-11 lh-18 color-656565">公众号</view>
-						<view class="icon-arrow" />
+						<view class="icon-arrow ml2" />
+						<view class="ml-auto">
+							<uQRCode ref="uqrcode" :text="qrcode" :size="56"></uQRCode>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -20,8 +26,15 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import uQRCode from '@/components/uqrcode/uqrcode.vue'
+	import dayjs from 'dayjs'
+	import { ref, inject, computed } from 'vue'
 	const show = ref(false)
+	const detail = inject('detail')
+	const domain = import.meta.env.VITE_DOMAIN
+	const qrcode = computed(() => `${domain}/pages/report/index?no=${detail.value?.order_no}`)
+	const uqrcode = ref('')
+	const date = computed(() => dayjs(detail.value.created_at).format('YYYY/MM/D'))
 	const close = () => {
 		show.value = false
 	}
@@ -58,5 +71,10 @@
 		background: url("data:image/svg+xml,%3Csvg width='12' height='20' viewBox='0 0 12 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 1L1 10l10 9' stroke='%23FFF' stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 		width: 12px;
 		height: 20px;
+	}
+
+	.x-date-text {
+		bottom: 15%;
+		left: 18px;
 	}
 </style>

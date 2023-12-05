@@ -1,20 +1,25 @@
 <template>
-	<view class="x-bg h-100 fixed w-100 top-0 left-0 z-9999">
+	<view class="x-bg h-100 fixed w-100 top-0 left-0 z-9999" v-if="show">
 		<view class="pt-24 pl-20 mb-26">
 			<view @click.stop="close" class="x-left-arrow" />
 		</view>
-		<view class="relative width-fit center">
+		<view class="relative width-fit center" @click.stop="empty">
 			<view class="tc">
 				<image mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/person-bg.png" />
 			</view>
-			<view class="absolute top-0 pt-90 pr-38 pl-38 x-content left-0">
-				<view class="white">
-					<view class="font-18 lh-25 b">测试结果：健康</view>
-					<view class="f7 white-90 lh-17 tl">2023-08-02 17:40</view>
+			<view class="absolute top-0 pt-90 x-content left-0">
+				<view class="pr-38 pl-38">
+					<view class="white">
+						<view class="font-18 lh-25 b">测试结果：{{detail?.report?.total_avg_text}}</view>
+						<view class="f7 white-90 lh-17 tl">{{detail?.created_at}}</view>
+					</view>
+					<view class="x-bottom-text flex items-center">
+						<image class="img-launch flex-shrink-0" src="https://res.vkunshan.com/depressed/report/poster/launch.png" />
+						<view class="font-11 fw4 white ml2 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
+					</view>
 				</view>
-				<view class="x-bottom-text flex items-center">
-					<image class="img-launch flex-shrink-0" src="https://res.vkunshan.com/depressed/report/poster/launch.png" />
-					<view class="font-11 fw4 white ml2 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
+				<view class="tr pr-20 x-qrcode mt-28">
+					<uQRCode class="dib" ref="uqrcode" :text="qrcode" :size="72"></uQRCode>
 				</view>
 			</view>
 		</view>
@@ -27,8 +32,20 @@
 </template>
 
 <script setup>
-	import { inject } from 'vue'
+	import uQRCode from '@/components/uqrcode/uqrcode.vue'
+	import dayjs from 'dayjs'
+	import { inject, ref, computed } from 'vue'
 	const detail = inject('detail')
+	const show = ref(false)
+	const open = () => show.value = true
+	const close = () => show.value = false
+	const empty = () => {}
+	defineExpose({
+		open
+	})
+	const domain = import.meta.env.VITE_DOMAIN
+	const qrcode = computed(() => `${domain}/pages/report/index?no=${detail.value?.order_no}`)
+	const uqrcode = ref('')
 </script>
 
 <style lang="scss" scoped>
