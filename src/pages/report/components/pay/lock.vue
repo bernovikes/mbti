@@ -1,8 +1,9 @@
 <template>
 	<view class="relative">
-		<view v-if="!detail.is_pay" class="bg-white x-lock-bg flex items-center justify-center absolute z-999 top-0 left-0 right-0 bottom-0">
+		<view v-if="lock" class="bg-white x-lock-bg flex items-center justify-center absolute z-999 top-0 left-0 right-0 bottom-0">
 			<view @click="openPayDialog" class="white btn flex items-center justify-center lh-22">
-				<view class="icon-lock mr2" />解锁分析报告
+				<view class="icon-lock mr2" />
+				{{btn_text}}
 			</view>
 		</view>
 		<slot></slot>
@@ -10,11 +11,21 @@
 </template>
 
 <script setup>
-	import { inject, ref, watch } from 'vue'
+	import { inject, ref, watch, computed } from 'vue'
+	defineProps({
+		lock: {
+			type: Boolean,
+			default: true
+		}
+	})
 	const detail = inject('detail')
 	const openPayDialog = () => {
 		uni.$emit('open_pay_dialog', true)
 	}
+	const btn_text = computed(() => {
+		const val = detail.value
+		return val?.is_pay && !val?.all_unlock ? '升级完整报告' : '解锁分析报告'
+	})
 </script>
 
 <style lang="scss" scoped>

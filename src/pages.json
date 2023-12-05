@@ -34,6 +34,9 @@
 		},
 		{
 			"path": "pages/feedback/feedback"
+		},
+		{
+			"path": "pages/follow/follow"
 		}
 	],
 	"tabBar": {
@@ -46,6 +49,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarTitleText": "小熊心理测试",
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom"
 	}

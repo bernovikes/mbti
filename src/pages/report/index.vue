@@ -8,15 +8,21 @@
 			<view class="f7 lh-20">{{detail.created_at}}</view>
 		</view>
 		<view class="mt-20 pl-14 pr-14">
-			<scl90-page></scl90-page>
+			<template v-if="detail.rule_type==='scl90'">
+				<scl90-page></scl90-page>
+			</template>
+			<template v-if="detail.rule_type==='sds'">
+				<sds></sds>
+			</template>
 			<!--  -->
 			<comment />
+			<bottom />
 			<!--  -->
-			<template v-if="!detail?.is_pay">
+			<template v-if="!detail?.all_unlock">
 				<pay-btn></pay-btn>
 			</template>
 			<!--  -->
-			<template v-if="!detail?.is_pay">
+			<template v-if="!detail?.all_unlock">
 				<pay-dialog></pay-dialog>
 			</template>
 		</view>
@@ -30,6 +36,7 @@
 	import scl90Page from './scl90.vue'
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
+	import bottom from './components/bottom.vue'
 	import payDialog from './components/pay/dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
 	import { onLoad, onUnload } from '@dcloudio/uni-app'
@@ -55,15 +62,22 @@
 	const factorList = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'factor'))
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
+	const refer = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'refer'))
+	const buyed = ref('')
 	provide('detail', detail)
 	provide('factorList', factorList)
 	provide('illustrate', illustrate)
 	provide('appendix', appendix)
+	provide('refer', refer)
+	provide('buyed', buyed)
 	const fetchDetail = async () => {
 		try {
 			const { data } = await fetchAnswerData(route.query.no)
-			data.is_pay = !!data.question_bank_goods.find(item => item.type === 'all')?.paid_order
-			// data.is_pay = true
+			const { question_bank_goods } = data
+			const dict = { all: 2, lite: 1, diff: 1 }
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			data.all_unlock = permissions === dict.all
+			buyed.value = data.is_pay = !!permissions
 			detail.value = data
 			watch(chart, (nval) => {
 				drawradar()
@@ -86,6 +100,7 @@
 			}
 		})
 	}
+	uni.$on('close_pay_dialog', () => redpackRef.value.open())
 	onMounted(() => {
 		fetchDetail()
 	})

@@ -1,10 +1,20 @@
 <template>
-	<view @click="openPayDialog" class="x-pay-big-btn flex items-center white lh-22 justify-center">
-		<view class="icon-lock mr2"></view>解锁专属报告
+	<view class="fixed left-0 bottom-0 w-100 z-999">
+		<view class="pl-18 pr-18 pb-20">
+			<view @click="openPayDialog" class="x-pay-big-btn pulse flex items-center white lh-22 justify-center">
+				<view class="icon-lock mr2"></view>{{btn_text}}
+			</view>
+		</view>
 	</view>
 </template>
 
 <script setup>
+	import { inject, computed } from 'vue'
+	const detail = inject('detail')
+	const btn_text = computed(() => {
+		const val = detail.value
+		return val?.is_pay && !val?.all_unlock ? '升级完整报告' : '解锁专属报告'
+	})
 	const openPayDialog = () => {
 		uni.$emit('open_pay_dialog', true)
 	}

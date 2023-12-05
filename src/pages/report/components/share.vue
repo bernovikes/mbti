@@ -7,7 +7,7 @@
 		</view>
 		<view class="tr">
 			<view @click="openPoster" class="x-red-top-share"></view>
-			<view>
+			<view v-if="detail.is_pay">
 				<view @click="openPersonPoster" class="x-block-share dib"></view>
 			</view>
 		</view>
@@ -19,9 +19,10 @@
 <script setup>
 	import poster from './share/poster.vue'
 	import person from './share/person.vue'
-	import { ref } from 'vue'
+	import { ref, inject } from 'vue'
 	const posterRef = ref('')
 	const personRef = ref('')
+	const detail = inject('detail')
 	const openPoster = () => {
 		posterRef.value.open()
 	}

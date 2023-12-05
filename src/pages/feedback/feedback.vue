@@ -7,7 +7,7 @@
 		</view>
 		<view class="pl-18 mt-18 pr-18">
 			<view class="f6 fw5 lh-20 color-3b3d40">问题与建议</view>
-			<textarea v-model.trim="form.content" class="bg-f3f6f9 f7 fw5 lh-22 color-8c949c pt-12 pl-14 pr-14 w-100  mt-10 x-textarea" placeholder="请在此处天禧嗯您所遇到的问题或意见建议，客服将及时为您解答问题。"></textarea>
+			<textarea v-model.trim="form.content" class="bg-f3f6f9 f7 fw5 lh-22 color-8c949c pt-12 pl-14 pr-14 w-100  mt-10 x-textarea" placeholder="请输入您所遇到的问题或意见建议。"></textarea>
 			<view class="f6 fw5 lh-20 mt-28 color-3b3d40">联系电话</view>
 			<input v-model.trim="form.phone" class="bg-f3f6f9 f7 fw5 pt2 pb2 pl-14 mt-10 color-8c949c x-textarea" maxlength="11" placeholder="请输入电话方便我们联系您" />
 		</view>

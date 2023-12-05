@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">01</text>
@@ -40,7 +40,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">02</text>
@@ -61,7 +61,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">03</text>
@@ -81,7 +81,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">04</text>
@@ -102,7 +102,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">05</text>
@@ -121,7 +121,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">06</text>
@@ -150,7 +150,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">07</text>
@@ -166,7 +166,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">08</text>
@@ -191,7 +191,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">09</text>
@@ -215,6 +215,37 @@
 				</view>
 			</template>
 		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.is_pay">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">10</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
+						<view class="lh-18">参考建议</view>
+						<view class="font-10">recommendation</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:nopadding>
+				<view class="pb-30">
+					<view v-for="(item,index) in refer?.section" :key="index" class="x-illustrate-item">
+						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
+						</view>
+						<view class="pt-26 pl-20 pr-20" v-if="item.h2">
+							<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.h2}}</view>
+						</view>
+						<view class="pt-12 pl-20 pr-20" v-if="item.content">
+							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
+						</view>
+						<view class="pt-12 pl-20 pr-20" v-if="item.h3">
+							<view class="color-357aff pre-wrap font-13 fw4 lh-26">{{item.h3}}</view>
+						</view>
+					</view>
+				</view>
+			</template>
+		</ui-block>
 	</view>
 </template>
 
@@ -223,7 +254,7 @@
 	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
 	import { radar } from './radar'
 	import line from './line'
-	import { inject, computed, onMounted, watch, ref } from 'vue'
+	import { inject, computed, onMounted, watch, ref, nextTick } from 'vue'
 	const chart = ref('')
 	const lineChart = ref('')
 	const detail = inject('detail')
@@ -231,6 +262,7 @@
 	const illustrate = inject('illustrate')
 	const appendix = inject('appendix')
 	const speed = inject('speed')
+	const refer = inject('refer')
 	const total_avg_text = computed(() => detail.value.is_pay ? detail.value?.report?.total_avg_text : '???')
 	const total_avg = computed(() => detail?.value?.is_pay ? detail?.value?.report?.total_avg : '???')
 	const chat = computed(() => {
@@ -271,8 +303,8 @@
 		}
 	}
 	watch(detail, () => {
-		drawradar()
-	})
+		nextTick(() => drawradar())
+	}, { immediate: true })
 </script>
 
 <style scoped lang="scss">

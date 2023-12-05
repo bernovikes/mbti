@@ -18,7 +18,7 @@
 			</view>
 		</view>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h2>
 				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 					<view class="icon-dot dib bg-white br-100 mr2"></view>程度分析
@@ -32,7 +32,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h2>
 				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 					<view class="icon-dot dib bg-white br-100 mr2"></view>什么是抑郁症
@@ -45,7 +45,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center mb-28 pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">01</text>
@@ -83,7 +83,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">02</text>
@@ -108,7 +108,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">03</text>
@@ -133,7 +133,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">04</text>
@@ -146,7 +146,7 @@
 			</template>
 			<template v-slot:nopadding>
 				<view class="pb-30">
-					<view v-for="(item,index) in appendix?.section" :key="index" class="x-illustrate-item">
+					<view v-for="(item,index) in refer?.section" :key="index" class="x-illustrate-item">
 						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
@@ -164,7 +164,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block>
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">05</text>
@@ -188,7 +188,7 @@
 <script setup>
 	import uiBlock from './components/ui-block.vue'
 	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
-	import { inject, computed, onMounted, watch, ref } from 'vue'
+	import { inject, computed, onMounted, watch, ref, nextTick } from 'vue'
 	import { radar } from './sds/radar.js'
 	import line from './sds/line.js'
 	const chart = ref('')
@@ -196,7 +196,7 @@
 	const detail = inject('detail')
 	const factorList = inject('factorList')
 	const illustrate = inject('illustrate')
-	const appendix = inject('appendix')
+	const refer = inject('refer')
 	const result_analysis = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'result_analysis'))
 	const degree = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'degree'))
 	const prompt = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'alert'))
@@ -213,12 +213,13 @@
 				max: maxNumber
 			}
 		})
+		console.log(chart.value)
 		radar([{ value: charData }], maxNumber, chart.value, indicator)
 		line(charData, factor, lineChart.value)
 	}
 	watch(factorList, (nval) => {
-		drawradar()
-	})
+		nextTick(() => drawradar())
+	}, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

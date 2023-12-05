@@ -3,7 +3,7 @@
 		<view class="x-body-h1 width-fit">
 			<slot name="h1"></slot>
 		</view>
-		<lock>
+		<lock :lock="lock">
 			<slot name="h2"></slot>
 			<view class="pl-20 pr-20 pb-30 pt-22" v-if="bodySlot">
 				<slot name="body"></slot>
@@ -19,6 +19,12 @@
 	export default {
 		components: {
 			lock
+		},
+		props: {
+			lock: {
+				type: Boolean,
+				default: true
+			}
 		},
 		setup(ctx, props) {
 			const bodySlot = ref(props.slots.body)

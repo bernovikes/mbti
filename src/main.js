@@ -8,6 +8,7 @@ import '@/static/scss/generate/line-height.scss'
 import '@/static/scss/generate/margin.scss'
 import '@/static/scss/generate/font.scss'
 import '@/static/scss/common.scss'
+import '@/static/scss/animation.scss'
 export function createApp() {
 	const app = createSSRApp(App);
 	return {
