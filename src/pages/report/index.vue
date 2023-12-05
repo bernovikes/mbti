@@ -28,9 +28,15 @@
 		</view>
 		<!--  -->
 		<redpack ref="redpackRef" />
+		<uni-popup ref="wxscan">
+			<view class="pa3 bg-white">
+				<uQRCode ref="uqrcode" :text="scan_url" :size="150"></uQRCode>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 <script setup>
+	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
 	import share from './components/share.vue'
 	import scl90Page from './scl90.vue'
@@ -48,6 +54,7 @@
 	import redpack from './components/redpack.vue'
 	const route = useRoute()
 	const detail = ref({})
+	const scan_url = ref('')
 	const speed = ref([
 		{ 'label': '答题率', 'value': '100%' },
 		{ 'label': '答题时间', 'value': '6分32秒' },
@@ -64,6 +71,7 @@
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
 	const refer = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'refer'))
 	const buyed = ref('')
+	const wxscan = ref('wxscan')
 	provide('detail', detail)
 	provide('factorList', factorList)
 	provide('illustrate', illustrate)
@@ -101,6 +109,13 @@
 		})
 	}
 	uni.$on('close_pay_dialog', () => redpackRef.value.open())
+	uni.$on('wx_scan', (url) => {
+		if (url) {
+			uni.setStorageSync('scan', true)
+			wxscan.value?.open('center')
+			scan_url.value = url
+		}
+	})
 	onMounted(() => {
 		fetchDetail()
 	})
@@ -160,7 +175,6 @@
 				}
 			}
 		} catch (e) {
-			console.log(e)
 			//TODO handle the exception
 		}
 	})
@@ -170,11 +184,13 @@
 		payIntervalTimer = setInterval(async () => {
 			const trace_no = uni.getStorageSync('trace_no')
 			const pay_callback = uni.getStorageSync('pay_callback')
-			if (pay_callback) {
+			const scan = uni.getStorageSync('scan')
+			if (pay_callback || scan) {
 				try {
 					const { code, data } = await traceCheck(trace_no)
 					if (code === http.SUCCESS && data?.pay_status) {
 						uni.removeStorageSync('pay_callback')
+						uni.removeStorageSync('scan')
 						uni.removeStorageSync('trace_no')
 						fetchDetail()
 						clearInterval(payIntervalTimer)

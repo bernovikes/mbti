@@ -213,7 +213,6 @@
 				max: maxNumber
 			}
 		})
-		console.log(chart.value)
 		radar([{ value: charData }], maxNumber, chart.value, indicator)
 		line(charData, factor, lineChart.value)
 	}

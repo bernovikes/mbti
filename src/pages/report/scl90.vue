@@ -297,8 +297,7 @@
 			})
 			radar([{ value: charData }], maxNumber, chart.value, indicator)
 			line(avg, factor, lineChart.value, standard)
-		} catch (e) {
-			console.log(e)
+		} catch (e) {			
 			//TODO handle the exception
 		}
 	}

@@ -48,14 +48,18 @@
 					</label>
 				</radio-group>
 				<!--  -->
-				<view @click="submit" class="btn white flex items-center justify-center mt-28 lh-22">立即解锁</view>
+				<view @click="submit" class="btn white flex items-center justify-center mt-28 lh-22">{{btn_text}}</view>
 			</view>
 		</view>
 	</uni-popup>
 </template>
 <script setup>
-	import { onMounted, ref, reactive, toRefs, watch, inject } from 'vue'
+	import { onMounted, ref, reactive, toRefs, watch, inject, computed } from 'vue'
 	const detailData = inject('detail')
+	const btn_text = computed(() => {
+		const val = detailData.value
+		return val?.is_pay && !val?.all_unlock ? '立即升级' : '立即解锁'
+	})
 	const goods = ref({})
 	const pop = ref('')
 	const pay_type = ref('wechat')
@@ -79,16 +83,22 @@
 			label: '微信',
 			rec: true,
 			check: true,
-			icon: 'icon-wxpay'
+			icon: 'icon-wxpay',
 		},
 		{
 			type: 'alipay',
 			label: '支付宝',
 			check: false,
-			icon: 'icon-alipay'
-		}
+			icon: 'icon-alipay',
+		},
+		{
+			type: 'wechat_scan',
+			label: '微信扫码支付',			
+			check: false,
+			icon: 'icon-wxpay',
+		},
 	])
-	const choosePayMethod = ({ detail: { value } }) => {
+	const choosePayMethod = ({ detail: { value } }) => {		
 		pay_type.value = value
 	}
 	const close = () => {
@@ -126,7 +136,7 @@
 			goodsList.value[index].origin_price = item.goods.origin_price
 		})
 	}, { deep: true })
-	const submit = () => {		
+	const submit = () => {
 		pop.value.close()
 		uni.$emit('callpay', {
 			goods_id: goods.value?.id,
@@ -184,7 +194,7 @@
 		height: 26px;
 	}
 
-	.x-pay-label:first-child {
+	.x-pay-label:not(:last-child) {
 		margin-bottom: 18px;
 	}
 

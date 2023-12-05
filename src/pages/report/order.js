@@ -11,6 +11,9 @@ export const payEnvCheck = (paymethod) => {
 			return 'alipay_website_pay'
 		}
 	}
+	if (paymethod === 'wechat_scan') {
+		return 'wechat_scan';
+	}
 }
 /**
  * 微信h5支付
@@ -26,15 +29,14 @@ export const wechatH5Pay = (data, redirect_url) => {
  * 支付宝h5支付
  * @param {object} data
  */
-export const aliPayH5 = (data) => {	
+export const aliPayH5 = (data) => {
 	try {
 		// store.state.report.callback = true
 		const div = document.createElement('div')
 		div.innerHTML = data.h5
 		document.body.append(div)
 		div.querySelector('form').submit()
-	} catch (e) {		
-	}
+	} catch (e) {}
 }
 /**
  * 微信服务号支付
@@ -66,12 +68,15 @@ export const wechatJsSdkPay = (data) => {
 		}
 	})
 }
+const wechatScanDialog = (data) => {
+	uni.$emit('wx_scan', data?.code_url)
+}
 export const payGetWay = (type, argv) => {
-	console.log(type, argv)
 	const fn = {
-		wechat_website_pay: wechatH5Pay,		
+		wechat_website_pay: wechatH5Pay,
 		wechat_jspay: wechatJsSdkPay,
-		alipay_website_pay: aliPayH5
+		alipay_website_pay: aliPayH5,
+		wechat_scan: wechatScanDialog
 	}
 	return fn[type](...argv)
 }
