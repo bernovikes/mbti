@@ -30,6 +30,7 @@
 <script setup>
 	import { fetchAnswerList } from '@/api/api.js'
 	import { ref, onMounted } from 'vue'
+	import { getUserId } from '@/common/lib.js'
 	const list = ref([])
 	const loadding = ref(true)
 	const virtualPayment = ref(true)
@@ -51,6 +52,10 @@
 	}
 	onMounted(async () => {
 		const params = { tempUser }
+		const user_id = getUserId()
+		if (user_id) {
+			params['user_id'] = user_id
+		}
 		try {
 			const { data } = await fetchAnswerList(params)
 			loadding.value = false

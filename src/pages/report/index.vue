@@ -203,6 +203,7 @@
 	}
 	// 
 	onUnload(() => {
+		uni.removeStorageSync('scan')
 		clearInterval(payIntervalTimer)
 	})
 </script>

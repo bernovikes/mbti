@@ -5,3 +5,6 @@ export const isWechat = () => {
 export const isMobile = () => {
 	return uni.getSystemInfoSync()?.deviceType === 'phone';
 }
+export const getUserId = () => {
+	return uni.getStorageSync('login_user')?.id
+}

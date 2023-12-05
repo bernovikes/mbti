@@ -31,7 +31,7 @@
 </template>
 <script setup>
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
-	import { reactive, ref, computed, toRaw } from 'vue'
+	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import http from '@/enum/http.js'
 	const login_user = uni.getStorageSync('login_user')
@@ -123,10 +123,11 @@
 		doned.value = false
 		prev && mountData(prev)
 	}
+	const setDone = () => doned.value = chooseHistory.value.length >= initHistory.value.length - 1
 	// 选择答案
 	const chooseAnswer = (id, value, index) => {
 		choose_value.value = `${id}_${value}_${index}`
-		doned.value = chooseHistory.value.length >= initHistory.value.length - 1
+		setDone()
 		// 如果答题进行到最后一题,重新选择答案,则替换最后一题的记录
 		if (doned.value) {
 			historyStack(choose_value.value, initHistory.value.length - 1, true)
@@ -137,7 +138,7 @@
 			return false
 		}
 		// 如果未完成答题
-		if (!doned.value) {			
+		if (!doned.value) {
 			timer = setTimeout(() => {
 				historyStack(choose_value.value)
 				if (timer) {
@@ -195,8 +196,33 @@
 			//TODO handle the exception
 		}
 	}
+	const initHistoryOperate = () => {
+		const ask_time = chooseHistory.value.pop() //弹出history最后一个值,不弹出，如果进行选择则会同一题有多个操作
+		setDone()
+		clickPrev.value = true
+		resetYieldAnswer()
+	}
 	onLoad((option) => {
+		const _cache_key = `quesIndex_${option?.id}_history`
 		fetchDetail(option?.id)
+		watch(chooseHistory, (val) => {
+			uni.setStorageSync(_cache_key, toRaw(chooseHistory.value))
+		}, { deep: true })
+		const history = uni.getStorageSync(_cache_key)
+		if (history) {
+			uni.showModal({
+				title: '您有未完成的测试',
+				content: '是否继续上次未完成的测试?',
+				confirmText: '继续',
+				cancelText: '重新测试',
+			}).then(res => {
+				if (res.confirm) {
+					chooseHistory.value = history
+					uni.removeStorageSync(_cache_key)
+					initHistoryOperate()
+				}
+			})
+		}
 	})
 </script>
 <style lang="scss" scoped>
