@@ -104,7 +104,7 @@
 	}
 	const close = () => {
 		pop.value?.close()
-		uni.$emit('close_pay_dialog')
+		isMobile() && uni.$emit('close_pay_dialog')
 	}
 	onMounted(() => {
 		if (!isMobile()) {
@@ -113,6 +113,7 @@
 		if (isWechat()) {
 			list.splice(1, 1)
 		}
+		pay_type.value = list[0].type
 		uni.$on('open_pay_dialog', () => {
 			pop.value?.open()
 		})
@@ -252,5 +253,12 @@
 
 	.x-goods {
 		column-gap: 15px;
+	}
+
+	@media screen and (min-width: 768px) {
+		.x-pay-dialog {
+			max-width: 428px;
+			margin: 0 auto;
+		}
 	}
 </style>

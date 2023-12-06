@@ -1,6 +1,8 @@
 <template>
 	<view class="min-vh-100 pt-65 pb-30 x-bg">
-		<share />
+		<template v-if="isMobile()">
+			<share />
+		</template>
 		<view class="pl-14 white">
 			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">恭喜完成测试！</view>
