@@ -197,7 +197,7 @@
 					<text class="font-30 lh-35 b">09</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
-						<view class="lh-18">附录</view>
+						<view class="lh-18">引言</view>
 						<view class="font-10">appendix</view>
 					</view>
 				</view>
@@ -263,6 +263,7 @@
 	const appendix = inject('appendix')
 	const speed = inject('speed')
 	const refer = inject('refer')
+	const science = inject('science')
 	const total_avg_text = computed(() => detail.value.is_pay ? detail.value?.report?.total_avg_text : '???')
 	const total_avg = computed(() => detail?.value?.is_pay ? detail?.value?.report?.total_avg : '???')
 	const chat = computed(() => {
@@ -297,7 +298,7 @@
 			})
 			radar([{ value: charData }], maxNumber, chart.value, indicator)
 			line(avg, factor, lineChart.value, standard)
-		} catch (e) {			
+		} catch (e) {
 			//TODO handle the exception
 		}
 	}

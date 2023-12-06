@@ -19,18 +19,24 @@
 		</view>
 		<!--  -->
 		<ui-block :lock="!detail.is_pay">
-			<template v-slot:h2>
-				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
-					<view class="icon-dot dib bg-white br-100 mr2"></view>程度分析
+			<template v-slot:h1>
+				<view class="flex items-center mb-22 pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">01</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
+						<view class="lh-18">测评简介</view>
+						<view class="font-10">reportillustrate</view>
+					</view>
 				</view>
 			</template>
 			<template v-slot:body>
-				<view class="font-13 fw4 lh-26">
-					{{degree?.config}}
+				<view class="f6 fw4 lh-28 color-50545e">
+					<view :class="{'mb-28':!index}" v-for="(item,index) in reportDesc.section" :key="index">
+						{{item.content}}
+					</view>
 				</view>
 			</template>
 		</ui-block>
-		<!--  -->
 		<!--  -->
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h2>
@@ -45,35 +51,67 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.all_unlock">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
-				<view class="flex items-center mb-28 pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">01</text>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">02</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
-						<view class="lh-18">量表简介</view>
-						<view class="font-10">brief introduction</view>
+						<view class="lh-18">作答情况</view>
+						<view class="font-10">Answering situation</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:body>
+				<view class="x-answer-body pl-20 pr-20 pt-10 pb-10">
+					<view v-for="(item,index) in speed" :key="index" class="font-13 flex items-center justify-between">
+						<view class="color-4c5264 lh-26 fw5">{{item.label}}</view>
+						<view class="lh-17 color-6e9fff">{{item.value}}</view>
+					</view>
+				</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.is_pay">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">03</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
+						<view class="lh-18">程度分析</view>
+						<view class="font-10">cehngdufenxi</view>
 					</view>
 				</view>
 			</template>
 			<template v-slot:h2>
-				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
-					<view class="icon-dot dib bg-white br-100 mr2"></view>量表介绍
+				<l-echart ref="chart"></l-echart>
+			</template>
+			<template v-slot:body>
+				<view class="font-13 fw4 lh-26">
+					{{degree?.config}}
 				</view>
-				<view class="pl-20 pr-20 pb-30 pt-22">
-					<view class="color-53555c font-13 fw4 lh-26">
-						<view>我们常说的抑郁症，其实是指临床上的重症抑郁症（major depression），人群中有16%的人在一生的某个时期会受其影响。患抑郁症除了付出严重的感情和社会代价之外，经济代价也是巨大的。据世界卫生组织统计，抑郁症已成为世界第4大疾患，预计到2022年，可能成为仅次于冠心病的第二大疾病。</view>
-						<view class="mt3">美国权威的仲氏“抑郁自评量表”(SDS)，40年来经使用证实，该量表科学、方便。</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.all_unlock">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">04</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
+						<view class="lh-18">因子分析</view>
+						<view class="font-10">factor analysis</view>
 					</view>
 				</view>
-				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
-					<view class="icon-dot dib bg-white br-100 mr2"></view>各项因子分数
+			</template>
+			<template v-slot:h2>
+				<l-echart ref="lineChart"></l-echart>
+				<view class="x-body-h1 width-fit white mt-30 lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+					<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
 				</view>
 			</template>
 			<template v-slot:body>
 				<view class="x-factor-list flex flex-column">
-					<l-echart ref="lineChart"></l-echart>
-					<l-echart ref="chart"></l-echart>
 					<!--  -->
 					<view v-for="(item,index) in  factorList?.config">
 						<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.factor}}:得分{{item.sum}}</view>
@@ -86,11 +124,11 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">02</text>
+					<text class="font-30 lh-35 b">05</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
-						<view class="lh-18">结果分析</view>
-						<view class="font-10">Result analysis</view>
+						<view class="lh-18">特别说明</view>
+						<view class="font-10">Specification</view>
 					</view>
 				</view>
 			</template>
@@ -111,7 +149,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">03</text>
+					<text class="font-30 lh-35 b">06</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">科学调节抑郁情绪</view>
@@ -121,7 +159,7 @@
 			</template>
 			<template v-slot:nopadding>
 				<view class="pb-30">
-					<view v-for="(item,index) in illustrate?.section" :key="index" class="x-illustrate-item">
+					<view v-for="(item,index) in science?.section" :key="index" class="x-illustrate-item">
 						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
@@ -136,7 +174,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">04</text>
+					<text class="font-30 lh-35 b">07</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">参考建议</view>
@@ -167,7 +205,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">05</text>
+					<text class="font-30 lh-35 b">08</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">提示</view>
@@ -195,13 +233,15 @@
 	const lineChart = ref('')
 	const detail = inject('detail')
 	const factorList = inject('factorList')
-	const illustrate = inject('illustrate')
+	const science = inject('science')
 	const refer = inject('refer')
+	const reportDesc = inject('reportDesc')
+	const speed = inject('speed')
 	const result_analysis = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'result_analysis'))
 	const degree = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'degree'))
 	const prompt = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'alert'))
 	const total_sum = computed(() => detail.value.is_pay ? `${detail.value.report?.total_sum}分` : '???')
-	const degree_title = computed(() => detail.value.is_pay ? detail.value?.degree_title : '???')
+	const degree_title = computed(() => detail.value.is_pay ? detail.value?.report?.degree_title : '???')
 	const drawradar = () => {
 		const { config } = factorList.value
 		const charData = config.map(item => item.sum)
@@ -216,9 +256,11 @@
 		radar([{ value: charData }], maxNumber, chart.value, indicator)
 		line(charData, factor, lineChart.value)
 	}
-	watch(factorList, (nval) => {
-		nextTick(() => drawradar())
-	}, { immediate: true })
+	onMounted(() => {
+		watch(factorList, (nval) => {
+			drawradar()
+		}, { immediate: true })
+	})
 </script>
 
 <style lang="scss" scoped>

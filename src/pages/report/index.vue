@@ -72,6 +72,8 @@
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
 	const refer = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'refer'))
+	const science = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'science'))
+	const reportDesc = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'report_desc'))
 	const buyed = ref('')
 	const wxscan = ref('wxscan')
 	provide('detail', detail)
@@ -80,12 +82,16 @@
 	provide('appendix', appendix)
 	provide('refer', refer)
 	provide('buyed', buyed)
+	provide('reportDesc', reportDesc)
+	provide('science', science)
 	const fetchDetail = async () => {
 		try {
 			const { data } = await fetchAnswerData(route.query.no)
+			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			// const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			const permissions = 2
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data

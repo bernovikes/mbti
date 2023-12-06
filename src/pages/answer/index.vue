@@ -34,6 +34,7 @@
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import http from '@/enum/http.js'
+	import dayjs from 'dayjs'
 	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
 	let yieldfnCall = ''
@@ -50,6 +51,7 @@
 	const title = ref('')
 	const tempUser = uni.getStorageSync('tempUser')
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
+	const entry_time = dayjs()
 	const fetchDetail = async (id) => {
 		try {
 			const { data, code } = await getQuestionBank(id)
@@ -151,6 +153,9 @@
 	}
 	// 提交数据
 	const submit = async () => {
+		const minute = dayjs().diff(entry_time, 'minute')
+		const second = dayjs().subtract(minute, 'minute').diff(entry_time, 'second')
+		const finish_time = `${minute}分${second}秒`
 		if (disable_submit) {
 			return false
 		}
@@ -169,6 +174,7 @@
 				question_bank_id: detail.id,
 				rule_type: detail.rule_type,
 				options_data: {
+					finish_time,
 					options
 				},
 				visitor_code: tempUser
@@ -202,13 +208,13 @@
 		clickPrev.value = true
 		resetYieldAnswer()
 	}
+	const _cache_key = (id) => `quesIndex_${id}_history`
 	onLoad((option) => {
-		const _cache_key = `quesIndex_${option?.id}_history`
 		fetchDetail(option?.id)
 		watch(chooseHistory, (val) => {
-			uni.setStorageSync(_cache_key, toRaw(chooseHistory.value))
+			uni.setStorageSync(_cache_key(option?.id), toRaw(chooseHistory.value))
 		}, { deep: true })
-		const history = uni.getStorageSync(_cache_key)
+		const history = uni.getStorageSync(_cache_key(option?.id))
 		if (history) {
 			uni.showModal({
 				title: '您有未完成的测试',
@@ -218,8 +224,9 @@
 			}).then(res => {
 				if (res.confirm) {
 					chooseHistory.value = history
-					uni.removeStorageSync(_cache_key)
 					initHistoryOperate()
+				} else {
+					uni.removeStorageSync(_cache_key(option?.id))
 				}
 			})
 		}
