@@ -1,8 +1,10 @@
 <template>
-	<view class="fixed w-100 bg-white cm-tabbar bottom-0 left-0 flex">
-		<view @click="goPage(item.url)" v-for="(item,index) in menu" :key="index" class="w-50 tc h-100 flex items-center flex-column justify-center">
-			<view :class="[item.icon,currentUrl===item.url?'active' : '']" class="icon center" />
-			<view class="f7 fw4 lh-16">{{item.label}}</view>
+	<view class="fixed w-100 bottom-0 left-0">
+		<view class="bg-white cm-tabbar  flex">
+			<view @click="goPage(item.url)" v-for="(item,index) in menu" :key="index" class="w-50 tc h-100 flex items-center flex-column justify-center">
+				<view :class="[item.icon,currentUrl===item.url?'active' : '']" class="icon center" />
+				<view class="f7 fw4 lh-16">{{item.label}}</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -11,7 +13,7 @@
 	import { reactive, ref } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import { useRoute } from 'vue-router'
-	const route = useRoute()	
+	const route = useRoute()
 	const currentUrl = ref(`/${route.meta.route}`)
 	const menu = reactive([
 		{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
@@ -55,5 +57,12 @@
 
 	.active.icon-user {
 		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-ucenter-check.png);
+	}
+
+	@media screen and (min-width: 768px) {
+		.cm-tabbar {
+			max-width: 428px;
+			margin: 0 auto;
+		}
 	}
 </style>
