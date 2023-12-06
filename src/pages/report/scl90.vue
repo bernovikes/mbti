@@ -17,25 +17,36 @@
 				</view>
 			</view>
 		</view>
+		<!--  -->
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
-				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+				<view class="flex items-center mb-22 pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">01</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
-						<view class="lh-18">报告说明</view>
+						<view class="lh-18">测评简介</view>
 						<view class="font-10">reportillustrate</view>
 					</view>
 				</view>
 			</template>
 			<template v-slot:body>
-				<view class="color-50545e f6 lh-28">
-					<view>
-						抑郁自评量表 （SDS）是由美国社克大学教授庄（william w.K.Zung）于1955年开发的截止目前最严谨、知名度最高的权威抑郁评估量表，是国际上各精神科门诊和心理咨询机构首选的抑郁诊断工具。
+				<view class="f6 fw4 lh-28 color-50545e">
+					<view :class="{'mb-28':!index}" v-for="(item,index) in reportDesc.section" :key="index">
+						{{item.content}}
 					</view>
-					<view class="mt-28">
-						根据抑郁自评量表 (SDS)的中国常模，抑郁评定的临界值为53分，分值越高，抑郁倾向越明注重维护社会秩序，确保达成标准。
-					</view>
+				</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.is_pay">
+			<template v-slot:h2>
+				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+					<view class="icon-dot dib bg-white br-100 mr2"></view>什么是抑郁症
+				</view>
+			</template>
+			<template v-slot:body>
+				<view class="font-13 fw4 lh-26">
+					抑郁症是世界四大疾病，但到2020年上升为世界第二大疾病；到目前为止，抑郁症的病因还不是很清楚，但可以肯定是，生物、心理、社会环境等多种因素参与了抑郁症的发病过程。生物学因素主要涉及遗传、神经生化、神经内分泌、神经再生等方面。
 				</view>
 			</template>
 		</ui-block>
@@ -108,6 +119,31 @@
 					<text class="font-30 lh-35 b">05</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
+						<view class="lh-18">引言</view>
+						<view class="font-10">appendix</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:nopadding>
+				<view class="pb-30">
+					<view v-for="(item,index) in appendix?.section" :key="index" class="x-illustrate-item">
+						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
+						</view>
+						<view class="pt-22 pl-20 pr-20" v-if="item.content">
+							<view class="color-50545e f6 fw4 lh-28">{{item.content}}</view>
+						</view>
+					</view>
+				</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.is_pay">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">06</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
 						<view class="lh-18">结果分析</view>
 						<view class="font-10">Result analysis</view>
 					</view>
@@ -124,7 +160,7 @@
 		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">06</text>
+					<text class="font-30 lh-35 b">07</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">因子分析</view>
@@ -133,10 +169,10 @@
 				</view>
 			</template>
 			<template v-slot:h2>
-				<view class="pl-24 mt-24 pr-24">
+				<view class="pl-24 mt-24 pr-24" :class="{'relative z-999':detail.is_pay&&!detail.all_unlock}">
 					<l-echart ref="lineChart"></l-echart>
 				</view>
-				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+				<view class="x-body-h1 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4" :class="{'relative z-999':detail.is_pay&&!detail.all_unlock}">
 					<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
 				</view>
 			</template>
@@ -153,7 +189,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">07</text>
+					<text class="font-30 lh-35 b">08</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">综合结果</view>
@@ -169,7 +205,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">08</text>
+					<text class="font-30 lh-35 b">09</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">特别说明</view>
@@ -194,22 +230,22 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">09</text>
+					<text class="font-30 lh-35 b">10</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
-						<view class="lh-18">引言</view>
-						<view class="font-10">appendix</view>
+						<view class="lh-18">科学调节抑郁情绪</view>
+						<view class="font-10">Regulating depression</view>
 					</view>
 				</view>
 			</template>
 			<template v-slot:nopadding>
 				<view class="pb-30">
-					<view v-for="(item,index) in appendix?.section" :key="index" class="x-illustrate-item">
+					<view v-for="(item,index) in science?.section" :key="index" class="x-illustrate-item">
 						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
 						<view class="pt-22 pl-20 pr-20" v-if="item.content">
-							<view class="color-50545e f6 fw4 lh-28">{{item.content}}</view>
+							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -219,7 +255,7 @@
 		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">10</text>
+					<text class="font-30 lh-35 b">11</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">参考建议</view>
@@ -264,6 +300,7 @@
 	const speed = inject('speed')
 	const refer = inject('refer')
 	const science = inject('science')
+	const reportDesc = inject('reportDesc')
 	const total_avg_text = computed(() => detail.value.is_pay ? detail.value?.report?.total_avg_text : '???')
 	const total_avg = computed(() => detail?.value?.is_pay ? detail?.value?.report?.total_avg : '???')
 	const chat = computed(() => {

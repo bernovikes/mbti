@@ -105,10 +105,12 @@
 				</view>
 			</template>
 			<template v-slot:h2>
-				<l-echart ref="lineChart"></l-echart>
-				<view class="x-body-h1 width-fit white mt-30 lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
-					<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
-				</view>
+				<view :class="{'relative z-999':detail.is_pay&&!detail.all_unlock}">
+					<l-echart ref="lineChart"></l-echart>
+					<view class="x-body-h1 width-fit white mt-30 lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
+						<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
+					</view>
+				</view>				
 			</template>
 			<template v-slot:body>
 				<view class="x-factor-list flex flex-column">

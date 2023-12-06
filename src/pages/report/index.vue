@@ -7,7 +7,7 @@
 			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">恭喜完成测试！</view>
 			<view class="x-header-line mt3 mb-20"></view>
-			<view class="f7 lh-20">{{detail.created_at}}</view>
+			<view class="f7 lh-21 ba width-fit x-created_time">报告生成时间：{{detail.created_at}}</view>
 		</view>
 		<view class="mt-20 pl-14 pr-14">
 			<template v-if="detail.rule_type==='scl90'">
@@ -89,9 +89,8 @@
 			const { data } = await fetchAnswerData(route.query.no)
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
-			const dict = { all: 2, lite: 1, diff: 1 }
-			// const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
-			const permissions = 2
+			const dict = { all: 2, lite: 1, diff: 1 }			
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
@@ -258,5 +257,11 @@
 
 	:deep(.x-factor-list) {
 		row-gap: 36px;
+	}
+
+	.x-created_time {
+		border-radius: 3px;
+		background: rgba(255, 248, 248, 0.07);
+		padding: 0 6px;
 	}
 </style>
