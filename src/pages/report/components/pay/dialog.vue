@@ -55,6 +55,7 @@
 </template>
 <script setup>
 	import { onMounted, ref, reactive, toRefs, watch, inject, computed } from 'vue'
+	import { isWechat, isMobile } from '@/common/lib.js'
 	const detailData = inject('detail')
 	const btn_text = computed(() => {
 		const val = detailData.value
@@ -93,12 +94,12 @@
 		},
 		{
 			type: 'wechat_scan',
-			label: '微信扫码支付',			
+			label: '微信扫码支付',
 			check: false,
 			icon: 'icon-wxpay',
 		},
 	])
-	const choosePayMethod = ({ detail: { value } }) => {		
+	const choosePayMethod = ({ detail: { value } }) => {
 		pay_type.value = value
 	}
 	const close = () => {
@@ -106,6 +107,12 @@
 		uni.$emit('close_pay_dialog')
 	}
 	onMounted(() => {
+		if (!isMobile()) {
+			list.splice(0, 1)
+		}
+		if (isWechat()) {
+			list.splice(1, 1)
+		}
 		uni.$on('open_pay_dialog', () => {
 			pop.value?.open()
 		})

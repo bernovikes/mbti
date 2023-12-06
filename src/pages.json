@@ -37,6 +37,9 @@
 		},
 		{
 			"path": "pages/follow/follow"
+		},
+		{
+			"path": "pages/login/oauth"
 		}
 	],
 	"tabBar": {

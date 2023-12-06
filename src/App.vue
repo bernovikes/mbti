@@ -1,7 +1,11 @@
 <script setup>
 	import { getVisitorToken } from '@/api/api'
 	import { onLaunch } from '@dcloudio/uni-app'
+	import { isWechat, wechatNewAuth, getUserId } from '@/common/lib.js'
 	onLaunch(async () => {
+		if (isWechat() && !getUserId()) {
+			wechatNewAuth()
+		}
 		try {
 			if (!uni.getStorageSync('tempUser')) {
 				const { data: { temp } } = await getVisitorToken()
@@ -26,7 +30,7 @@
 	}
 
 	@media screen and (min-width: 768px) {
-		body {			
+		body {
 			max-width: 428px;
 			margin: 0 auto;
 		}

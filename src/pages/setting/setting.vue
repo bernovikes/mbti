@@ -35,7 +35,7 @@
 			url: '/pages/index/index'
 		})
 	}
-	const logout = () => {
+	const logout = (title) => {
 		uni.removeStorageSync('login_user')
 		uni.showToast({
 			icon: 'none',
@@ -53,8 +53,8 @@
 		{ label: '退出登录', icon: 'icon-logout', fn: () => logout('退出登录成功') },
 		{ label: '注销账号', icon: 'icon-off', fn: () => logout('注销成功') },
 	])
-	range.value.push(menu.value.slice(0, 3));
-	if (!isWechat() && uni.getStorageSync('login_user')) {
+	range.value.push(menu.value.slice(0, 3));	
+	if (uni.getStorageSync('login_user')) {
 		range.value.push(menu.value.slice(3))
 	}
 </script>

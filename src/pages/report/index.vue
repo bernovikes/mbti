@@ -49,7 +49,7 @@
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import http from '@/enum/http.js'
-	import { isMobile, isWechat } from '@/common/lib.js'
+	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import { useRoute } from 'vue-router'
 	import redpack from './components/redpack.vue'
 	const route = useRoute()
@@ -128,7 +128,7 @@
 		if (!isMobile()) {
 			return false
 		}
-		if (detail.is_pay) {
+		if (detail.value.is_pay) {
 			return false
 		}
 		if (route.path === '/pages/report/index') {
@@ -160,7 +160,7 @@
 			const { code, data } = await createOrder(params)
 			if (code === http.SUCCESS) {
 				uni.setStorageSync('trace_no', data.trace_no)
-				const pay_params = { trace_no: data.trace_no, env }
+				const pay_params = { trace_no: data.trace_no, env, device: getDevice() }
 				if (user_id) {
 					pay_params['user_id'] = user_id
 				}
