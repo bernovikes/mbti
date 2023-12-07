@@ -24,7 +24,10 @@
 			"path": "pages/login/login"
 		},
 		{
-			"path": "pages/article/article"
+			"path": "pages/article/article",
+			"style": {
+				"navigationStyle": "default"
+			}
 		},
 		{
 			"path": "pages/setting/setting"
