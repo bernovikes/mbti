@@ -30,7 +30,7 @@
 					<view class="x-bottom-trapezoid border-box" />
 					<view class="x-bottom-mp-bg relative pa1">
 						<view class="x-bottom-content">
-							<view @click="copy" class="x-bottom-title  b heavy width-fit center f7 pl-10 pr-10 grid place-center">点击复制公众号名称</view>
+							<view @click="copy" class="x-bottom-title  b  width-fit center f7 pl-10 pr-10 grid place-center">点击复制公众号名称</view>
 							<!--  -->
 							<view class="x-bottom-qrcode tc">
 								<image class="w-100 h-100" src="https://res.vkunshan.com/static/report/qrcode.jpg" />

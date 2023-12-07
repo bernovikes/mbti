@@ -40,6 +40,9 @@
 		},
 		{
 			"path": "pages/login/oauth"
+		},
+		{
+			"path": "pages/generate/generate"
 		}
 	],
 	"tabBar": {

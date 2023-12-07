@@ -190,15 +190,14 @@
 			})
 			if (code === http.SUCCESS) {
 				uni.redirectTo({
-					url: `/pages/report/index?${qs}`
+					url: `/pages/generate/generate?${qs}`
 				})
 			} else {
 				uni.showToast({
 					title: msg
 				})
 			}
-		} catch (e) {
-			console.log(e)
+		} catch (e) {			
 			//TODO handle the exception
 		}
 	}

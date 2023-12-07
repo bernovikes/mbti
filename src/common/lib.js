@@ -17,3 +17,15 @@ export const wechatNewAuth = () => {
 		location.href = `${env.VITE_APP_BASE_API}/wechat/login/oauth?redirect=${page}`
 	}
 }
+const _requestAnimationFrame = (callback) => {
+	return setTimeout(function() {
+		callback(Date.now());
+	}, 1000 / 60);
+}
+
+export function requestAnimationFrame(callback) {
+	// #ifdef MP-WEIXIN || APP-PLUS
+	return _requestAnimationFrame(callback)
+	// #endif
+	return window.requestAnimationFrame(callback)
+}
