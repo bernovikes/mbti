@@ -186,7 +186,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">08</text>
@@ -202,7 +202,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">09</text>
@@ -227,7 +227,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">10</text>
@@ -252,7 +252,7 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">11</text>

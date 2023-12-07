@@ -5,7 +5,7 @@
 		</template>
 		<view class="pl-14 white">
 			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
-			<view class="f6 lh-20">恭喜完成测试！</view>
+			<view class="f6 lh-20">测试报告</view>
 			<view class="x-header-line mt3 mb-20"></view>
 			<view class="f7 lh-21 ba width-fit x-created_time">报告生成时间：{{detail.created_at}}</view>
 		</view>
@@ -69,14 +69,14 @@
 	const tempUser = uni.getStorageSync('tempUser')
 	const login_user = uni.getStorageSync('login_user')
 	const user_id = login_user?.id
+	const buyed = ref('')
+	const wxscan = ref('wxscan')
 	const factorList = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'factor'))
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
 	const refer = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'refer'))
 	const science = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'science'))
 	const reportDesc = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'report_desc'))
-	const buyed = ref('')
-	const wxscan = ref('wxscan')
 	provide('detail', detail)
 	provide('factorList', factorList)
 	provide('illustrate', illustrate)
@@ -193,12 +193,13 @@
 			const trace_no = uni.getStorageSync('trace_no')
 			const pay_callback = uni.getStorageSync('pay_callback')
 			const scan = uni.getStorageSync('scan')
-			if (pay_callback || scan) {
+			if (pay_callback || scan) {				
 				try {
 					const { code, data } = await traceCheck(trace_no)
 					if (code === http.SUCCESS && data?.pay_status) {
 						uni.removeStorageSync('pay_callback')
 						uni.removeStorageSync('scan')
+						scan && wxscan.value?.close()
 						uni.removeStorageSync('trace_no')
 						fetchDetail()
 						clearInterval(payIntervalTimer)

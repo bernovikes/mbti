@@ -78,6 +78,24 @@
 					<text class="font-30 lh-35 b">03</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
+						<view class="lh-18">报告提示</view>
+						<view class="font-10">prompt</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:nopadding>
+				<view class="font-13 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4">
+					{{prompt?.content}}
+				</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.is_pay">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">04</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
 						<view class="lh-18">程度分析</view>
 						<view class="font-10">cehngdufenxi</view>
 					</view>
@@ -96,7 +114,7 @@
 		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">04</text>
+					<text class="font-30 lh-35 b">05</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">因子分析</view>
@@ -110,7 +128,7 @@
 					<view class="x-body-h1 width-fit white mt-30 lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 						<view class="icon-dot dib bg-white br-100 mr2"></view>因子详情分析
 					</view>
-				</view>				
+				</view>
 			</template>
 			<template v-slot:body>
 				<view class="x-factor-list flex flex-column">
@@ -123,10 +141,10 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">05</text>
+					<text class="font-30 lh-35 b">06</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">特别说明</view>
@@ -148,10 +166,10 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">06</text>
+					<text class="font-30 lh-35 b">07</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">科学调节抑郁情绪</view>
@@ -173,10 +191,10 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="!detail.all_unlock">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">07</text>
+					<text class="font-30 lh-35 b">08</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">参考建议</view>
@@ -203,25 +221,6 @@
 				</view>
 			</template>
 		</ui-block>
-		<!--  -->
-		<ui-block :lock="!detail.is_pay">
-			<template v-slot:h1>
-				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">08</text>
-					<text class="pl-10">|</text>
-					<view class="pl-12">
-						<view class="lh-18">提示</view>
-						<view class="font-10">prompt</view>
-					</view>
-				</view>
-			</template>
-			<template v-slot:nopadding>
-				<view class="font-13 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4">
-					{{prompt?.content}}
-				</view>
-			</template>
-		</ui-block>
-		<!--  -->
 	</view>
 </template>
 

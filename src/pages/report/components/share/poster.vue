@@ -12,7 +12,10 @@
 					</view>
 					<view class="flex items-center">
 						<image class="x-logo" src="https://res.vkunshan.com/depressed/report/poster/logo.png" />
-						<view class="font-11 lh-18 color-656565">公众号</view>
+						<view class="font-11 lh-18 color-656565">
+							<view>关注公众号<text class="color-2b2b2b b">@小熊心理测试</text></view>
+							<view>获取官方最新测试</view>
+						</view>
 						<view class="icon-arrow ml2" />
 						<view class="ml-auto">
 							<uQRCode ref="uqrcode" :text="qrcode" :size="56"></uQRCode>
