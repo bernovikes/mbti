@@ -25,7 +25,7 @@
 				</view>
 				<!--  -->
 				<checkbox-group @change="chooseGoods" class="flex x-goods" v-if="!buyed">
-					<label :class="{[item.type]:item.type,'active':active===item.type}" class="x-goods-item relative  pt-26 border-box w-50 flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
+					<label :class="{[item.type]:item.type,'active':active===item.type||!index}" class="x-goods-item relative  pt-26 border-box w-50 flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
 						<view class="absolute x-pay-goods-top tc" v-if="index">
 							<view class="x-pay-submark font-11 lh-20 white fw5">超值加购</view>
 						</view>
@@ -192,8 +192,7 @@
 		left: -1px;
 	}
 
-	.active.x-goods-item,
-	.x-pay-dialog__goods {
+	.active.x-goods-item {
 		background: url("data:image/svg+xml,%3Csvg width='27.632' height='15' viewBox='0 0 27.632 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='91.115%25' y1='41.374%25' x2='0%25' y2='64.735%25' id='a'%3E%3Cstop stop-color='%23539AFF' offset='0%25'/%3E%3Cstop stop-color='%2398B6FF' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M0 0h18.632a9 9 0 0 1 9 9v6H4a4 4 0 0 1-4-4V0z' fill='url(%23a)'/%3E%3Cpath stroke='%23FFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M9 7.34l3.812 3.555L19.105 5'/%3E%3C/g%3E%3C/svg%3E") right top no-repeat;
 	}
 
@@ -236,19 +235,15 @@
 		border-color: #DCDCDC;
 	}
 
-	.all .bottom,
-	.lite .bottom {
+	.x-goods-item .bottom {
 		border-radius: 0 0 8px 8px;
-	}
-
-	.lite .bottom {
-		color: white;
-		background: linear-gradient(to left, #539AFF, #98B6FF);
-	}
-
-	.all .bottom {
 		background: #EFEFEF;
 		color: #A2A1A8;
+	}
+
+	.active .bottom {
+		color: white;
+		background: linear-gradient(to left, #539AFF, #98B6FF);
 	}
 
 	.x-goods {
