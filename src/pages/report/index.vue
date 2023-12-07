@@ -38,6 +38,7 @@
 	</view>
 </template>
 <script setup>
+	import 'url-search-params-polyfill';
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
 	import share from './components/share.vue'
@@ -52,9 +53,9 @@
 	import { payEnvCheck, payGetWay } from './order.js'
 	import http from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
-	import { useRoute } from 'vue-router'
 	import redpack from './components/redpack.vue'
-	const route = useRoute()
+	const page = getCurrentPages().slice(-1)[0]
+	const route = { query: page.$page.options, route: page.route }
 	const detail = ref({})
 	const scan_url = ref('')
 	const speed = ref([
@@ -89,7 +90,7 @@
 			const { data } = await fetchAnswerData(route.query.no)
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
-			const dict = { all: 2, lite: 1, diff: 1 }			
+			const dict = { all: 2, lite: 1, diff: 1 }
 			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions

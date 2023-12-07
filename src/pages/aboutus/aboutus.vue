@@ -1,6 +1,8 @@
 <template>
 	<view class="bg-f5f6f7 h-100">
-		<uni-nav-bar color="#fff" backgroundColor="transparent" :border="false" left-icon="back" title="关于我们" @clickLeft="back" />
+		<view class="x-tabbar" :style="{'padding-top':statusBarHeight()}">
+			<uni-nav-bar color="#fff" backgroundColor="transparent" :border="false" left-icon="back" title="关于我们" @clickLeft="back" />
+		</view>
 		<view class="pt-64 tc">
 			<image class="icon" src="https://res.vkunshan.com/static/ucenter/launch-icon.png" />
 			<view class="font-15 fw5 color-63686d">MBTI测试</view>
@@ -13,6 +15,7 @@
 </template>
 
 <script setup>
+	import { statusBarHeight } from '@/common/lib.js'
 	const back = () => {
 		uni.switchTab({
 			url: '/pages/index/index'
@@ -21,7 +24,7 @@
 </script>
 
 <style scoped lang="scss">
-	:deep(.uni-navbar__content) {
+	.x-tabbar {
 		background: linear-gradient(247deg, #7FBFFE 0%, #9D91FE 100%);
 	}
 

@@ -24,8 +24,8 @@
 					</view>
 				</view>
 				<!--  -->
-				<checkbox-group @change="chooseGoods" class="flex x-goods" v-if="!buyed">
-					<label :class="{[item.type]:item.type,'active':active===item.type||!index}" class="x-goods-item relative  pt-26 border-box w-50 flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
+				<checkbox-group @change="chooseGoods" class="flex x-goods justify-between" v-if="!buyed">
+					<label :class="{[item.type]:item.type,'active':active===item.type||!index}" class="x-goods-item relative  pt-26 border-box  flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
 						<view class="absolute x-pay-goods-top tc" v-if="index">
 							<view class="x-pay-submark font-11 lh-20 white fw5">超值加购</view>
 						</view>
@@ -225,6 +225,7 @@
 		height: 136px;
 		border-radius: 8px;
 		border: 1px solid;
+		width: calc(50% - 7.5px);
 	}
 
 	.lite.x-goods-item {
@@ -246,9 +247,6 @@
 		background: linear-gradient(to left, #539AFF, #98B6FF);
 	}
 
-	.x-goods {
-		column-gap: 15px;
-	}
 
 	@media screen and (min-width: 768px) {
 		.x-pay-dialog {

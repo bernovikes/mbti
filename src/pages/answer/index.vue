@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg min-vh-100 pl-18 pr-18 ">
+	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}">
 		<view class="pt-30">
 			<view class="white">
 				<view class="font-20 x-title lh-28">{{title}}</view>
@@ -30,6 +30,8 @@
 	</view>
 </template>
 <script setup>
+	import 'url-search-params-polyfill';
+	import { structuredClone, statusBarHeight } from '@/common/lib.js'
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
@@ -197,7 +199,8 @@
 					title: msg
 				})
 			}
-		} catch (e) {			
+		} catch (e) {
+			console.log(e.message)
 			//TODO handle the exception
 		}
 	}

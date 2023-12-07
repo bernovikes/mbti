@@ -1,6 +1,9 @@
 export const isWechat = () => {
+	// #ifdef H5
 	var ua = navigator.userAgent.toLowerCase();
 	return ua.match(/micromessenger/i) == 'micromessenger';
+	// #endif
+	return false
 }
 export const getDevice = () => uni.getSystemInfoSync()?.deviceType
 export const isMobile = () => {
@@ -28,4 +31,16 @@ export function requestAnimationFrame(callback) {
 	return _requestAnimationFrame(callback)
 	// #endif
 	return window.requestAnimationFrame(callback)
+}
+
+export const statusBarHeight = () => {
+	return `${uni.getSystemInfoSync()?.statusBarHeight}px`
+}
+export const structuredClone = (argv) => {
+	// #ifdef H5
+	return window.structuredClone(argv)
+	// #endif
+	// #ifdef APP-PLUS || MP
+	return JSON.parse(JSON.stringify(argv))
+	// #endif
 }

@@ -21,10 +21,9 @@
 </template>
 
 <script setup>
+	import 'url-search-params-polyfill';
 	import { requestAnimationFrame } from '@/common/lib.js'
-	import { ref, reactive, onMounted } from 'vue'
-	import { useRoute } from 'vue-router'
-	const route = useRoute()
+	import { ref, reactive, onMounted } from 'vue'	
 	const curtab = ref(0)
 	const tab = reactive([{
 			label: '症状分析',
@@ -85,7 +84,7 @@
 		},
 	])
 	const goPay = () => {
-		const qs = new URLSearchParams(route.query)
+		const qs = new URLSearchParams(getCurrentPages().slice(-1)[0].$page.options)
 		uni.redirectTo({
 			url: `/pages/report/index?${qs}`
 		})

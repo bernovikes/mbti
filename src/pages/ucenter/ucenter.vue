@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg h-100 pl-18 pr-18">
+	<view class="x-bg h-100 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}">
 		<view class="pt-22 flex">
 			<view @click="goSetting" class="icon-setting ml-auto" />
 		</view>
@@ -67,6 +67,7 @@
 
 <script setup>
 	import { reactive, ref } from 'vue'
+	import { statusBarHeight } from '@/common/lib.js'
 	const kefuRef = ref('')
 	const range = ref([])
 	const userInfo = reactive(uni.getStorageSync('login_user'))

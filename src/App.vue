@@ -3,6 +3,7 @@
 	import { onLaunch } from '@dcloudio/uni-app'
 	import { isWechat, wechatNewAuth, getUserId } from '@/common/lib.js'
 	onLaunch(async () => {
+		uni.hideTabBar()
 		if (isWechat() && !getUserId()) {
 			wechatNewAuth()
 		}

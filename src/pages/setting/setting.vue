@@ -1,6 +1,8 @@
 <template>
 	<view class="bg-f5f6f7 h-100">
-		<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" title="设置" @clickLeft="goHome" />
+		<view class="x-tabbar" :style="{'padding-top':statusBarHeight()}">
+			<uni-nav-bar color="#fff" backgroundColor="transparent" :border="false" left-icon="back" title="设置" @clickLeft="goHome" />
+		</view>
 		<view class="pt-14 pr-14 pl-14">
 			<view class="bg-white pa3 mb-14 x-menu flex items-center">
 				<view>
@@ -22,6 +24,7 @@
 </template>
 
 <script setup>
+	import { statusBarHeight } from '@/common/lib.js'
 	import { ref } from 'vue'
 	import { isWechat } from '@/common/lib.js'
 	const range = ref([])
@@ -53,14 +56,14 @@
 		{ label: '退出登录', icon: 'icon-logout', fn: () => logout('退出登录成功') },
 		{ label: '注销账号', icon: 'icon-off', fn: () => logout('注销成功') },
 	])
-	range.value.push(menu.value.slice(0, 3));	
+	range.value.push(menu.value.slice(0, 3));
 	if (uni.getStorageSync('login_user')) {
 		range.value.push(menu.value.slice(3))
 	}
 </script>
 
 <style scoped lang="scss">
-	:deep(.uni-navbar__content) {
+	.x-tabbar {
 		background: linear-gradient(247deg, #7FBFFE 0%, #9D91FE 100%);
 	}
 

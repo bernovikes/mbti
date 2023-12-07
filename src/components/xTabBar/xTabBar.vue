@@ -10,11 +10,9 @@
 </template>
 
 <script setup>
-	import { reactive, ref } from 'vue'
-	import { onLoad } from '@dcloudio/uni-app'
-	import { useRoute } from 'vue-router'
-	const route = useRoute()
-	const currentUrl = ref(`/${route.meta.route}`)
+	import { reactive, ref, onMounted } from 'vue'
+	const page = getCurrentPages().slice(-1)[0]
+	const currentUrl = ref(`/${page.route}`)
 	const menu = reactive([
 		{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
 		{ label: '我的', icon: 'icon-user', url: '/pages/ucenter/ucenter' }
@@ -24,13 +22,16 @@
 			url
 		})
 	}
+	onMounted(() => {
+		uni.hideTabBar()
+	})
 </script>
 
 <style lang="scss" scoped>
 	.cm-tabbar {
 		height: 50px;
-		padding-bottom: calc(constant(safe-area-inset-bottom)); ///���� IOS<11.2/
-		padding-bottom: calc(env(safe-area-inset-bottom)); ///���� IOS>11.2/
+		padding-bottom: calc(constant(safe-area-inset-bottom));
+		padding-bottom: calc(env(safe-area-inset-bottom));
 	}
 
 	.icon {

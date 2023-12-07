@@ -28,6 +28,7 @@
 	</record>
 </template>
 <script setup>
+	import 'url-search-params-polyfill';
 	import { fetchAnswerList } from '@/api/api.js'
 	import { ref, onMounted } from 'vue'
 	import { getUserId } from '@/common/lib.js'

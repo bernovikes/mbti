@@ -1,10 +1,12 @@
 <template>
-	<view class="cm-record min-h-100" :class="{'empty':!data.length && !loadding}">		
-		<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" :title="nav" @clickLeft="back">
-			<template v-slot:right>
-				<image class="img-header-emoji o-30 absolute" lazy-load src="https://res.vkunshan.com/static/images/image-header-emoji.png" />
-			</template>
-		</uni-nav-bar>
+	<view class="cm-record min-h-100" :class="{'empty':!data.length && !loadding}">
+		<view class="x-navbar" :style="{'padding-top':statusBarHeight()}">
+			<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" :title="nav" @clickLeft="back">
+				<template v-slot:right>
+					<image class="img-header-emoji o-30 absolute" lazy-load src="https://res.vkunshan.com/static/images/image-header-emoji.png" />
+				</template>
+			</uni-nav-bar>
+		</view>
 		<!--  -->
 		<view class="pl-14 pr-14 mt-20 pb-20" v-if="data.length&&!loadding">
 			<view class="bg-white mb2 cm-record-item pt-14 pb-14 pl3 pr3" v-for="(item,index) in data" :key="index">
@@ -44,6 +46,7 @@
 </template>
 
 <script setup>
+	import { statusBarHeight } from '@/common/lib.js'
 	const props = defineProps({
 		loadding: {
 			type: Boolean,
@@ -80,7 +83,7 @@
 		height: 27px;
 	}
 
-	:deep(.uni-navbar__content),
+	.x-navbar,
 	.btn {
 		background: linear-gradient(247deg, #7FBFFE 0%, #9D91FE 100%);
 	}

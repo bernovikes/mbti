@@ -32,7 +32,7 @@
 
 <script setup>
 	import { kefuConfig } from '@/api/json/config.js'
-	import { ref, onMounted, defineExpose } from 'vue'
+	import { ref, onMounted } from 'vue'
 	const pop = ref('')
 	const config = ref('')
 	const open = () => pop.value.open()

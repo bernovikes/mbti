@@ -2,6 +2,7 @@
 </template>
 
 <script setup>
+	import 'url-search-params-polyfill';
 	import { onLoad } from '@dcloudio/uni-app'
 	onLoad((options) => {
 		const qs = new URLSearchParams(options)
