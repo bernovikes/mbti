@@ -1,7 +1,8 @@
 <template>
 	<view class="x-bg min-h-100">
-		<view class="x-header flex justify-center flex-column items-center">			
-			<view class="white x-title f6">你的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
+		<view class="x-header flex justify-center flex-column items-center">
+			<image class="x-bg-icon" src="https://res.vkunshan.com/depressed/generate/bg-icon.png" />
+			<view class="white x-title f6 color-606670">你的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
 			</view>
 		</view>
 		<!--  -->
@@ -23,23 +24,27 @@
 <script setup>
 	import 'url-search-params-polyfill';
 	import { requestAnimationFrame } from '@/common/lib.js'
-	import { ref, reactive, onMounted } from 'vue'	
+	import { ref, reactive, onMounted } from 'vue'
 	const curtab = ref(0)
 	const tab = reactive([{
 			label: '症状分析',
 			value: 0,
 			ask: [{
-					ask: '正在分析性格内外向、直觉、情感',
+					ask: '正在分析您的抑郁症状指标',
 					progress: 0
 				}, {
-					ask: '正在分析你的天赋能力、行为风格',
+					ask: '正在分析您的焦虑症状指标',
 					progress: 0
 				}, {
-					ask: '正在分析你的性格优势与性格劣势',
+					ask: '正在分析您的恐惧心理症状指标',
 					progress: 0
 				},
 				{
-					ask: '正在综合评估你的MBTI人格类型',
+					ask: '正在分析您的强迫心症状指标',
+					progress: 0
+				},
+				{
+					ask: '正在分析您是否存在思维异常情况',
 					progress: 0
 				}
 			]
@@ -48,17 +53,21 @@
 			label: '影响分析',
 			value: 1,
 			ask: [{
-					ask: '正在评估你的恋爱特质和爱情基因',
+					ask: '正在生成您的各项因子',
 					progress: 0
 				}, {
-					ask: '正在分析你喜欢的人性格类型',
+					ask: '正在生成您的精神性因子',
 					progress: 0
 				}, {
-					ask: '正在根据性格判断你未来的爱情婚姻走向',
+					ask: '正在生成您的躯体性障碍因子',
 					progress: 0
 				},
 				{
-					ask: '正在生成专属你的异性魅力锦囊',
+					ask: '正在生成您的运动性障碍因子',
+					progress: 0
+				},
+				{
+					ask: '正在生成您的抑郁心理障碍因子',
 					progress: 0
 				}
 			]
@@ -67,17 +76,21 @@
 			label: '评估建议',
 			value: 2,
 			ask: [{
-					ask: '正在分析你的职场性格优势与劣势',
+					ask: '正在评估您的抑郁食疗建议',
 					progress: 0
 				}, {
-					ask: '正在分析你的性格对人际关系的影响',
+					ask: '正在评估您的睡眠剥夺疗法',
 					progress: 0
 				}, {
-					ask: '正在生成与你天赋相匹配的岗位和职业',
+					ask: '正在评估您的认知行为疗法',
 					progress: 0
 				},
 				{
-					ask: '正在生成你的求职规划与晋升建议',
+					ask: '正在评估您的预防建议',
+					progress: 0
+				},
+				{
+					ask: '报告生成结束...',
 					progress: 0
 				}
 			]
@@ -153,11 +166,11 @@
 
 <style lang="scss" scoped>
 	.x-bg {
-		background: url(https://res.vkunshan.com/depressed/generate/bg.png) 0 0 / 100% no-repeat;
+		background: url(https://res.vkunshan.com/depressed/generate/bg.png?t=1) 0 0 / 100% 388px no-repeat;
 	}
 
 	.x-header {
-		padding-top: 150px;
+		padding-top: 70px;
 	}
 
 	.img-logo {
@@ -165,7 +178,7 @@
 	}
 
 	.x-title {
-		margin: 13px 0 23px 0
+		margin: 14px 0 22px 0;
 	}
 
 	@keyframes loadding {
@@ -188,7 +201,6 @@
 	}
 
 	.x-tab {
-		// grid-template-columns: repeat(3, 100px);
 		height: 36px;
 		padding: 6px 5px;
 		border-radius: 24px;
@@ -216,5 +228,10 @@
 	.x-ask-item {
 		margin-bottom: 22px;
 		padding: 0 5px;
+	}
+
+	.x-bg-icon {
+		width: 131px;
+		height: 128px;
 	}
 </style>

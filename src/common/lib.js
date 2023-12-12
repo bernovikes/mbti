@@ -37,10 +37,11 @@ export const statusBarHeight = () => {
 	return `${uni.getSystemInfoSync()?.statusBarHeight}px`
 }
 export const structuredClone = (argv) => {
+	const _clone = (argv) => JSON.parse(JSON.stringify(argv))
 	// #ifdef H5
-	return window.structuredClone(argv)
+	return 'structuredClone' in window ? window.structuredClone(argv) : _clone(argv)
 	// #endif
 	// #ifdef APP-PLUS || MP
-	return JSON.parse(JSON.stringify(argv))
+	return _clone(argv)
 	// #endif
 }

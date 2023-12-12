@@ -1,6 +1,6 @@
 <template>
 	<uni-popup ref="pop" type="bottom">
-		<view class="x-pay-dialog">
+		<view class="x-pay-dialog pb-safe">
 			<view class="x-pay-dialog__header">
 				<view class="tr">
 					<view @click="close" class="x-close dib tc white f7 inline-flex items-center justify-center">✕</view>
@@ -156,7 +156,7 @@
 <style scoped lang="scss">
 	.x-pay-dialog {
 		background: url(https://res.vkunshan.com/depressed/report/emoji.png) top 17px right 41px / 51px 43px no-repeat,
-			url(https://res.vkunshan.com/depressed/report/pay-dialog-header.png) 0 0 / 100% 76px no-repeat;
+			url(https://res.vkunshan.com/depressed/report/pay-dialog-header.png) 0 0 / 100% 76px no-repeat;	
 	}
 
 	.x-pay-dialog__header {

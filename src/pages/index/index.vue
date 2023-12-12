@@ -1,6 +1,6 @@
 <template>
 	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-50">
-		<view class="font-18 white lh-25 b">抑郁症测试</view>
+		<view class="font-18 white lh-25 b">抑郁测试</view>
 		<view class="white font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
 		<!--  -->
 		<view class="flex mt-22 x-grid justify-between">
@@ -20,7 +20,7 @@
 					<view class="color-22396b f6 lh-17 b">
 						<view>SDS-抑郁</view>
 						<view>
-							<view class="dib">症自测量表</view>
+							<view class="dib">自测量表</view>
 							<view class="icon-arrow dib v-mid ml-12"></view>
 						</view>
 					</view>
@@ -44,13 +44,27 @@
 		<view class="mt-28">
 			<view class="font-18 fw6 color-27282b">推荐测评</view>
 			<view class="mt-18 pb-38">
-				<view v-for="(item,index) in 4" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
+				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
 					<img src="https://res.vkunshan.com/depressed/index/logo.png" class="img-index-item db">
 					<view>
 						<view class="color-22396b f6 fw5 lh-18">MBTI测试</view>
 						<view class="font-11 fw4 color-aeb1b8">深入地了解自己的人格类型</view>
 					</view>
 					<view class="color-6fa7ff f7 ml-auto fw5 lh-22 pl-13 pr-13 btn-index-item bg-e5f2ff">跳转</view>
+				</view>
+			</view>
+		</view>
+		<!--  -->
+		<view>
+			<view class="font-18 fw6 color-27282b">看Ta们说</view>
+			<view class="mt3 overflow-x-hidden x-comment relative">
+				<view :class="{'x-comment-move':chatWidth}" class="absolute x-comment-item" :style="{'--width':chatWidth}">
+					<view :style="[!index%2 ? '' :'margin-top:16px;margin-left:50px;']" class="x-bullet-chat flex items-center" v-for="(item,index) in chat">
+						<view class="x-bullet-chat-item pl3  mr3 pr3 pt2 pb2 f7 fw5 color-3e3f44 nowrap  bg-white width-fit flex items-center border-box" v-for="(citem,cindex) in item" :key="cindex">
+							<image :src="citem.img" class="img-avatar flex-shrink-0 br-100 mr1" />
+							{{citem.cp}}
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -72,13 +86,20 @@
 </template>
 
 <script setup>
+	import { comment } from '@/pages/report/mock.js'
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { onMounted, ref } from 'vue'
 	import xpops from './components/pops/pops.vue'
 	const detail = ref({})
 	const unpaydialog = ref('')
+	const chatWidth = ref('')
 	let unpaid_no = ''
 	const tempUser = uni.getStorageSync('tempUser') || '';
+	const chat = [
+		[],
+		[]
+	]
+	comment.map((item, index) => chat[index % 2].push(item))
 	const goOrderQuery = () => {
 		uni.navigateTo({
 			url: '/pages/order/index'
@@ -100,12 +121,22 @@
 				}
 			})
 		}
+		// 
+		const query = uni.createSelectorQuery().in(this)
+		query.select('.x-comment-item').boundingClientRect(({ width }) => {
+			if (width) {
+				chatWidth.value = `-${width}px`
+			}
+		}).exec()
 	})
 	const goUnpayOrder = () => {
 		uni.navigateTo({
 			url: `/pages/report/index?no=${unpaid_no}`
 		})
 		unpaydialog.value.close()
+	}
+	const gombti = () => {
+		window.open('https://mbti.xinli10.com/#/?channel=yiyu')
 	}
 	const goTest = (id) => {
 		uni.navigateTo({
@@ -187,5 +218,30 @@
 		box-shadow: 0 2px 7px 0 rgba(100, 100, 197, 0.13);
 		border-radius: 14px;
 		padding: 5px 44px;
+	}
+
+	.img-avatar {
+		width: 14px;
+		height: 14px;
+	}
+
+	.x-bullet-chat-item {
+		box-shadow: 0 2px 8px 0px rgba(173, 177, 186, 0.16);
+		border-radius: 20px;
+	}
+
+	.x-comment {
+		height: 130px;
+	}
+
+	@keyframes move {
+		to {
+			transform: translateX(var(--width));
+		}
+	}
+
+	.x-comment-move {
+		left: 95vw;
+		animation: 13s linear 0s move infinite;
 	}
 </style>

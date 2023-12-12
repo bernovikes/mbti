@@ -22,7 +22,7 @@
 
 <style scoped lang="scss">
 	.x-pay-big-btn {
-		background: linear-gradient(to left, rgba(110, 160, 255, 0.48), rgba(109, 159, 255, 0.77), rgba(110, 159, 255, 1)) no-repeat;
+		background: linear-gradient(to left, rgba(110, 160, 255), rgba(109, 159, 255), rgba(110, 159, 255)) no-repeat;
 		height: 49px;
 		border-radius: 50px;
 	}

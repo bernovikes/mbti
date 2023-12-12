@@ -141,6 +141,7 @@
 		if (timer) {
 			return false
 		}
+		console.log(doned.value)
 		// 如果未完成答题
 		if (!doned.value) {
 			timer = setTimeout(() => {
