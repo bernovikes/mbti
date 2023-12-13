@@ -7,7 +7,7 @@ const request = (url, method, data) => {
 				url: httpUrl,
 				data: data,
 				method: method,
-				enableHttp2: true,
+				enableHttp2: true,				
 				success(res) {
 					if (res.statusCode !== 200) {
 						reject(res.data)

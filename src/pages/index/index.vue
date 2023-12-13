@@ -2,6 +2,11 @@
 	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-50">
 		<view class="font-18 white lh-25 b">抑郁测试</view>
 		<view class="white font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
+		<swiper class="x-header-swiper mt-20" circular autoplay>
+			<swiper-item v-for="(item,index) in mock" :key="index" class="x-header-swiper-item f7 flex items-center white fw4 lh-20 regular">
+				<view class="pl3 pr3" v-text="item" />
+			</swiper-item>
+		</swiper>
 		<!--  -->
 		<view class="flex mt-22 x-grid justify-between">
 			<view @click="goTest(detail[0].id)" class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
@@ -47,10 +52,10 @@
 				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
 					<img src="https://res.vkunshan.com/depressed/index/logo.png" class="img-index-item db">
 					<view>
-						<view class="color-22396b f6 fw5 lh-18">MBTI测试</view>
+						<view class="color-22396b f6 fw5 lh-18">MBTI人格测试</view>
 						<view class="font-11 fw4 color-aeb1b8">深入地了解自己的人格类型</view>
 					</view>
-					<view class="color-6fa7ff f7 ml-auto fw5 lh-22 pl-13 pr-13 btn-index-item bg-e5f2ff">跳转</view>
+					<view class="color-6fa7ff f7 ml-auto fw5 lh-22 pl-13 pr-13 btn-index-item bg-e5f2ff">进入测试</view>
 				</view>
 			</view>
 		</view>
@@ -90,6 +95,13 @@
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { onMounted, ref } from 'vue'
 	import xpops from './components/pops/pops.vue'
+	const mock = [
+		'日日重复同样的事，遵循着与昨日相同的惯例；若能避开猛烈的欢喜，自然也不会有悲痛的来袭。',
+		'山上吹来每一股气息都是如此洋溢着生命，仿佛无论谁吸进了它，即使是气息奄奄的人，也会复活起来。',
+		'我是一个内向的人，就算一个人也能自处，我会走出户外，牵着我的狗狗们散步，感受树、天空和花朵。',
+		'每个人都不是一座孤岛，一个人必须是这世界上最坚固的岛屿，然后才能成为大陆的一部分。',
+		'你不愿意种花，你说，我不愿意看见它一点点凋落。是的，为了避免结束，你避免了一切开始。'
+	]
 	const detail = ref({})
 	const unpaydialog = ref('')
 	const chatWidth = ref('')
@@ -243,5 +255,14 @@
 	.x-comment-move {
 		left: 95vw;
 		animation: 13s linear 0s move infinite;
+	}
+
+	.x-header-swiper-item {
+		background: rgba(255, 255, 255, .18);
+		border-radius: 9px;
+	}
+
+	.x-header-swiper {
+		height: 56px;
 	}
 </style>

@@ -65,7 +65,7 @@
 	const pop = ref('')
 	const pay_type = ref('wechat')
 	const goodsList = ref([{
-			t1: '基础班报告',
+			t1: '基础版报告',
 			check: false,
 			redpack: 0,
 			bottom: '',

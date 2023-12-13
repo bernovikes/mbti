@@ -12,10 +12,10 @@
 						<view class="f7 color-e57358  pt1">惊喜红包</view>
 						<view class="f7 lh-solid color-e0890a mt-18">恭喜获得红包</view>
 						<view class="font-dina b block  h1-redpack">{{detail.coupons[0].price}}</view>
-						<view class="f7 mt2 h2-redpack color-604018">可享受<view class="di color-fb2043 ml1 mr1">6.7折</view>查看完整版报告</view>
+						<view class="f7 mt2 h2-redpack color-604018">可享受<view class="di color-fb2043 ml1 mr1">{{discount_text}}折</view>查看完整版报告</view>
 						<view class="x-redpack-bottom">
 							<view @click.stop="tapPay(detail.coupons[0].id)" class="btn pulse fw5 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{detail.coupons[0].price}}</text>
+								<text class="font-22">{{all_good_price-detail.coupons[0].price}}</text>
 								<text class="font-18 di">¥</text>
 								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
 							</view>
@@ -31,7 +31,7 @@
 						<view class="x-redpack-tow-bottom tc">
 							<view class="color-ffd861 medium  f7 lh-17">您已获得 满额红包</view>
 							<view @click.stop="tapPay(detail.coupons[1].id)" class="btn pulse fw5 mt1 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{detail.coupons[1].price}}</text>
+								<text class="font-22">{{all_good_price-detail.coupons[1].price}}</text>
 								<text class="font-18 di">¥</text>
 								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
 							</view>
@@ -46,17 +46,25 @@
 </template>
 
 <script setup>
-	import { inject, ref } from 'vue'
+	import { inject, ref, watch } from 'vue'
 	const detail = inject('detail')
 	const redpack1 = ref(false)
 	const redpack2 = ref(false)
 	const show = ref(true)
 	const redpack = ref('')
+	const all_good_price = ref(0)
+	const discount_text = ref(0)
+	let all_goods = ''
 	const open = () => {
 		redpack1.value = true
 		redpack2.value = false
 		redpack.value.open('center')
 	}
+	watch(detail, () => {
+		all_goods = detail.value.question_bank_goods.find(item => item.type === 'all')
+		all_good_price.value = all_goods?.goods?.discount_price
+		discount_text.value = (((all_good_price.value - detail.value.coupons?.[0].price) / all_good_price.value) * 10).toFixed(1)
+	})
 	defineExpose({
 		open
 	})
@@ -67,7 +75,7 @@
 		redpackClose()
 	}
 	const tapPay = (redpack_type) => {
-		const goods_id = detail.value.question_bank_goods.find(item => item.type === 'all')?.goods?.id		
+		const goods_id = all_good_price?.goods?.id
 		if (redpack_type) {
 			uni.$emit('callpay', {
 				pay_method: 'wechat', //支付渠道 微信或支付宝						

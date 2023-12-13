@@ -141,7 +141,6 @@
 		if (timer) {
 			return false
 		}
-		console.log(doned.value)
 		// 如果未完成答题
 		if (!doned.value) {
 			timer = setTimeout(() => {
@@ -201,7 +200,10 @@
 				})
 			}
 		} catch (e) {
-			console.log(e.message)
+			e?.code && uni.showToast({
+				icon: 'error',
+				title: e.msg
+			})
 			//TODO handle the exception
 		}
 	}
@@ -214,10 +216,10 @@
 	const _cache_key = (id) => `quesIndex_${id}_history`
 	onLoad((option) => {
 		fetchDetail(option?.id)
+		const history = uni.getStorageSync(_cache_key(option?.id))
 		watch(chooseHistory, (val) => {
 			uni.setStorageSync(_cache_key(option?.id), toRaw(chooseHistory.value))
 		}, { deep: true })
-		const history = uni.getStorageSync(_cache_key(option?.id))
 		if (history) {
 			uni.showModal({
 				title: '您有未完成的测试',

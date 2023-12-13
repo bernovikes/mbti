@@ -2,6 +2,15 @@
 	import { getVisitorToken } from '@/api/api'
 	import { onLaunch } from '@dcloudio/uni-app'
 	import { isWechat, wechatNewAuth, getUserId } from '@/common/lib.js'
+	// #ifdef H5
+	import { useRoute } from 'vue-router'
+	import { watch } from 'vue'
+	const route = useRoute()
+	watch(route, () => {
+		const { query: { channel = '' } } = route
+		channel && uni.setStorageSync('channel', channel)
+	})
+	// #endif
 	onLaunch(async () => {
 		uni.hideTabBar()
 		if (isWechat() && !getUserId()) {
