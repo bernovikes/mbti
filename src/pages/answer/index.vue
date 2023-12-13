@@ -127,7 +127,7 @@
 		doned.value = false
 		prev && mountData(prev)
 	}
-	const setDone = () => doned.value = chooseHistory.value.length >= initHistory.value.length - 1
+	const setDone = () => doned.value = chooseHistory.value.length >= initHistory.value.length-1
 	// 选择答案
 	const chooseAnswer = (id, value, index) => {
 		choose_value.value = `${id}_${value}_${index}`
@@ -184,6 +184,7 @@
 			if (login_user) {
 				params['user_id'] = login_user?.id
 			}
+			uni.removeStorageSync(_cache_key(detail.id))
 			const { code, msg, data } = await postAnswerData(params)
 			disable_submit = false
 			const qs = new URLSearchParams({
@@ -207,9 +208,9 @@
 			//TODO handle the exception
 		}
 	}
-	const initHistoryOperate = () => {
+	const initHistoryOperate = () => {		
 		const ask_time = chooseHistory.value.pop() //弹出history最后一个值,不弹出，如果进行选择则会同一题有多个操作
-		setDone()
+		doned.value = chooseHistory.value.length >= initHistory.value.length
 		clickPrev.value = true
 		resetYieldAnswer()
 	}
