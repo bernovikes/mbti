@@ -20,7 +20,7 @@
 <script setup>
 	import { postFeedback } from '@/api/api.js'
 	import { reactive } from 'vue'
-	import http from '../../enum/http';
+	import { HTTP_SUCCESS } from '../../enum/http';
 	const message = {
 		content: '请输入您的意见',
 		phone: '请输入您的联系方式'
@@ -58,7 +58,7 @@
 		if (vaild()) {
 			try {
 				const { code } = await postFeedback(form)
-				if (code === http.SUCCESS) {
+				if (code === HTTP_SUCCESS) {
 					successLocation()
 				}
 			} catch (e) {

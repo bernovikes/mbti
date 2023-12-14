@@ -35,7 +35,7 @@
 	import { sendSms, phoneLogin } from '@/api/api.js'
 	import { ref } from 'vue'
 	import { onUnload } from '@dcloudio/uni-app'
-	import http from '@/enum/http.js'
+	import { HTTP_SUCCESS } from '@/enum/http.js'
 	const login_user = uni.getStorageSync('login_user')
 	if (login_user) {
 		uni.switchTab({
@@ -63,7 +63,7 @@
 		if (vaild()) {
 			try {
 				const { code, msg, data } = await phoneLogin({ phone, code: sms_code })
-				if (code === http.SUCCESS) {
+				if (code === HTTP_SUCCESS) {
 					uni.setStorageSync('login_user', data)
 					uni.switchTab({
 						url: '/pages/index/index'

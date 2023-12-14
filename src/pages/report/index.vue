@@ -51,7 +51,7 @@
 	import { onLoad, onUnload } from '@dcloudio/uni-app'
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
-	import http from '@/enum/http.js'
+	import { HTTP_SUCCESS } from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
 	import sdsMock from './mock/sds.json'
@@ -97,14 +97,11 @@
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			// const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
-			const permissions = 2
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			// const permissions = 2
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
-			watch(chart, (nval) => {
-				drawradar()
-			})
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -173,7 +170,7 @@
 		}
 		try {
 			const { code, data } = await createOrder(params)
-			if (code === http.SUCCESS) {
+			if (code === HTTP_SUCCESS) {
 				uni.setStorageSync('trace_no', data.trace_no)
 				const pay_params = { trace_no: data.trace_no, env, device: getDevice() }
 				if (user_id) {
@@ -203,7 +200,7 @@
 			if (pay_callback || scan) {
 				try {
 					const { code, data } = await traceCheck(trace_no)
-					if (code === http.SUCCESS && data?.pay_status) {
+					if (code === SUCCESS && data?.pay_status) {
 						uni.removeStorageSync('pay_callback')
 						uni.removeStorageSync('scan')
 						scan && wxscan.value?.close()
@@ -275,6 +272,7 @@
 		background: rgba(255, 248, 248, 0.07);
 		padding: 0 6px;
 	}
+
 	:deep(.x-factor-item:not(:last-child)) {
 		background: linear-gradient(transparent 50%, #CECECE 50%) left bottom / 100% 1px no-repeat;
 		padding-bottom: 30px;

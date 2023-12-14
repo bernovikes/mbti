@@ -35,7 +35,7 @@
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
-	import http from '@/enum/http.js'
+	import { HTTP_SUCCESS } from '@/enum/http.js'
 	import dayjs from 'dayjs'
 	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
@@ -57,7 +57,7 @@
 	const fetchDetail = async (id) => {
 		try {
 			const { data, code } = await getQuestionBank(id)
-			if (code === http.SUCCESS) {
+			if (code === HTTP_SUCCESS) {
 				detail = data
 				title.value = data.title
 				const { question } = data
@@ -127,7 +127,7 @@
 		doned.value = false
 		prev && mountData(prev)
 	}
-	const setDone = () => doned.value = chooseHistory.value.length >= initHistory.value.length-1
+	const setDone = () => doned.value = chooseHistory.value.length >= initHistory.value.length - 1
 	// 选择答案
 	const chooseAnswer = (id, value, index) => {
 		choose_value.value = `${id}_${value}_${index}`
@@ -191,7 +191,7 @@
 				no: data,
 				tempUser
 			})
-			if (code === http.SUCCESS) {
+			if (code === HTTP_SUCCESS) {
 				uni.redirectTo({
 					url: `/pages/generate/generate?${qs}`
 				})
@@ -208,7 +208,7 @@
 			//TODO handle the exception
 		}
 	}
-	const initHistoryOperate = () => {		
+	const initHistoryOperate = () => {
 		const ask_time = chooseHistory.value.pop() //弹出history最后一个值,不弹出，如果进行选择则会同一题有多个操作
 		doned.value = chooseHistory.value.length >= initHistory.value.length
 		clickPrev.value = true
