@@ -233,8 +233,6 @@
 	import uiBlock from './components/ui-block.vue'
 	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
 	import { inject, computed, onMounted, watch, ref, nextTick } from 'vue'
-	import { radar } from './sds/radar.js'
-	import line from './sds/line.js'
 	const chart = ref('')
 	const lineChart = ref('')
 	const detail = inject('detail')
@@ -259,8 +257,12 @@
 				max: maxNumber
 			}
 		})
-		radar([{ value: charData }], maxNumber, chart.value, indicator)
-		line(charData, factor, lineChart.value)
+		import('./sds/line.js').then(({ default: line }) => {
+			line(charData, factor, lineChart.value)
+		})
+		import('./sds/radar.js').then(({ radar }) => {
+			radar([{ value: charData }], maxNumber, chart.value, indicator)
+		})
 	}
 	onMounted(() => {
 		watch(factorList, (nval) => {

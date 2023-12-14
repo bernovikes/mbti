@@ -33,7 +33,6 @@
 
 <script setup>
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
-	import dayjs from 'dayjs'
 	import { inject, ref, computed } from 'vue'
 	const detail = inject('detail')
 	const show = ref(false)

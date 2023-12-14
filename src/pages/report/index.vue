@@ -54,9 +54,10 @@
 	import http from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
+	import sdsMock from './mock/sds.json'
 	const page = getCurrentPages().slice(-1)[0]
 	const route = { query: page.$page.options, route: page.route }
-	const detail = ref({})
+	const detail = ref(sdsMock.data)
 	const scan_url = ref('')
 	const speed = ref([
 		{ 'label': '答题率', 'value': '100%' },
@@ -87,7 +88,12 @@
 	provide('science', science)
 	const fetchDetail = async () => {
 		try {
+			uni.showLoading({
+				title: '正在加载数据',
+				mask: true
+			})
 			const { data } = await fetchAnswerData(route.query.no)
+			uni.hideLoading()
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }

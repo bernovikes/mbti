@@ -4,9 +4,9 @@
 			<view class="icon-comment-circle absolute dib br-100"></view>
 			用户评价
 		</view>
-		<swiper class="h-100 bg-dde9ff x-comment">
+		<swiper @change="changeSwiper" class="h-100 bg-dde9ff x-comment">
 			<swiper-item v-for="(item,index) in comment" :key="index">
-				<view class="pl3 pr3 h-100 flex items-center">
+				<view class="pl3 pr3 h-100 flex items-center" v-if="currentSwiper===index">
 					<image class="x-comment-avatar flex-shrink-0 br-100" :src="item.img" lazy-load />
 					<view class="pl3">
 						<view class="f6 lh-20">{{item.name}}</view>
@@ -22,9 +22,13 @@
 	import { ref } from 'vue'
 	import { comment } from '../mock.js'
 	const load = ref(false)
+	const currentSwiper = ref(0)
 	setTimeout(() => {
 		load.value = true
 	}, 3000)
+	const changeSwiper = ({ detail: { current } }) => {
+		currentSwiper.value = current
+	}
 </script>
 
 <style lang="scss" scoped>

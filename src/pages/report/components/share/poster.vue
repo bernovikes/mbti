@@ -29,15 +29,14 @@
 </template>
 
 <script setup>
-	import uQRCode from '@/components/uqrcode/uqrcode.vue'
-	import dayjs from 'dayjs'
+	import uQRCode from '@/components/uqrcode/uqrcode.vue'	
 	import { ref, inject, computed } from 'vue'
 	const show = ref(false)
 	const detail = inject('detail')
 	const domain = import.meta.env.VITE_DOMAIN
 	const qrcode = computed(() => `${domain}/pages/report/index?no=${detail.value?.order_no}`)
 	const uqrcode = ref('')
-	const date = computed(() => dayjs(detail.value.created_at).format('YYYY/MM/D'))
+	const date = computed(() => detail.value.created_date)
 	const close = () => {
 		show.value = false
 	}
