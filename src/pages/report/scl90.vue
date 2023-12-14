@@ -30,7 +30,7 @@
 				</view>
 			</template>
 			<template v-slot:body>
-				<view class="f6 fw4 lh-28 color-50545e">
+				<view class="f6 fw4 lh-28 pre-wrap  color-50545e">
 					<view :class="{'mb-28':!index}" v-for="(item,index) in reportDesc.section" :key="index">
 						{{item.content}}
 					</view>
@@ -131,7 +131,7 @@
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
 						<view class="pt-22 pl-20 pr-20" v-if="item.content">
-							<view class="color-50545e f6 fw4 lh-28">{{item.content}}</view>
+							<view class="color-50545e f6 pre-wrap  fw4 lh-28">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -157,10 +157,26 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<ui-block :lock="!detail.all_unlock">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
 					<text class="font-30 lh-35 b">07</text>
+					<text class="pl-10">|</text>
+					<view class="pl-12">
+						<view class="lh-18">综合结果</view>
+						<view class="font-10">Obtaining Results</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:body>
+				<view class="f6 fw4 lh-28 color-50545e">根据缩合分析，你的总分为<text class="color-5c93ff">{{detail.report?.total_sum}}</text>，平均分为<text class="color-5c93ff">{{detail.report?.total_avg}}</text>;阴性因子数<text class="color-5c93ff">{{detail.report?.negative_total}}</text>个，阳性项目数为<text class="color-5c93ff">{{detail.report?.positive_total}}</text>个，阳性项目平均分为<text class="color-5c93ff">{{detail.report?.positive_avg}}</text>，按照从高到低排列顺序为: {{detail.report?.top_factor}}。</view>
+			</template>
+		</ui-block>
+		<!--  -->
+		<ui-block :lock="!detail.all_unlock">
+			<template v-slot:h1>
+				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
+					<text class="font-30 lh-35 b">08</text>
 					<text class="pl-10">|</text>
 					<view class="pl-12">
 						<view class="lh-18">因子分析</view>
@@ -178,27 +194,19 @@
 			</template>
 			<template v-slot:body>
 				<view>
-					<view v-for="(item,index) in  factorList?.config">
-						<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.factor}} {{item.avg}}分 [很轻]</view>
-						<view class="color-50545e f6 fw4 lh-28 mt-12">{{item.content}}</view>
+					<view v-for="(item,index) in  factorList?.config" class="x-factor-item">
+						<view class="flex items-center">
+							<view class="x-factor-title f6 fw6 lh-28 border-box pl-10 pr-10 width-fit color-5b92ff">{{item.factor}}<text class="ml2">均分{{item.avg}}分</text></view>
+							<view class="color-5b92ff b f6 lh-20 ml-auto">得分：{{item.sum}}</view>
+						</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />说明</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.suggest}}</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />指导建议</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.content}}</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />改善方式</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.instruction}}</view>
 					</view>
 				</view>
-			</template>
-		</ui-block>
-		<!--  -->
-		<ui-block :lock="!detail.all_unlock">
-			<template v-slot:h1>
-				<view class="flex items-center pt2 pb2 pr-30 pl3 white">
-					<text class="font-30 lh-35 b">08</text>
-					<text class="pl-10">|</text>
-					<view class="pl-12">
-						<view class="lh-18">综合结果</view>
-						<view class="font-10">Obtaining Results</view>
-					</view>
-				</view>
-			</template>
-			<template v-slot:body>
-				<view class="f6 fw4 lh-28 color-50545e">根据上述分析，你的总分为<text class="color-5c93ff">{{detail.report?.total_sum}}</text>，平均分为<text class="color-5c93ff">{{detail.report?.total_avg}}</text>;阴性因子数<text class="color-5c93ff">{{detail.report?.negative_total}}</text>个，阳性项目数为<text class="color-5c93ff">{{detail.report?.positive_total}}</text>个，阳性项目平均分为<text class="color-5c93ff">{{detail.report?.positive_avg}}</text>，按照从高到低排列顺序为: {{detail.report?.top_factor}}。</view>
 			</template>
 		</ui-block>
 		<!--  -->
@@ -220,7 +228,7 @@
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
 						<view class="pt-22 pl-20 pr-20" v-if="item.content">
-							<view class="color-50545e f6 fw4 lh-28">{{item.content}}</view>
+							<view class="color-50545e pre-wrap  f6 fw4 lh-28">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -355,4 +363,8 @@
 		width: 47px;
 		height: 90px;
 	}
+
+	.circle {
+		padding: 3px;
+	}	
 </style>

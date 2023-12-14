@@ -133,9 +133,14 @@
 			<template v-slot:body>
 				<view class="x-factor-list flex flex-column">
 					<!--  -->
-					<view v-for="(item,index) in  factorList?.config">
+					<view v-for="(item,index) in  factorList?.config" class="x-factor-item">
 						<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.factor}}:得分{{item.sum}}</view>
-						<view class="x-factor-content color-53555c pre-wrap font-13 fw4 lh-28 mt-12">{{item.content}}</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />说明</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.suggest}}</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />指导建议</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.content}}</view>
+						<view class="color-6a9cff lh-20 mt3"><text class="bg-6a9cff dib circle br-100 f6 fw5 mr1" />改善方式</view>
+						<view class="color-50545e pre-wrap f6 fw4 lh-28 mt-12">{{item.instruction}}</view>
 					</view>
 				</view>
 			</template>
@@ -270,5 +275,9 @@
 		height: 97px;
 		border-radius: 100%;
 		background: radial-gradient(closest-side, #fff 70%, transparent 71%), conic-gradient(currentColor var(--width, 10%), #f2f0ff 0);
+	}
+
+	.circle {
+		padding: 3px;
 	}
 </style>

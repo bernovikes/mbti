@@ -1,11 +1,11 @@
 <template>
-	<view class="mb-26">
+	<view class="mb-26" v-if="load">
 		<view class="color-6b9dff font-15 lh-17 width-fit relative b tc x-comment-title pl1 center mb3">
 			<view class="icon-comment-circle absolute dib br-100"></view>
 			用户评价
 		</view>
 		<swiper class="h-100 bg-dde9ff x-comment">
-			<swiper-item  v-for="(item,index) in comment" :key="index">
+			<swiper-item v-for="(item,index) in comment" :key="index">
 				<view class="pl3 pr3 h-100 flex items-center">
 					<image class="x-comment-avatar flex-shrink-0 br-100" :src="item.img" lazy-load />
 					<view class="pl3">
@@ -19,7 +19,12 @@
 </template>
 
 <script setup>
+	import { ref } from 'vue'
 	import { comment } from '../mock.js'
+	const load = ref(false)
+	setTimeout(() => {
+		load.value = true
+	}, 3000)
 </script>
 
 <style lang="scss" scoped>

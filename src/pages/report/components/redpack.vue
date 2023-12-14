@@ -1,10 +1,12 @@
 <template>
 	<view>
 		<!-- prerender -->
-		<view class="dn">
-			<image src="https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592" />
-			<image src="https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638" />
-		</view>
+		<template v-if="preload">
+			<view class="dn">
+				<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592" />
+				<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638" />
+			</view>
+		</template>
 		<uni-popup ref="redpack">
 			<view v-if="Object.values(detail).length" class="fixed z-999 bg-black-60 flex-column flex justify-center items-center  left-0 right-0 top-0 bottom-0">
 				<block v-if="redpack1">
@@ -46,7 +48,7 @@
 </template>
 
 <script setup>
-	import { inject, ref, watch } from 'vue'
+	import { inject, ref, watch, onMounted } from 'vue'
 	const detail = inject('detail')
 	const redpack1 = ref(false)
 	const redpack2 = ref(false)
@@ -54,6 +56,10 @@
 	const redpack = ref('')
 	const all_good_price = ref(0)
 	const discount_text = ref(0)
+	const preload = ref(false)
+	setTimeout(() => {
+		preload.value = true
+	}, 3000)
 	let all_goods = ''
 	const open = () => {
 		redpack1.value = true

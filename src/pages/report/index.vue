@@ -91,7 +91,8 @@
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			// const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			const permissions = 2
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
@@ -193,7 +194,7 @@
 			const trace_no = uni.getStorageSync('trace_no')
 			const pay_callback = uni.getStorageSync('pay_callback')
 			const scan = uni.getStorageSync('scan')
-			if (pay_callback || scan) {				
+			if (pay_callback || scan) {
 				try {
 					const { code, data } = await traceCheck(trace_no)
 					if (code === http.SUCCESS && data?.pay_status) {
@@ -254,7 +255,9 @@
 	}
 
 	:deep(.x-factor-title) {
-		border: solid 1px #6499FF;
+		border: solid 1px;
+		border-image: linear-gradient(#9ECAFF, #6499FF) 10;
+		background: linear-gradient(to left, #DBE8FF, #F0F5FF);
 	}
 
 	:deep(.x-factor-list) {
@@ -265,5 +268,10 @@
 		border-radius: 3px;
 		background: rgba(255, 248, 248, 0.07);
 		padding: 0 6px;
+	}
+	:deep(.x-factor-item:not(:last-child)) {
+		background: linear-gradient(transparent 50%, #CECECE 50%) left bottom / 100% 1px no-repeat;
+		padding-bottom: 30px;
+		margin-bottom: 20px;
 	}
 </style>

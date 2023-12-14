@@ -16,10 +16,6 @@ export function getQuestionBank(id) {
  * 提交答题数据
  */
 export function postAnswerData(data) {
-	const channel = uni.getStorageSync('channel')
-	if (channel) {
-		data['channel'] = channel
-	}
 	return request(`/api/front_question_banks`, 'POST', data)
 }
 
