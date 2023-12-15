@@ -1,12 +1,10 @@
 <template>
 	<view class="fixed right-0 z-9999">
 		<!-- preload -->
-		<template v-if="preload">
-			<view class="dn">
-				<image lazy-load src="https://res.vkunshan.com/depressed/report/poster/person-bg.png" />
-				<image lazy-load src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image>
-			</view>
-		</template>
+		<view class="dn">
+			<image lazy-load src="https://res.vkunshan.com/depressed/report/poster/person-bg.png" />
+			<image lazy-load src="https://res.vkunshan.com/depressed/report/poster/bg.png" />
+		</view>
 		<view class="tr">
 			<view @click="openPoster" class="x-red-top-share"></view>
 			<view v-if="detail.is_pay">
@@ -23,11 +21,7 @@
 	import person from './share/person.vue'
 	import { ref, inject } from 'vue'
 	const posterRef = ref('')
-	const personRef = ref('')
-	const preload = ref(false)
-	setTimeout(() => {
-		preload.value = true
-	}, 4000)
+	const personRef = ref('')	
 	const detail = inject('detail')
 	const openPoster = () => {
 		posterRef.value.open()

@@ -57,7 +57,7 @@
 	import sdsMock from './mock/sds.json'
 	const page = getCurrentPages().slice(-1)[0]
 	const route = { query: page.$page.options, route: page.route }
-	const detail = ref(sdsMock.data)
+	const detail = ref('')
 	const scan_url = ref('')
 	const speed = ref([
 		{ 'label': '答题率', 'value': '100%' },
@@ -98,7 +98,6 @@
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
 			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
-			// const permissions = 2
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data

@@ -2,7 +2,7 @@
 	<view class="x-bg min-h-100">
 		<view class="x-header flex justify-center flex-column items-center">
 			<image class="x-bg-icon" src="https://res.vkunshan.com/depressed/generate/bg-icon.png" />
-			<view class="white x-title f6 color-606670">你的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
+			<view class="white x-title f6 color-606670">您的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
 			</view>
 		</view>
 		<!--  -->

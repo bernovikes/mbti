@@ -1,12 +1,9 @@
 <template>
 	<view>
-		<!-- prerender -->
-		<template v-if="preload">
-			<view class="dn">
-				<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592" />
-				<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638" />
-			</view>
-		</template>
+		<view class="dn">
+			<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592" />
+			<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638" />
+		</view>
 		<uni-popup ref="redpack">
 			<view v-if="Object.values(detail).length" class="fixed z-999 bg-black-60 flex-column flex justify-center items-center  left-0 right-0 top-0 bottom-0">
 				<block v-if="redpack1">
@@ -56,10 +53,6 @@
 	const redpack = ref('')
 	const all_good_price = ref(0)
 	const discount_text = ref(0)
-	const preload = ref(false)
-	setTimeout(() => {
-		preload.value = true
-	}, 3000)
 	let all_goods = ''
 	const open = () => {
 		redpack1.value = true
@@ -81,7 +74,7 @@
 		redpackClose()
 	}
 	const tapPay = (redpack_type) => {
-		const goods_id = all_good_price?.goods?.id
+		const goods_id = all_goods?.goods?.id
 		if (redpack_type) {
 			uni.$emit('callpay', {
 				pay_method: 'wechat', //支付渠道 微信或支付宝						

@@ -1,5 +1,5 @@
 <template>
-	<view class="mb-26" v-if="load">
+	<view class="mb-26">
 		<view class="color-6b9dff font-15 lh-17 width-fit relative b tc x-comment-title pl1 center mb3">
 			<view class="icon-comment-circle absolute dib br-100"></view>
 			用户评价
@@ -20,12 +20,8 @@
 
 <script setup>
 	import { ref } from 'vue'
-	import { comment } from '../mock.js'
-	const load = ref(false)
+	import { comment } from '../mock.js'	
 	const currentSwiper = ref(0)
-	setTimeout(() => {
-		load.value = true
-	}, 3000)
 	const changeSwiper = ({ detail: { current } }) => {
 		currentSwiper.value = current
 	}
