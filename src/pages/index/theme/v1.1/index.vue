@@ -11,9 +11,9 @@
 		<view class="flex mt-22 x-grid justify-between">
 			<view @click="goTest(detail[0].id)" class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
 				<view class="color-22396b f6 lh-17 b">
-					<view>SCL-90</view>
+					<view>焦虑与抑郁症状</view>
 					<view>
-						<view class="dib">焦虑与抑郁</view>
+						自评量表（SCL-90）
 					</view>
 				</view>
 				<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
@@ -22,10 +22,8 @@
 			<view class="x-grid-right flex flex-column h-100">
 				<view @click="goTest(detail[1].id)" class="x-grid-right-top  pt-12 pl-12 pb-14  border-box flex flex-column  w-100">
 					<view class="color-22396b f6 lh-17 b">
-						<view>SDS-抑郁</view>
-						<view>
-							<view class="dib">自测量表</view>
-						</view>
+						<view>抑郁风险自</view>												
+						<view>测量表（SDS）</view>
 					</view>
 					<view class="white width-fit version font-10 lh-16  mt-10">标准版</view>
 					<view class="tr mt-6">
@@ -34,10 +32,8 @@
 				</view>
 				<view @click="goTest(detail[2].id)" class="x-grid-right-bottom pt-12 pl-12 pb-14  border-box flex flex-column mt-auto w-100">
 					<view class="color-22396b f6 lh-17 b">
-						<view>抑郁程度测试</view>
-						<view>
-							<view class="dib">（SDS）</view>
-						</view>
+						<view>抑郁程度测</view>
+						<view>试量表（SDS）</view>
 					</view>
 					<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
 					<view class="tr mt-6">
