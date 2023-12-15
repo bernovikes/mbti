@@ -1,7 +1,6 @@
 <template>
 	<view class="x-bg min-h-100">
 		<view class="x-header flex justify-center flex-column items-center">
-			<image class="x-bg-icon" src="https://res.vkunshan.com/depressed/generate/bg-icon.png" />
 			<view class="white x-title f6 color-606670">您的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
 			</view>
 		</view>
@@ -166,11 +165,11 @@
 
 <style lang="scss" scoped>
 	.x-bg {
-		background: url(https://res.vkunshan.com/depressed/generate/bg.png?t=1) 0 0 / 100% 388px no-repeat;
+		background: url(https://res.vkunshan.com/depressed/generate/bg.png?t=2) 0 0 / 100% 300px no-repeat;
 	}
 
-	.x-header {
-		padding-top: 70px;
+	.x-header {		
+		padding-top: 200px;
 	}
 
 	.img-logo {

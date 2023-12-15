@@ -11,7 +11,7 @@
 		<view class="flex mt-22 x-grid justify-between">
 			<view @click="goTest(detail[0].id)" class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
 				<view class="color-22396b f6 lh-17 b">
-					<view>焦虑与抑郁症状</view>
+					<view>焦虑与抑郁状</view>
 					<view>
 						自评量表（SCL-90）
 					</view>
@@ -155,9 +155,8 @@
 </script>
 
 <style lang="scss" scoped>
-	.x-bg {
-		--svg: url("data:image/svg+xml,%3Csvg width='375' height='159' viewBox='0 0 375 159' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3ClinearGradient x1='2.009%25' y1='41.011%25' y2='58.989%25' id='b'%3E%3Cstop stop-color='%238EC8FF' offset='0%25'/%3E%3Cstop stop-color='%236F9FFA' offset='40.729%25'/%3E%3Cstop stop-color='%23709FF9' offset='65.979%25'/%3E%3Cstop stop-color='%23A4C3FF' offset='100%25'/%3E%3C/linearGradient%3E%3Cpath id='a' d='M0 0h375v159H0z'/%3E%3ClinearGradient x1='50%25' y1='0%25' x2='50%25' y2='100%25' id='d'%3E%3Cstop stop-color='%23F6F9FF' stop-opacity='0' offset='0%25'/%3E%3Cstop stop-color='%23F5F9FF' stop-opacity='.296' offset='28.794%25'/%3E%3Cstop stop-color='%23F6F9FF' stop-opacity='.622' offset='58.487%25'/%3E%3Cstop stop-color='%23F6F9FF' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd' opacity='.2'%3E%3Cmask id='c' fill='%23fff'%3E%3Cuse xlink:href='%23a'/%3E%3C/mask%3E%3Cuse fill='url(%23b)' xlink:href='%23a'/%3E%3Ccircle stroke-opacity='.373' stroke='%23FFF' fill-opacity='.073' fill='%23FFF' opacity='.78' mask='url(%23c)' cx='45.5' cy='-21.5' r='85'/%3E%3Ccircle stroke-opacity='.373' stroke='%23FFF' fill-opacity='.073' fill='%23FFF' opacity='.6' mask='url(%23c)' cx='351' cy='-21' r='70.5'/%3E%3Cpath fill='url(%23d)' d='M0 79h375v80H0z'/%3E%3C/g%3E%3C/svg%3E");
-		background: var(--svg) 0 0 / 100% 159px no-repeat #F6F9FF;
+	.x-bg {		
+		background: url(https://res.vkunshan.com/depressed/index/bg.png) 0 0 / 100% 159px no-repeat #F6F9FF;
 	}
 
 	.x-grid {
@@ -178,7 +177,7 @@
 		background: url("https://res.vkunshan.com/depressed/index/v1/grid_left.png") bottom center / 167px 221px no-repeat;
 
 		.version {
-			background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%);
+			background: linear-gradient(270deg, rgba(139, 178, 255, 0.6) 0%, rgba(90, 146, 255, 0.6) 100%);
 		}
 
 		.x-grid-num {
@@ -193,7 +192,7 @@
 		background: url("https://res.vkunshan.com/depressed/index/v1/grid_right_top.png") 0 0 / 100% 100% no-repeat;
 
 		.version {
-			background: linear-gradient(270deg, #AC9FFF 0%, #9589FF 100%);
+			background: linear-gradient(270deg, rgba(172, 159, 255, 0.6) 0%, rgba(149, 137, 255, 0.6) 100%);
 		}
 
 		.x-grid-num {
@@ -205,7 +204,7 @@
 		background: url("https://res.vkunshan.com/depressed/index/v1/grid_right_bottom.png") 0 0 / 100% 100% no-repeat;
 
 		.version {
-			background: linear-gradient(270deg, #FFA797 0%, #FF855A 100%);
+			background: linear-gradient(270deg, rgba(255, 167, 151, 0.6) 0%, rgba(255, 133, 90, 0.6) 100%);
 		}
 
 		.x-grid-num {
