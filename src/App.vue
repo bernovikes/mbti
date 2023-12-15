@@ -41,7 +41,7 @@
 
 	@media screen and (min-width: 768px) {
 		body {
-			max-width: 428px;
+			max-width: 375px;
 			margin: 0 auto;
 		}
 	}

@@ -62,7 +62,7 @@
 
 	@media screen and (min-width: 768px) {
 		.cm-tabbar {
-			max-width: 428px;
+			max-width: 375px;
 			margin: 0 auto;
 		}
 	}

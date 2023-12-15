@@ -250,7 +250,7 @@
 
 	@media screen and (min-width: 768px) {
 		.x-pay-dialog {
-			max-width: 428px;
+			max-width: 375px;
 			margin: 0 auto;
 		}
 	}
