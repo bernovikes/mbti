@@ -1,10 +1,11 @@
 <template>
 	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}">
-		<view class="pt-30">
+		<view class="pt-30 flex justify-between">
 			<view class="white">
 				<view class="font-20 x-title lh-28">{{title}}</view>
 				<view class="f7 lh-17">测试去了解最真实的自己</view>
 			</view>
+			<image class="icon-emoji" src="https://res.vkunshan.com/depressed/index/emoji.png"></image>
 		</view>
 		<!--  -->
 		<!--  -->
@@ -298,5 +299,9 @@
 	.btn-submit {
 		background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%);
 		width: 103px;
+	}
+	.icon-emoji {
+		width: 47px;
+		height: 39px;
 	}
 </style>

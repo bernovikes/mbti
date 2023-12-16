@@ -1,7 +1,12 @@
 <template>
 	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-50">
-		<view class="font-18 color-414141 lh-25 b">抑郁测试</view>
-		<view class="color-414141 font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
+		<view class="flex justify-between">
+			<view>
+				<view class="font-18 color-414141 lh-25 b">Hi，今天又是美好的一天</view>
+				<view class="color-414141 font-11 lh-16">放下抑郁焦虑吧，愿您在这里找到自我</view>
+			</view>
+			<image class="icon-emoji" src="https://res.vkunshan.com/depressed/index/emoji.png"></image>
+		</view>
 		<swiper class="x-header-swiper mt-20" circular autoplay>
 			<swiper-item v-for="(item,index) in mock" :key="index" class="x-header-swiper-item f7 flex items-center white fw4 lh-20 regular">
 				<view class="pl3 pr3" v-text="item" />
@@ -9,31 +14,32 @@
 		</swiper>
 		<!--  -->
 		<view class="flex mt-22 x-grid justify-between">
-			<view @click="goTest(detail[0].id)" class="x-grid-left pt-12 pl-14 pb-14  border-box flex flex-column">
+			<view @click="goTest(detail[0].id)" class="x-grid-left pt3 pl3 pb-14  border-box flex flex-column relative">
+				<view class="absolute x-grid-rec lh-18 font-11 white fw5 tc">热门推荐</view>
 				<view class="color-22396b f6 lh-17 b">
-					<view>焦虑与抑郁状</view>
+					<view>焦虑与抑郁自评</view>
 					<view>
-						自评量表（SCL-90）
+						（SCL-90）
 					</view>
 				</view>
 				<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
 				<view class="color-2e72f5 bg-e5f2ff x-grid-num flex place-center font-11 mt-auto lh-16 fw5">90题</view>
 			</view>
 			<view class="x-grid-right flex flex-column h-100">
-				<view @click="goTest(detail[1].id)" class="x-grid-right-top  pt-12 pl-12 pb-14  border-box flex flex-column  w-100">
+				<view @click="goTest(detail[1].id)" class="x-grid-right-top  pt3 pl3 pb-14  border-box flex flex-column  w-100">
 					<view class="color-22396b f6 lh-17 b">
-						<view>抑郁风险自</view>												
-						<view>测量表（SDS）</view>
+						<view>抑郁风险自测</view>
+						<view>（SDS）</view>
 					</view>
 					<view class="white width-fit version font-10 lh-16  mt-10">标准版</view>
 					<view class="tr mt-6">
 						<view class="x-grid-num inline-flex place-center font-10 lh-16 fw5">20题</view>
 					</view>
 				</view>
-				<view @click="goTest(detail[2].id)" class="x-grid-right-bottom pt-12 pl-12 pb-14  border-box flex flex-column mt-auto w-100">
+				<view @click="goTest(detail[2].id)" class="x-grid-right-bottom pt3 pl3 pb-14  border-box flex flex-column mt-auto w-100">
 					<view class="color-22396b f6 lh-17 b">
-						<view>抑郁程度测</view>
-						<view>试量表（SDS）</view>
+						<view>抑郁程度测试</view>
+						<view>（SDS）</view>
 					</view>
 					<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
 					<view class="tr mt-6">
@@ -44,7 +50,7 @@
 		</view>
 		<!--  -->
 		<view class="mt-28">
-			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib"/>推荐测评</view>
+			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />推荐测评</view>
 			<view class="mt-18 pb-38">
 				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
 					<img src="https://res.vkunshan.com/depressed/index/logo.png" class="img-index-item db">
@@ -58,7 +64,7 @@
 		</view>
 		<!--  -->
 		<view>
-			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib"/>看Ta们说</view>
+			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />看Ta们说</view>
 			<view class="mt3 overflow-x-hidden x-comment relative">
 				<view :class="{'x-comment-move':chatWidth}" class="absolute x-comment-item" :style="{'--width':chatWidth}">
 					<view :style="[!index%2 ? '' :'margin-top:16px;margin-left:50px;']" class="x-bullet-chat flex items-center" v-for="(item,index) in chat">
@@ -155,7 +161,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.x-bg {		
+	.x-bg {
 		background: url(https://res.vkunshan.com/depressed/index/bg.png) 0 0 / 100% 159px no-repeat #F6F9FF;
 	}
 
@@ -290,5 +296,18 @@
 		height: 15px;
 		background: linear-gradient(360deg, #8BB2FF 0%, #5A92FF 100%);
 		border-radius: 2px;
+	}
+
+	.icon-emoji {
+		width: 47px;
+		height: 39px;
+	}
+
+	.x-grid-rec {
+		width: 60px;
+		background: linear-gradient(270deg, #FF616C 0%, #FF959C 100%);
+		border-radius: 11px 11px 11px 0px;
+		top: -8px;
+		right: -6px;
 	}
 </style>
