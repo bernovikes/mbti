@@ -24,7 +24,7 @@
 	}
 	const btn_text = computed(() => {
 		const val = detail.value
-		return val?.is_pay && !val?.all_unlock ? '升级完整报告' : '解锁分析报告'
+		return val?.is_pay && !val?.all_unlock ? '升级专属报告' : '解锁专属报告'
 	})
 </script>
 

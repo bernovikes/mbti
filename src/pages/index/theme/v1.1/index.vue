@@ -43,7 +43,7 @@
 					</view>
 					<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
 					<view class="tr mt-6">
-						<view class="x-grid-num inline-flex place-center font-10 lh-16 fw5">60题</view>
+						<view class="x-grid-num inline-flex place-center font-10 lh-16 fw5">50题</view>
 					</view>
 				</view>
 			</view>
@@ -281,8 +281,8 @@
 	}
 
 	.x-comment-move {
-		left: 95vw;
-		animation: 13s linear 0s move infinite;
+		left: 100%;		
+		animation: 20s linear 0s move infinite;
 	}
 
 	.x-header-swiper {

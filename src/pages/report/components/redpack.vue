@@ -14,7 +14,7 @@
 						<view class="f7 mt2 h2-redpack color-604018">可享受<view class="di color-fb2043 ml1 mr1">{{discount_text}}折</view>查看完整版报告</view>
 						<view class="x-redpack-bottom">
 							<view @click.stop="tapPay(detail.coupons[0].id)" class="btn pulse fw5 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{all_good_price-detail.coupons[0].price}}</text>
+								<text class="font-22">{{(all_good_price-detail.coupons[0].price).toFixed(2)}}</text>
 								<text class="font-18 di">¥</text>
 								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
 							</view>
@@ -30,7 +30,7 @@
 						<view class="x-redpack-tow-bottom tc">
 							<view class="color-ffd861 medium  f7 lh-17">您已获得 满额红包</view>
 							<view @click.stop="tapPay(detail.coupons[1].id)" class="btn pulse fw5 mt1 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{all_good_price-detail.coupons[1].price}}</text>
+								<text class="font-22">{{(all_good_price-detail.coupons[1].price).toFixed(2)}}</text>
 								<text class="font-18 di">¥</text>
 								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
 							</view>

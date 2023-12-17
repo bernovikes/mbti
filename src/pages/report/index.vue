@@ -3,6 +3,7 @@
 		<template v-if="isMobile()">
 			<share />
 		</template>
+		<bulletChat />
 		<view class="pl-14 white">
 			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">测试报告</view>
@@ -39,6 +40,7 @@
 </template>
 <script setup>
 	import 'url-search-params-polyfill';
+	import bulletChat from './components/bullet-chat.vue'
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
 	import share from './components/share.vue'
@@ -177,7 +179,7 @@
 				}
 				const pay_res = await createPayConfig(pay_params)
 				const urlparams_obj = queryString
-				const callback = `pages/callback/callback?${urlparams_obj}`
+				const callback = `pages/callback/index?${urlparams_obj}`
 				const result = payGetWay(env, [pay_res.data, callback])
 				if (result instanceof Promise) {
 					result.then((res) => {
