@@ -121,7 +121,7 @@
 			}
 		})
 	}
-	uni.$on('close_pay_dialog', () => redpackRef.value.open())
+	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && redpackRef.value.open())
 	uni.$on('wx_scan', (url) => {
 		if (url) {
 			uni.setStorageSync('scan', true)
