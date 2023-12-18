@@ -180,7 +180,7 @@
 	}
 
 	.x-grid-left {
-		background: url("https://res.vkunshan.com/depressed/index/v1/grid_left.png") bottom center / 167px 221px no-repeat;
+		background: url("https://res.vkunshan.com/depressed/index/v1/grid_left.png") bottom center / 100% 221px no-repeat;
 
 		.version {
 			background: linear-gradient(270deg, rgba(139, 178, 255, 0.6) 0%, rgba(90, 146, 255, 0.6) 100%);
