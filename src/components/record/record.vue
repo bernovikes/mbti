@@ -1,11 +1,7 @@
 <template>
-	<view class="cm-record min-h-100" :class="{'empty':!data.length && !loadding}">
+	<view class="min-h-100 bg-f5f6f7" :class="{'empty':!data.length && !loadding}">
 		<view class="x-navbar" :style="{'padding-top':statusBarHeight()}">
-			<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" :title="nav" @clickLeft="back">
-				<template v-slot:right>
-					<image class="img-header-emoji o-30 absolute" lazy-load src="https://res.vkunshan.com/static/images/image-header-emoji.png" />
-				</template>
-			</uni-nav-bar>
+			<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" :title="nav" @clickLeft="back" />
 		</view>
 		<!--  -->
 		<view class="pl-14 pr-14 mt-20 pb-20" v-if="data.length&&!loadding">
@@ -18,7 +14,7 @@
 						<slot name="status" :item="item"></slot>
 					</span>
 				</view>
-				<view class="mt-20 flex items-center">
+				<view class="mt-17 flex items-center">
 					<image class="icon" lazy-load src="https://res.vkunshan.com/static/log-ioc01.png" />
 					<span class="font-13 fw5 color-4b4b57 lh-18 ml-10">
 						<slot name="no" :item="item"></slot>
@@ -68,29 +64,19 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-	.cm-record {
-		background: url(https://res.vkunshan.com/static/home/home-gradient-bg.png) left top / 100% 273px no-repeat, linear-gradient(to bottom, #F7F8FF, #F7F8FF);
-	}
-
+<style lang="scss" scoped>	
 	.empty.cm-record {
 		background: white;
 		padding: 0;
 	}
 
-	.img-header-emoji {
-		width: 33px;
-		height: 27px;
-	}
-
 	.x-navbar,
 	.btn {
-		background: linear-gradient(247deg, #7FBFFE 0%, #9D91FE 100%);
+		background: linear-gradient(315deg, #5790FF 0%, #73A2FF 53%, #8EB4FF 100%);
 	}
 
 	.cm-record-item {
 		border-radius: 8px;
-		box-shadow: 2px 2px 16px 0px rgba(131, 119, 227, 0.29);
 	}
 
 	.cm-item-tag {

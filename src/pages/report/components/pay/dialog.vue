@@ -12,43 +12,46 @@
 			</view>
 			<!--  -->
 			<view class="bg-white pt-20 pl-20 pr-20 pb-18">
-				<view class="pl-68 pr-68" v-if="buyed">
-					<view class="x-pay-dialog__goods pt-22 relative  tc" v-for="(item,index) in goodsList" :key="index">
-						<view class="absolute x-pay-goods-top">
-							<view class="x-pay-submark font-11 lh-20 white fw5">报告特惠</view>
+				<view class="pb-safe">
+					<view class="pl-68 pr-68" v-if="buyed">
+						<view class="x-pay-dialog__goods pt-22 relative  tc" v-for="(item,index) in goodsList" :key="index">
+							<view class="absolute x-pay-goods-top">
+								<view class="x-pay-submark font-11 lh-20 white fw5">报告特惠</view>
+							</view>
+							<view class="f6 fw6 lh-20 color-616161">完整解析报告</view>
+							<view class="font-26 color-3d8dff font-dina b"><text class="f6">¥</text>{{item.discount_price}}</view>
+							<view class="f7 lh-20 fw5 color-c3c3c3 strike">¥{{item.origin_price}}</view>
+							<view class="white font-11 fw4 lh-20 x-pay-dialog__goods-bottom">已减¥{{item.origin_price-item.discount_price}}</view>
 						</view>
-						<view class="f6 fw6 lh-20 color-616161">完整解析报告</view>
-						<view class="font-26 color-3d8dff font-dina b"><text class="f6">¥</text>{{item.discount_price}}</view>
-						<view class="f7 lh-20 fw5 color-c3c3c3 strike">¥{{item.origin_price}}</view>
-						<view class="white font-11 fw4 lh-20 x-pay-dialog__goods-bottom">已减¥{{item.origin_price-item.discount_price}}</view>
 					</view>
+					<!--  -->
+					<checkbox-group @change="chooseGoods" class="flex x-goods justify-between" v-if="!buyed">
+						<label :class="{[item.type]:item.type,'active':active===item.type||!index}" class="x-goods-item relative  pt-26 border-box  flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
+							<view class="absolute x-pay-goods-top tc" v-if="index">
+								<view class="x-pay-submark font-11 lh-20 white fw5">超值加购</view>
+							</view>
+							<view :class="{'color-464646':!index,'color-616161':index}" class="f6 b lh-20">{{item.t1}}</view>
+							<view class="b mt2 t-discount-price lh-20">￥{{item.discount_price}}</view>
+							<view v-if="!index" class="strike f7 fw5 color-c3c3c3 lh-20 mt2">￥{{item.origin_price}}</view>
+							<view class="color-aaaaaa font-10 lh-20 mt2 lh-20" v-if="index">完整图文报告，各维度得分详解</view>
+							<view class="mt-auto bottom font-11 lh-27 w-100 tc">
+								{{item.bottom}}
+							</view>
+							<checkbox v-if="index" hidden :value="item.type" :checked="item.check" />
+						</label>
+					</checkbox-group>
+					<!--  -->
+					<radio-group class="mt-28" @change="choosePayMethod">
+						<label :class="{'active':pay_type===item.type}" class="flex items-center f7 lh-17 fw5 color-434446 x-pay-label" v-for="(item,index) in list" :key="index">
+							<image class="icon mr3" :src="`https://res.vkunshan.com/static/report/${item.icon}.png`" />
+							<text>{{item.label}}</text>
+							<radio hidden :value="item.type" :checked="item.check" />
+							<view class="radio ml-auto color-d7dce2 ba br-100 border-box" />
+						</label>
+					</radio-group>
+					<!--  -->
+					<view @click="submit" class="btn white flex items-center justify-center mt-28 lh-22">{{btn_text}}</view>
 				</view>
-				<!--  -->
-				<checkbox-group @change="chooseGoods" class="flex x-goods justify-between" v-if="!buyed">
-					<label :class="{[item.type]:item.type,'active':active===item.type||!index}" class="x-goods-item relative  pt-26 border-box  flex items-center justify-center flex-column" v-for="(item,index) in goodsList" :key="index">
-						<view class="absolute x-pay-goods-top tc" v-if="index">
-							<view class="x-pay-submark font-11 lh-20 white fw5">超值加购</view>
-						</view>
-						<view :class="{'color-464646':!index,'color-616161':index}" class="f6 b lh-20">{{item.t1}}</view>
-						<view :class="{'color-559bff':!index,'color-59566f':index}" class="b lh-20">￥{{item.discount_price}}</view>
-						<view class="strike f7 fw5 color-c3c3c3 lh-20">￥{{item.origin_price}}</view>
-						<view class="mt-auto bottom font-11 lh-27 w-100 tc">
-							{{item.bottom}}
-						</view>
-						<checkbox v-if="index" hidden :value="item.type" :checked="item.check" />
-					</label>
-				</checkbox-group>
-				<!--  -->
-				<radio-group class="mt-28" @change="choosePayMethod">
-					<label :class="{'active':pay_type===item.type}" class="flex items-center f7 lh-17 fw5 color-434446 x-pay-label" v-for="(item,index) in list" :key="index">
-						<image class="icon mr3" :src="`https://res.vkunshan.com/static/report/${item.icon}.png`" />
-						<text>{{item.label}}</text>
-						<radio hidden :value="item.type" :checked="item.check" />
-						<view class="radio ml-auto color-d7dce2 ba br-100 border-box" />
-					</label>
-				</radio-group>
-				<!--  -->
-				<view @click="submit" class="btn white flex items-center justify-center mt-28 lh-22">{{btn_text}}</view>
 			</view>
 		</view>
 	</uni-popup>
@@ -156,7 +159,7 @@
 <style scoped lang="scss">
 	.x-pay-dialog {
 		background: url(https://res.vkunshan.com/depressed/report/emoji.png) top 17px right 41px / 51px 43px no-repeat,
-			url(https://res.vkunshan.com/depressed/report/pay-dialog-header.png) 0 0 / 100% 76px no-repeat;	
+			url(https://res.vkunshan.com/depressed/report/pay-dialog-header.png) 0 0 / 100% 76px no-repeat;
 	}
 
 	.x-pay-dialog__header {
@@ -192,8 +195,22 @@
 		left: -1px;
 	}
 
-	.active.x-goods-item {
+	.active.x-goods-item::before {
+		content: " ";
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 28px;
+		height: 15px;
 		background: url("data:image/svg+xml,%3Csvg width='27.632' height='15' viewBox='0 0 27.632 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='91.115%25' y1='41.374%25' x2='0%25' y2='64.735%25' id='a'%3E%3Cstop stop-color='%23539AFF' offset='0%25'/%3E%3Cstop stop-color='%2398B6FF' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M0 0h18.632a9 9 0 0 1 9 9v6H4a4 4 0 0 1-4-4V0z' fill='url(%23a)'/%3E%3Cpath stroke='%23FFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M9 7.34l3.812 3.555L19.105 5'/%3E%3C/g%3E%3C/svg%3E") right top no-repeat;
+	}
+
+	.t-discount-price {
+		color: #59566F;
+	}
+
+	.active .t-discount-price {
+		color: #559BFF;
 	}
 
 	.icon {
@@ -224,16 +241,12 @@
 	.x-goods-item {
 		height: 136px;
 		border-radius: 8px;
-		border: 1px solid;
 		width: calc(50% - 7.5px);
+		box-shadow: 0 0 1px 1px #DCDCDC inset;
 	}
 
-	.lite.x-goods-item {
-		border-color: #C7DEFF;
-	}
-
-	.all.x-goods-item {
-		border-color: #DCDCDC;
+	.active.x-goods-item {
+		box-shadow: 0 0 1px 1px #C7DEFF inset;
 	}
 
 	.x-goods-item .bottom {

@@ -45,7 +45,7 @@
 				</view>
 			</template>
 			<template v-slot:body>
-				<view class="font-13 fw4 lh-26">
+				<view class="f6 fw4 lh-26">
 					抑郁症是世界四大疾病，但到2020年上升为世界第二大疾病；到目前为止，抑郁症的病因还不是很清楚，但可以肯定是，生物、心理、社会环境等多种因素参与了抑郁症的发病过程。生物学因素主要涉及遗传、神经生化、神经内分泌、神经再生等方面。
 				</view>
 			</template>
@@ -64,7 +64,7 @@
 			</template>
 			<template v-slot:body>
 				<view class="x-answer-body pl-20 pr-20 pt-10 pb-10">
-					<view v-for="(item,index) in speed" :key="index" class="font-13 flex items-center justify-between">
+					<view v-for="(item,index) in speed" :key="index" class="f6 flex items-center justify-between">
 						<view class="color-4c5264 lh-26 fw5">{{item.label}}</view>
 						<view class="lh-17 color-6e9fff">{{item.value}}</view>
 					</view>
@@ -84,7 +84,7 @@
 				</view>
 			</template>
 			<template v-slot:nopadding>
-				<view class="font-13 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4">
+				<view class="f6 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4">
 					{{prompt?.content}}
 				</view>
 			</template>
@@ -105,7 +105,7 @@
 				<l-echart ref="chart"></l-echart>
 			</template>
 			<template v-slot:body>
-				<view class="font-13 fw4 lh-26">
+				<view class="f6 fw4 lh-26">
 					{{degree?.config}}
 				</view>
 			</template>
@@ -163,8 +163,8 @@
 						<view v-if="item.h1" class="x-body-h1 mt-30 width-fit white lh-20  pt2 pb2  pl-14  pr-14  f6 fw4">
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
-						<view class="pt-22 pl-20 pr-20" v-if="item.content">
-							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
+						<view class="pt-22 pl-20 pr-20 color-53555c pre-wrap f6 fw4 lh-26" v-if="item.content">
+							{{item.content}}							
 						</view>
 					</view>
 				</view>
@@ -189,7 +189,7 @@
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
 						<view class="pt-22 pl-20 pr-20" v-if="item.content">
-							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
+							<view class="color-53555c pre-wrap f6 fw4 lh-26">{{item.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -217,10 +217,10 @@
 							<view class="x-factor-title bg-dce8ff f6 fw6 lh-20 pt1 pb1 pl-10 pr-10 width-fit color-5b92ff">{{item.h2}}</view>
 						</view>
 						<view class="pt-12 pl-20 pr-20" v-if="item.content">
-							<view class="color-53555c pre-wrap font-13 fw4 lh-26">{{item.content}}</view>
+							<view class="color-53555c pre-wrap f6 fw4 lh-26">{{item.content}}</view>
 						</view>
 						<view class="pt-12 pl-20 pr-20" v-if="item.h3">
-							<view class="color-357aff pre-wrap font-13 fw4 lh-26">{{item.h3}}</view>
+							<view class="color-357aff pre-wrap f6 fw4 lh-26">{{item.h3}}</view>
 						</view>
 					</view>
 				</view>
@@ -266,7 +266,7 @@
 	}
 	onMounted(() => {
 		watch(factorList, (nval) => {
-			drawradar()
+			setTimeout(() => drawradar(), 1000)
 		}, { immediate: true })
 	})
 </script>

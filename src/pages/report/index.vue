@@ -2,10 +2,10 @@
 	<view class="min-vh-100 pt-65 pb-30 x-bg">
 		<template v-if="isMobile()">
 			<share />
+			<bulletChat />
 		</template>
-		<bulletChat />
 		<view class="pl-14 white">
-			<view class="font-22 lh-30">{{detail?.question_bank_title}}</view>
+			<view class="font-22 lh-30 b">{{detail?.question_bank_title}}</view>
 			<view class="f6 lh-20">测试报告</view>
 			<view class="x-header-line mt3 mb-20"></view>
 			<view class="f7 lh-21 ba width-fit x-created_time">报告生成时间：{{detail.created_at}}</view>
@@ -99,7 +99,7 @@
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)			
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
@@ -113,8 +113,8 @@
 		uni.showModal({
 			title: '距获得解读只差最后一步',
 			content: "98%的用户认为结果的准确性远远超出预期",
-			confirmText: '继续支付',
-			cancelText: '残忍离开'
+			confirmText: '立即解锁',
+			cancelText: '还在考虑'
 		}).then(res => {
 			if (res.cancel) {
 				redpackRef.value.open()

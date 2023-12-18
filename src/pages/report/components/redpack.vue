@@ -1,40 +1,35 @@
 <template>
 	<view>
 		<view class="dn">
-			<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592" />
-			<image lazy-load src="https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638" />
+			<image lazy-load src="https://res.vkunshan.com/depressed/report/redpack1.png" />
+			<image lazy-load src="https://res.vkunshan.com/depressed/report/redpack2.png" />
 		</view>
 		<uni-popup ref="redpack">
 			<view v-if="Object.values(detail).length" class="fixed z-999 bg-black-60 flex-column flex justify-center items-center  left-0 right-0 top-0 bottom-0">
 				<block v-if="redpack1">
 					<view class="x-redpack-one-container tc dib">
-						<view class="f7 color-e57358  pt1">惊喜红包</view>
-						<view class="f7 lh-solid color-e0890a mt-18">恭喜获得红包</view>
-						<view class="font-dina b block  h1-redpack">{{detail.coupons[0].price}}</view>
-						<view class="f7 mt2 h2-redpack color-604018">可享受<view class="di color-fb2043 ml1 mr1">{{discount_text}}折</view>查看完整版报告</view>
+						<view class="f7 lh-solid color-e0890a  pt-50">恭喜获得红包</view>
+						<view class="font-dina b lh-74 h1-redpack">{{detail.coupons[0].price}}</view>
 						<view class="x-redpack-bottom">
 							<view @click.stop="tapPay(detail.coupons[0].id)" class="btn pulse fw5 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{(all_good_price-detail.coupons[0].price).toFixed(2)}}</text>
-								<text class="font-18 di">¥</text>
-								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
+								<text class="font-21 btn-left lh-30">¥{{(all_good_price-detail.coupons[0].price).toFixed(2)}}</text>
+								<text class="font-15 lh-21 ml-10">解锁完整报告</text>
 							</view>
-							<view @click.stop="showRedpack" class="btn-redpack-exit width-fit center mt3 font-15 color-ffd187 lh-21 medium">放弃我的报告</view>
+							<view @click.stop="showRedpack" class="btn-redpack-exit pt2 pb2 pl-34 pr-34  border-box width-fit center mt3 f6 color-ffd187 lh-21 medium">放弃我的报告</view>
 						</view>
 					</view>
 				</block>
 				<block v-if="redpack2">
 					<view class="x-redpack-tow-container tc dib">
-						<view class="f7 color-e57358 x-redpack-tow-h2 ">惊喜红包</view>
-						<view class="f7 lh-solid color-e0890a mt-12">恭喜获得红包</view>
-						<view class="font-dina b block  h1-redpack">{{detail.coupons[1].price}}</view>
+						<view class="f7 lh-solid color-e0890a pt-40">恭喜获得大额红包</view>
+						<view class="font-dina b lh-74 h1-redpack">{{detail.coupons[1].price}}</view>
 						<view class="x-redpack-tow-bottom tc">
-							<view class="color-ffd861 medium  f7 lh-17">您已获得 满额红包</view>
-							<view @click.stop="tapPay(detail.coupons[1].id)" class="btn pulse fw5 mt1 color-e9042a center flex items-center width-fit">
-								<text class="font-22">{{(all_good_price-detail.coupons[1].price).toFixed(2)}}</text>
-								<text class="font-18 di">¥</text>
-								<text class="f7 lh-17 ml1 o-50">解锁完整报告</text>
+							<view class="color-ffd861 medium  f7 lh-17">您已获得满额红包</view>
+							<view @click.stop="tapPay(detail.coupons[1].id)" class="btn pulse fw5 mt3 color-e9042a center flex items-center width-fit">
+								<text class="font-21 btn-left lh-30">¥{{(all_good_price-detail.coupons[1].price).toFixed(2)}}</text>
+								<text class="font-15 lh-21 ml-10">解锁完整报告</text>
 							</view>
-							<view @click="goFollow" class="btn-redpack-exit width-fit center mt-13 font-15 color-ffd187 lh-21 medium">退出销毁</view>
+							<view @click="goFollow" class="btn-redpack-exit pt2 pb2 pl-46 pr-46 width-fit border-box center mt-13 f6 color-ffd187 lh-21 medium">退出销毁</view>
 						</view>
 					</view>
 					<view class="f7 o-70 white absolute x-redpack-tip">小雅提示您:退出后进入自动销毁报告队列</view>
@@ -98,12 +93,11 @@
 
 <style scoped lang="scss">
 	.x-redpack-one-container {
-		width: 82%;
-		height: 50.5%;
-		max-height: 337px;
-		background: url("https://res.vkunshan.com/static/report/redpack/redpack_bg_1.png?x-oss-process=image/resize,w_592") right top no-repeat,
-			url(https://res.vkunshan.com/static/report/redpack/redpack_ip.png) left bottom no-repeat;
-		background-size: 97% 100%, 98px 131px;
+		width: 77%;
+		height: 60.5%;
+		max-height: 397px;
+		background: url("https://res.vkunshan.com/depressed/report/redpack1.png?v=3") center top no-repeat;
+		background-size: 97% 100%;
 		margin: auto;
 	}
 
@@ -120,31 +114,34 @@
 
 	.btn {
 		border-radius: 25px;
-		height: 35px;
-		padding: 0 20px;
+		// height: 48px;
+		padding: 10px 26px 8px 31px;
 		background: linear-gradient(to bottom, #FFE68C, #FFD045);
 		box-shadow: 6px 4px 16px 0 rgba(78, 0, 21, 0.17);
 	}
 
+	.btn-left {
+		letter-spacing: 2px;
+	}
+
 	.x-redpack-bottom {
-		margin-top: 23%;
+		margin-top: 32.5%;
 	}
 
 	.btn-redpack-exit {
-		padding: 4px 20px;
 		border: solid 1px currentColor;
 		border-radius: 20px;
 	}
 
 	.x-redpack-tow-container {
-		background: url(https://res.vkunshan.com/static/report/redpack/redpack_bg_2.png?x-oss-process=image/resize,w_638&v=2) left top / 100% 100% no-repeat;
-		width: 100%;
+		background: url(https://res.vkunshan.com/depressed/report/redpack2.png?v=3) left top / 100% 100% no-repeat;
+		width: 77%;
 		height: 67.7%;
-		max-height: 447px;
+		max-height: 439px;
 	}
 
 	.x-redpack-tow-bottom {
-		margin-top: 24%;
+		margin-top: 41.9%;
 	}
 
 	.x-redpack-tip {

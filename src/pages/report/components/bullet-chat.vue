@@ -1,6 +1,6 @@
 <template>
 	<block v-if="chat.length">
-		<view class="x-bullet-chat fixed z-3 top-0" :style="{'--delay':detail.is_pay ? '10s':'3s','--finish':chat.length}">
+		<view class="x-bullet-chat fixed z-999 top-0" :style="{'--delay':detail.is_pay ? '10s':'3s','--finish':chat.length}">
 			<view :style="{top:`${2+((index%2)*2.5)}rem`,'--index':index}" v-for="(item,index) in chat" :key="index" class="x-bullet-chat-item   absolute  f7 lh-17 flex items-center color-242142">
 				<image :src="item.url" class="img-avatar br-100 mr1" />
 				{{item.text}}

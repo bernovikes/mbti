@@ -2,7 +2,7 @@
 	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}">
 		<view class="pt-30 flex justify-between">
 			<view class="white">
-				<view class="font-20 x-title lh-28">{{title}}</view>
+				<view class="font-20 b x-title lh-28">{{title}}</view>
 				<view class="f7 lh-17">测试去了解最真实的自己</view>
 			</view>
 			<image class="icon-emoji" src="https://res.vkunshan.com/depressed/index/emoji.png"></image>
@@ -17,16 +17,20 @@
 			<view class="bg-f5f6fa x-progress-bar mt2">
 				<view class="x-progress" :style="{'--width':progress}"></view>
 			</view>
+			<view class="mt-22" v-if="!chooseHistory.length">
+				<img v-if="rule_type==='sds'" class="img-cover-sds db w-100" src="https://res.vkunshan.com/depressed/answer/sds.png" />
+				<img v-if="rule_type==='scl90'" class="img-cover-scl90 db w-100" src="https://res.vkunshan.com/depressed/answer/scl90.png" />
+			</view>
 			<view class="mt-22 font-17 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
 			<!--  -->
 			<view class="mt-24">
 				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
 			</view>
 			<!--  -->
-		</view>
-		<view class="flex items-center">
-			<view v-if="chooseHistory.length" @click="getPrevResult" class="f6 fw5 mt3 lh-20 color-9095a4 bg-white btn flex items-center justify-center">上一题</view>
-			<view v-if="doned" @click="submit" class="f6 fw5 mt3 ml-auto lh-20  white btn-submit flex items-center justify-center">查看结果</view>
+			<view class="flex items-center justify-between mt-38">
+				<view v-if="chooseHistory.length" @click="getPrevResult" class="f6 fw5 lh-20 color-9095a4 bg-white btn flex items-center justify-center">上一题</view>
+				<view v-if="doned" @click="submit" class="f6 fw5  lh-20  white btn-submit flex items-center justify-center">查看结果</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -48,6 +52,7 @@
 	const doned = ref(false)
 	const chooseHistory = ref([])
 	const choose_value = ref('')
+	const rule_type = ref('')
 	let disable_submit = false
 	let timer = ''
 	let detail = ''
@@ -63,6 +68,7 @@
 				title.value = data.title
 				const { question } = data
 				total.value = question.length
+				rule_type.value = data.rule_type
 				initStack(question)
 				getQuestionList()
 			}
@@ -287,21 +293,30 @@
 
 	.btn-submit,
 	.btn {
-		border-radius: 16px;
-		height: 32px;
+		border-radius: 18px;
+		height: 36px;
 	}
 
 	.btn {
-		width: 86px;
-		box-shadow: 2px 2px 8px 0 rgba(105, 99, 122, 0.17);
+		width: 92px;
+		background: rgba(240, 247, 252, .8);
 	}
 
 	.btn-submit {
 		background: linear-gradient(270deg, #8BB2FF 0%, #5A92FF 100%);
-		width: 103px;
+		width: 177px;
 	}
+
 	.icon-emoji {
 		width: 47px;
 		height: 39px;
+	}
+
+	.img-cover-sds {
+		height: 143px;
+	}
+
+	.img-cover-scl90 {
+		height: 171px;
 	}
 </style>

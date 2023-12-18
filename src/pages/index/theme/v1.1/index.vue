@@ -31,8 +31,8 @@
 						<view>抑郁风险自测</view>
 						<view>（SDS）</view>
 					</view>
-					<view class="white width-fit version font-10 lh-16  mt-10">标准版</view>
-					<view class="tr mt-6">
+					<view class="white width-fit version font-10 lh-16  mt2">标准版</view>
+					<view class="tr">
 						<view class="x-grid-num inline-flex place-center font-10 lh-16 fw5">20题</view>
 					</view>
 				</view>
@@ -41,8 +41,8 @@
 						<view>抑郁程度测试</view>
 						<view>（SDS）</view>
 					</view>
-					<view class="white width-fit version font-10 lh-16  mt-10">专业版</view>
-					<view class="tr mt-6">
+					<view class="white width-fit version font-10 lh-16  mt2">专业版</view>
+					<view class="tr">
 						<view class="x-grid-num inline-flex place-center font-10 lh-16 fw5">50题</view>
 					</view>
 				</view>
@@ -58,7 +58,7 @@
 						<view class="color-22396b f6 b lh-18">MBTI人格测试</view>
 						<view class="font-11 fw4 color-aeb1b8">深入地了解自己的人格类型</view>
 					</view>
-					<view class="color-6fa7ff f7 ml-auto fw5 lh-22 pl-13 pr-13 btn-index-item bg-e5f2ff">进入测试</view>
+					<view class="color-6fa7ff f7 ml-auto fw5 lh-25 pl-12 pr-12 btn-index-item bg-e5f2ff">进入测试</view>
 				</view>
 			</view>
 		</view>
