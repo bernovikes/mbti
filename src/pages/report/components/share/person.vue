@@ -5,7 +5,7 @@
 		</view>
 		<view class="relative width-fit center" @click.stop="empty">
 			<view class="tc">
-				<image mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/person-bg.png" />
+				<image mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/person-bg.png?v=2" />
 			</view>
 			<view class="absolute top-0 pt-90 x-content left-0">
 				<view class="pr-38 pl-38">
@@ -14,8 +14,7 @@
 						<view class="f7 white-90 lh-17 tl">{{detail?.created_at}}</view>
 					</view>
 					<view class="x-bottom-text flex items-center">
-						<image class="img-launch flex-shrink-0" src="https://res.vkunshan.com/depressed/report/poster/launch.png" />
-						<view class="font-11 fw4 white ml2 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
+						<view class="font-11 fw4 white ml-38 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
 					</view>
 				</view>
 				<view class="tr pr-20 x-qrcode mt-28">

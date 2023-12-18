@@ -312,11 +312,8 @@
 		height: 39px;
 	}
 
+	.img-cover-scl90,
 	.img-cover-sds {
-		height: 143px;
-	}
-
-	.img-cover-scl90 {
 		height: 171px;
 	}
 </style>
