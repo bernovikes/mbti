@@ -36,10 +36,12 @@
 				<uQRCode ref="uqrcode" :text="scan_url" :size="150"></uQRCode>
 			</view>
 		</uni-popup>
+		<rmodel ref="rmodelRef" @cancel="redpackRef.open" title="温馨提示" content="获得解读只差最后一步，96%的用户对报告准确率比较认可，请您认真对待自己的身心健康！" confirmText="立刻解锁" cancelText="退出销毁" />
 	</view>
 </template>
 <script setup>
 	import 'url-search-params-polyfill';
+	import rmodel from './components/model.vue'
 	import bulletChat from './components/bullet-chat.vue'
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
@@ -56,7 +58,6 @@
 	import { HTTP_SUCCESS } from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
-	import sdsMock from './mock/sds.json'
 	const page = getCurrentPages().slice(-1)[0]
 	const route = { query: page.$page.options, route: page.route }
 	const detail = ref('')
@@ -68,6 +69,7 @@
 	])
 	provide('speed', speed)
 	const redpackRef = ref('')
+	const rmodelRef = ref('')
 	let payIntervalTimer = ''
 	const tempUser = uni.getStorageSync('tempUser')
 	const login_user = uni.getStorageSync('login_user')
@@ -99,7 +101,7 @@
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)			
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
@@ -110,18 +112,14 @@
 	const queryString = new URLSearchParams({ ...route.query })
 	// 离开当前页面,弹出红包
 	const backvoid = () => {
-		uni.showModal({
-			title: '距获得解读只差最后一步',
-			content: "98%的用户认为结果的准确性远远超出预期",
-			confirmText: '立即解锁',
-			cancelText: '还在考虑'
-		}).then(res => {
-			if (res.cancel) {
-				redpackRef.value.open()
-			}
-		})
+		try {
+			rmodelRef.value.open()
+		} catch (e) {
+			console.log(e)
+			//TODO handle the exception
+		}
 	}
-	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && redpackRef.value.open())
+	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && rmodelRef.value.open())
 	uni.$on('wx_scan', (url) => {
 		if (url) {
 			uni.setStorageSync('scan', true)
@@ -154,7 +152,15 @@
 			}
 		})
 	})
+	let createOrderIng = false
 	uni.$on('callpay', async (argv) => {
+		if (createOrderIng) {
+			uni.showToast({
+				title: '请勿快速点击',
+				icon: 'none'
+			})
+			return false
+		}
 		const { goods_id, pay_method } = argv
 		const env = payEnvCheck(pay_method)
 		const params = {
@@ -170,6 +176,11 @@
 			params['user_id'] = user_id
 		}
 		try {
+			createOrderIng = true
+			uni.showLoading({
+				title: '正在创建订单...',
+				mask: true
+			})
 			const { code, data } = await createOrder(params)
 			if (code === HTTP_SUCCESS) {
 				uni.setStorageSync('trace_no', data.trace_no)
@@ -178,6 +189,8 @@
 					pay_params['user_id'] = user_id
 				}
 				const pay_res = await createPayConfig(pay_params)
+				createOrderIng = false
+				uni.hideLoading()
 				const urlparams_obj = queryString
 				const callback = `pages/callback/index?${urlparams_obj}`
 				const result = payGetWay(env, [pay_res.data, callback])
@@ -187,7 +200,7 @@
 					}).catch(() => {})
 				}
 			}
-		} catch (e) {
+		} catch (e) {			
 			//TODO handle the exception
 		}
 	})

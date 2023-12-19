@@ -91,20 +91,20 @@
 	const active = ref('all')
 	const list = reactive([{
 			type: 'wechat',
-			label: '微信',
+			label: '微信支付',
 			rec: true,
 			check: true,
 			icon: 'icon-wxpay',
 		},
 		{
 			type: 'alipay',
-			label: '支付宝',
+			label: '支付宝支付',
 			check: false,
 			icon: 'icon-alipay',
 		},
 		{
 			type: 'wechat_scan',
-			label: '微信扫码支付',
+			label: '微信扫码（支持他人扫码）',
 			check: false,
 			icon: 'icon-wxpay',
 		},
