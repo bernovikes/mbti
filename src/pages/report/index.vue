@@ -113,13 +113,13 @@
 	// 离开当前页面,弹出红包
 	const backvoid = () => {
 		try {
-			rmodelRef.value.open()
+			rmodelRef.value?.open()
 		} catch (e) {
 			console.log(e)
 			//TODO handle the exception
 		}
 	}
-	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && rmodelRef.value.open())
+	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && rmodelRef.value?.open())
 	uni.$on('wx_scan', (url) => {
 		if (url) {
 			uni.setStorageSync('scan', true)
