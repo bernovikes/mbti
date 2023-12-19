@@ -84,7 +84,7 @@
 				</view>
 			</template>
 			<template v-slot:nopadding>
-				<view class="f6 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4">
+				<view class="f6 pt-20 pl-20 pr-20 pb-20 color-53555c lh-26 fw4 pre-wrap">
 					{{prompt?.content}}
 				</view>
 			</template>
@@ -105,7 +105,7 @@
 				<l-echart ref="chart"></l-echart>
 			</template>
 			<template v-slot:body>
-				<view class="f6 fw4 lh-26">
+				<view class="f6 fw4 lh-26 pre-wrap">
 					{{degree?.config}}
 				</view>
 			</template>
