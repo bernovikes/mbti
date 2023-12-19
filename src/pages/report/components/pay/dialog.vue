@@ -21,7 +21,7 @@
 							<view class="f6 fw6 lh-20 color-616161">完整解析报告</view>
 							<view class="font-26 color-3d8dff font-dina b"><text class="f6">¥</text>{{item.discount_price}}</view>
 							<view class="f7 lh-20 fw5 color-c3c3c3 strike">¥{{item.origin_price}}</view>
-							<view class="white font-11 fw4 lh-20 x-pay-dialog__goods-bottom">已减¥{{item.origin_price-item.discount_price}}</view>
+							<view class="white font-11 fw4 lh-20 x-pay-dialog__goods-bottom">因子详细解析</view>
 						</view>
 					</view>
 					<!--  -->
@@ -31,7 +31,14 @@
 								<view class="x-pay-submark font-11 lh-20 white fw5">超值加购</view>
 							</view>
 							<view :class="{'color-464646':!index,'color-616161':index}" class="f6 b lh-20">{{item.t1}}</view>
-							<view class="b mt2 t-discount-price lh-20">￥{{item.discount_price}}</view>
+							<view class="b mt2 t-discount-price lh-20">
+								<block v-if="!index">
+									￥{{item.discount_price}}
+								</block>
+								<block v-if="index">
+									￥{{(item.discount_price-goodsList[0]?.discount_price).toFixed(2)}}
+								</block>
+							</view>
 							<view v-if="!index" class="strike f7 fw5 color-c3c3c3 lh-20 mt2">￥{{item.origin_price}}</view>
 							<view class="color-aaaaaa font-10 lh-20 mt2 lh-20" v-if="index">完整图文报告，各维度得分详解</view>
 							<view class="mt-auto bottom font-11 lh-27 w-100 tc">
@@ -71,7 +78,7 @@
 			t1: '基础版报告',
 			check: false,
 			redpack: 0,
-			bottom: '',
+			bottom: '简要分析',
 		},
 		{
 			t1: '完整版报告',
@@ -137,10 +144,7 @@
 		}
 		goods.value = goodsList.value[buyed.value ? 0 : 1]
 		const goods_type = buyed.value ? ['diff'] : ['lite', 'all']
-		const filter_goods_list = question_bank_goods.filter(item => goods_type.includes(item.type)).map((item, index) => {
-			if (['lite', 'diff'].includes(item.type)) {
-				goodsList.value[index].bottom = `已减￥${item.goods.origin_price-item.goods.discount_price}`
-			}
+		const filter_goods_list = question_bank_goods.filter(item => goods_type.includes(item.type)).map((item, index) => {	
 			goodsList.value[index].id = item.goods_id
 			goodsList.value[index].type = item.type
 			goodsList.value[index].discount_price = item.goods.discount_price

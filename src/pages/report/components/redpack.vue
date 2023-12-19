@@ -8,7 +8,7 @@
 			<view v-if="Object.values(detail).length" class="fixed z-999 bg-black-60 flex-column flex justify-center items-center  left-0 right-0 top-0 bottom-0">
 				<block v-if="redpack1">
 					<view class="x-redpack-one-container tc dib">
-						<view class="f7 lh-solid color-e0890a  pt-50">恭喜获得红包</view>
+						<view class="f7 lh-solid color-e0890a  pt-50">恭喜获得优惠红包</view>
 						<view class="font-dina b lh-74 h1-redpack">{{detail.coupons[0].price}}</view>
 						<view class="x-redpack-bottom">
 							<view @click.stop="tapPay(detail.coupons[0].id)" class="btn pulse fw5 color-e9042a center flex items-center width-fit">
@@ -21,7 +21,7 @@
 				</block>
 				<block v-if="redpack2">
 					<view class="x-redpack-tow-container tc dib">
-						<view class="f7 lh-solid color-e0890a pt-40">恭喜获得大额红包</view>
+						<view class="f7 lh-solid color-e0890a pt-40">恭喜获得大额优惠红包</view>
 						<view class="font-dina b lh-74 h1-redpack">{{detail.coupons[1].price}}</view>
 						<view class="x-redpack-tow-bottom tc">
 							<view class="color-ffd861 medium  f7 lh-17">您已获得满额红包</view>
