@@ -36,7 +36,7 @@
 				<uQRCode ref="uqrcode" :text="scan_url" :size="150"></uQRCode>
 			</view>
 		</uni-popup>
-		<rmodel ref="rmodelRef" @cancel="redpackRef.open" title="温馨提示" content="获得解读只差最后一步，96%的用户对报告准确率比较认可，请您认真对待自己的身心健康！" confirmText="立刻解锁" cancelText="退出销毁" />
+		<rmodel ref="rmodelRef" @cancel="redpackRef.open" title="温馨提示" content="获得解读只差最后一步，96%的用户对报告准确率比较认可，请您认真对待自己的身心健康！" confirmText="还在考虑" cancelText="退出销毁" />
 	</view>
 </template>
 <script setup>
