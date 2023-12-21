@@ -29,6 +29,14 @@
 			<view class="radio br-100 mr1"></view>
 			我已阅读并同意<view class="color-687b8a" @click="agreement">《用户协议》</view>
 		</label>
+		<!-- #ifdef APP-PLUS -->
+		<view class="f7 color-5e6173 tc mt-75">第三方登录</view>
+		<view class="flex items-center justify-center pt-12 pb3">
+			<view v-for="(item,index) in sso" :key="index" class="login-sso-item" @click="item.fn">
+				<image class="icon" :src="item.icon" />
+			</view>
+		</view>
+		<!-- #endif -->
 	</view>
 </template>
 <script setup>
@@ -36,7 +44,28 @@
 	import { ref } from 'vue'
 	import { onUnload } from '@dcloudio/uni-app'
 	import { HTTP_SUCCESS } from '@/enum/http.js'
+	import { wechatAppLogin } from '@/common/lib.js'
 	const login_user = uni.getStorageSync('login_user')
+	const WechatLogin = () => {
+		if (!form.value.check) {
+			uni.showModal({
+				title: '提示',
+				content: '我已阅读并同意用户协议和隐私协议',
+				success: (res) => {
+					if (res.confirm) {
+						form.value.check = true
+						wechatAppLogin()
+					}
+				}
+			})
+		} else {
+			wechatAppLogin()
+		}
+	}
+	const sso = [{
+		icon: 'https://res.vkunshan.com/login/login-wechat.png',
+		fn: WechatLogin,
+	}]
 	if (login_user) {
 		uni.switchTab({
 			url: '/pages/index/index'
@@ -125,152 +154,6 @@
 			//TODO handle the exception
 		}
 	}
-	// import cache from "../../common/js/cache";
-	// import {
-	// 	wechatAuth,
-	// 	getLogin,
-	// 	wechatAppLogin
-	// } from '../../common/js/lib.js'
-	// export default {
-	// 	data() {
-	// 		return {
-	// 			send: false,
-	// 			countDown: 0,
-	// 			form: {
-	// 				phone: '',
-	// 				code: '',
-	// 				check: false,
-	// 			},
-	// 			sso: [{
-	// 				icon: 'icon_wechat',
-	// 				fn: this.WechatLogin,
-	// 			}]
-	// 		}
-	// 	},
-	// 	onUnload() {
-	// 		clearTimeout(this.timer)
-	// 	},
-	// 	methods: {
-	// 		agreement() {
-	// 			uni.setStorageSync('fromPage', '/pages/login/login')
-	// 			uni.navigateTo({
-	// 				url: '/pages/article/article?hide=1&type=1&title=服务协议'
-	// 			})
-	// 		},
-	// 		wechatLoginCheck() {
-	// 			if (this.is_wechat) {
-	// 				uni.showToast({
-	// 					icon: 'none',
-	// 					title: '请点击微信登录',
-	// 				})
-	// 				return false
-	// 			}
-	// 			return true
-	// 		},
-	// 		async login() {
-	// 			this.wechatLoginCheck()
-	// 			const {
-	// 				phone,
-	// 				code: sms_code
-	// 			} = this.form
-	// 			if (this.vaild()) {
-	// 				try {
-	// 					const {
-	// 						code,
-	// 						data,
-	// 						msg
-	// 					} = await methodsApi.smsLogin({
-	// 						phone,
-	// 						sms_code
-	// 					})
-	// 					if (code === this.$store.state.http.success) {
-	// 						cache.set('login', data)
-	// 						let url = uni.getStorageSync('fromPage') || '/pages/index/index'
-	// 						uni.setStorageSync('fromPage', '')
-	// 						uni.reLaunch({
-	// 							url
-	// 						})
-	// 					} else {
-	// 						uni.showToast({
-	// 							icon: 'none',
-	// 							title: msg,
-	// 						})
-	// 					}
-	// 				} catch (e) {
-	// 					//TODO handle the exception
-	// 				}
-	// 			}
-	// 		},
-	// 		WechatLogin() {
-	// 			// #ifdef H5
-	// 			if (this.$wechat.isWechat()) {
-	// 				wechatAuth()
-	// 			}
-	// 			// #endif
-	// 			// #ifdef APP-PLUS
-	// 			wechatAppLogin()
-	// 			// #endif
-	// 		},
-	// 		agree({
-	// 			detail: {
-	// 				value
-	// 			}
-	// 		}) {
-	// 			this.form.check = value
-	// 		},
-	// 		async sendCode() {
-	// 			if (!this.wechatLoginCheck()) {
-	// 				return false
-	// 			}
-	// 			if (!this.vaild(['phone', 'rule_phone']) || this.send) {
-	// 				return false
-	// 			}
-	// 			this.timer && clearInterval(this.timer)
-	// 			let t = 60
-	// 			const raf = () => {
-	// 				if (t <= 0) {
-	// 					clearInterval(this.timer)
-	// 					this.send = false
-	// 					t = 0
-	// 					return false
-	// 				}
-	// 				this.countDown = t--
-	// 				this.send = true
-	// 			}
-	// 			this.timer = setInterval(raf, 1000)
-	// 			try {
-	// 				const {
-	// 					msg
-	// 				} = await methodsApi.sendSms({
-	// 					phone: this.form.phone,
-	// 				})
-	// 				uni.showToast({
-	// 					icon: 'none',
-	// 					title: msg
-	// 				})
-	// 			} catch (e) {
-	// 				//TODO handle the exception
-	// 			}
-	// 		},
-	// 		vaild(field = ['phone', 'code', 'check', 'rule_phone']) {
-	// 			const message = {
-	// 				phone: '请输入手机号',
-	// 				code: '请输入验证码',
-	// 				check: '请阅读并勾选用户协议',
-	// 				rule_phone: '请输入正确手机号'
-	// 			}
-	// 			return field.every(item => {
-	// 				const val = item === 'rule_phone' ? /^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.form.phone) : this
-	// 					.form[item];
-	// 				!val && uni.showToast({
-	// 					icon: 'none',
-	// 					title: message[item]
-	// 				})
-	// 				return !!val
-	// 			})
-	// 		},
-	// 	}
-	// }
 </script>
 <style lang="scss" scoped>
 	.x-bg {
@@ -319,5 +202,14 @@
 
 	.agree {
 		padding-left: 55px;
+	}
+
+	.login-sso-item:not(:last-child) {
+		margin-right: 30px;
+	}
+
+	.icon {
+		width: 28px;
+		height: 28px;
 	}
 </style>

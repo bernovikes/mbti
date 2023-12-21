@@ -30,7 +30,8 @@
 
 <style lang="scss" scoped>
 	.x-lock-bg {
-		background: url(https://res.vkunshan.com/depressed/report/blur_v5.png) 110% 200% repeat rgba(255, 255, 255, .6);
+		background: url(https://res.vkunshan.com/depressed/report/blur_v5.png) repeat rgba(255, 255, 255, .8);
+		transform: translateX(0);
 	}
 
 	.btn {

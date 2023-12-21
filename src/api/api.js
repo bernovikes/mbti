@@ -83,3 +83,10 @@ export function fetchTopic(id) {
 export function postFeedback(data) {
 	return request(`/api/feedback`, 'POST', data)
 }
+
+/** 
+ * app登录
+ */
+export function appLogin(data) {
+	return request(`/api/login/app/login`, 'POST', data)
+}

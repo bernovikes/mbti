@@ -1,3 +1,5 @@
+import { appLogin } from '@/api/api.js'
+import { HTTP_SUCCESS } from '@/enum/http';
 export const isWechat = () => {
 	// #ifdef H5
 	var ua = navigator.userAgent.toLowerCase();
@@ -44,4 +46,36 @@ export const structuredClone = (argv) => {
 	// #ifdef APP-PLUS || MP
 	return _clone(argv)
 	// #endif
+}
+export const wechatAppLogin = () => {
+	uni.login({
+		provider: 'weixin',
+		async success(loginRes) {
+			try {
+				const { data, code } = await appLogin({
+					access_token: loginRes.authResult.access_token,
+					openid: loginRes.authResult.openid,
+				})
+				if (code === HTTP_SUCCESS) {
+					uni.setStorageSync('login_user', { id: data?.user_id, nickname: '微信用户' })
+					uni.switchTab({
+						url: '/pages/index/index'
+					})
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: res.msg,
+					})
+				}
+			} catch (e) {
+				//TODO handle the exception
+			}
+		},
+		fail(err) {
+			uni.showModal({
+				'title': '提示',
+				'content': JSON.stringify(err)
+			})
+		}
+	})
 }
