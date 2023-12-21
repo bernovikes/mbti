@@ -164,7 +164,7 @@
 							<view class="icon-dot dib bg-white br-100 mr2"></view>{{item.h1}}
 						</view>
 						<view class="pt-22 pl-20 pr-20 color-53555c pre-wrap f6 fw4 lh-26" v-if="item.content">
-							{{item.content}}							
+							{{item.content}}
 						</view>
 					</view>
 				</view>
@@ -232,6 +232,8 @@
 <script setup>
 	import uiBlock from './components/ui-block.vue'
 	import LEchart from '@/uni_modules/lime-echart/components/l-echart/l-echart.vue'
+	import { radar } from './sds/radar.js'
+	import line from './sds/line.js'
 	import { inject, computed, onMounted, watch, ref, nextTick } from 'vue'
 	const chart = ref('')
 	const lineChart = ref('')
@@ -257,12 +259,8 @@
 				max: maxNumber
 			}
 		})
-		import('./sds/line.js').then(({ default: line }) => {
-			line(charData, factor, lineChart.value)
-		})
-		import('./sds/radar.js').then(({ radar }) => {
-			radar([{ value: charData }], maxNumber, chart.value, indicator)
-		})
+		line(charData, factor, lineChart.value)
+		radar([{ value: charData }], maxNumber, chart.value, indicator)
 	}
 	onMounted(() => {
 		watch(factorList, (nval) => {

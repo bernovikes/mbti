@@ -30,9 +30,7 @@
 
 <style lang="scss" scoped>
 	.x-lock-bg {
-		background: rgb(255, 255, 255, .5);
-		backdrop-filter: blur(5px);
-		border-radius: 12px;
+		background: url(https://res.vkunshan.com/depressed/report/blur_v5.png) 110% 200% repeat rgba(255, 255, 255, .6);
 	}
 
 	.btn {

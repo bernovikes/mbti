@@ -151,7 +151,9 @@
 		unpaydialog.value.close()
 	}
 	const gombti = () => {
+		// #ifdef H5
 		window.open('https://mbti.xinli10.com/#/?channel=yiyu')
+		// #endif
 	}
 	const goTest = (id) => {
 		uni.navigateTo({
@@ -281,7 +283,7 @@
 	}
 
 	.x-comment-move {
-		left: 100%;		
+		left: 100%;
 		animation: 20s linear 0s move infinite;
 	}
 
