@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-	import { ref, onMounted, defineEmits } from 'vue'
+	import { ref, onMounted } from 'vue'
 	const emits = defineEmits(['confirm', 'cancel'])
 	const model = ref('')
 	const props = defineProps({

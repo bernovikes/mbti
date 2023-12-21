@@ -200,7 +200,7 @@
 					}).catch(() => {})
 				}
 			}
-		} catch (e) {			
+		} catch (e) {
 			//TODO handle the exception
 		}
 	})
@@ -213,8 +213,8 @@
 			const scan = uni.getStorageSync('scan')
 			if (pay_callback || scan) {
 				try {
-					const { code, data } = await traceCheck(trace_no)
-					if (code === SUCCESS && data?.pay_status) {
+					const { code, data } = await traceCheck(trace_no)			
+					if (code === HTTP_SUCCESS && data?.pay_status) {
 						uni.removeStorageSync('pay_callback')
 						uni.removeStorageSync('scan')
 						scan && wxscan.value?.close()
@@ -222,7 +222,7 @@
 						fetchDetail()
 						clearInterval(payIntervalTimer)
 					}
-				} catch (e) {
+				} catch (e) {					
 					//TODO handle the exception
 				}
 			}
