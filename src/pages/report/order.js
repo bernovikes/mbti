@@ -5,10 +5,16 @@ export const payEnvCheck = (paymethod) => {
 		if (platform === 'h5') {
 			return isWechat() ? 'wechat_jspay' : 'wechat_website_pay'
 		}
+		if (platform === 'app') {
+			return 'wechat_app'
+		}
 	}
 	if (paymethod === 'alipay') {
 		if (platform === 'h5') {
 			return 'alipay_website_pay'
+		}
+		if (platform === 'app') {
+			return 'alipay_app'
 		}
 	}
 	if (paymethod === 'wechat_scan') {
@@ -71,12 +77,33 @@ export const wechatJsSdkPay = (data) => {
 const wechatScanDialog = (data) => {
 	uni.$emit('wx_scan', data?.code_url)
 }
+const androidPay = (provider, data) => {
+	return new Promise((resolve, reject) => {
+		uni.requestPayment({
+			provider,
+			orderInfo: data,
+			success(res) {
+				uni.showToast({
+					title: '支付成功'
+				})
+				resolve(res)
+			},
+			fail(err) {				
+				uni.showToast({
+					title: '支付失败'
+				})
+				reject(err)
+			}
+		})
+	})
+}
 export const payGetWay = (type, argv) => {
 	const fn = {
 		wechat_website_pay: wechatH5Pay,
 		wechat_jspay: wechatJsSdkPay,
 		alipay_website_pay: aliPayH5,
-		wechat_scan: wechatScanDialog
+		wechat_scan: wechatScanDialog,
+		wechat_app: () => androidPay('wxpay', ...argv)
 	}
 	return fn[type](...argv)
 }
