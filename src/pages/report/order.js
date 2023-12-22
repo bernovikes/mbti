@@ -88,7 +88,7 @@ const androidPay = (provider, data) => {
 				})
 				resolve(res)
 			},
-			fail(err) {			
+			fail(err) {
 				console.log(err)
 				uni.showToast({
 					title: '支付失败'
@@ -105,7 +105,10 @@ export const payGetWay = (type, argv) => {
 		alipay_website_pay: aliPayH5,
 		wechat_scan: wechatScanDialog,
 		wechat_app: () => androidPay('wxpay', ...argv),
-		alipay_app: () => androidPay('alipay', ...argv)
+		alipay_app: () => {
+			const argvConfig = (data) => data?.h5			
+			androidPay('alipay', argvConfig(...argv))
+		}
 	}
 	return fn[type](...argv)
 }
