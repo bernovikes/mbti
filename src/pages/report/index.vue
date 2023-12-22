@@ -55,7 +55,7 @@
 	import { onLoad, onUnload } from '@dcloudio/uni-app'
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
-	import { HTTP_SUCCESS } from '@/enum/http.js'
+	import { HTTP_SUCCESS, REPEAT_PAY_ORDER } from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
 	const page = getCurrentPages().slice(-1)[0]
@@ -201,6 +201,10 @@
 				}
 			}
 		} catch (e) {
+			if (e?.code === REPEAT_PAY_ORDER) {
+				fetchDetail()
+				uni.hideLoading()
+			}
 			//TODO handle the exception
 		}
 	})
@@ -213,7 +217,7 @@
 			const scan = uni.getStorageSync('scan')
 			if (pay_callback || scan) {
 				try {
-					const { code, data } = await traceCheck(trace_no)			
+					const { code, data } = await traceCheck(trace_no)
 					if (code === HTTP_SUCCESS && data?.pay_status) {
 						uni.removeStorageSync('pay_callback')
 						uni.removeStorageSync('scan')
@@ -222,7 +226,7 @@
 						fetchDetail()
 						clearInterval(payIntervalTimer)
 					}
-				} catch (e) {					
+				} catch (e) {
 					//TODO handle the exception
 				}
 			}
