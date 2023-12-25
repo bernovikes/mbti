@@ -151,8 +151,12 @@
 		unpaydialog.value.close()
 	}
 	const gombti = () => {
+		const url = 'https://mbti.xinli10.com/#/?channel=yiyu'
 		// #ifdef H5
-		window.open('https://mbti.xinli10.com/#/?channel=yiyu')
+		window.open(url)
+		// #endif
+		// #ifdef APP-PLUS
+		plus.runtime.openURL(url);
 		// #endif
 	}
 	const goTest = (id) => {
