@@ -259,8 +259,8 @@
 				max: maxNumber
 			}
 		})
-		line(charData, factor, lineChart.value)
-		radar([{ value: charData }], maxNumber, chart.value, indicator)
+		line(charData, factor, lineChart?.value)
+		radar([{ value: charData }], maxNumber, chart?.value, indicator)
 	}
 	onMounted(() => {
 		watch(factorList, (nval) => {

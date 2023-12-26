@@ -49,8 +49,8 @@ export const structuredClone = (argv) => {
 }
 export const wechatAppLogin = () => {
 	uni.login({
-		provider: 'weixin',
-		async success(loginRes) {
+		provider: 'weixin',		
+		async success(loginRes) {			
 			try {
 				const { data, code } = await appLogin({
 					access_token: loginRes.authResult.access_token,

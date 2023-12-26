@@ -68,9 +68,14 @@
 <script setup>
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
+	import { onShow } from '@dcloudio/uni-app'
 	const kefuRef = ref('')
 	const range = ref([])
-	const userInfo = reactive(uni.getStorageSync('login_user'))
+	const userInfo = ref('')
+	onShow(() => {
+		userInfo.value = uni.getStorageSync('login_user')
+		console.log(userInfo.value)
+	})
 	const locationUrl = (url) => {
 		uni.navigateTo({
 			url: url
