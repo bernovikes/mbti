@@ -1,5 +1,5 @@
 <template>
-	<view class="fixed top-0 x-bg left-0 w-100 z-9999 h-100" v-if="show">
+	<view class="fixed top-0 x-bg left-0 w-100 z-9999 h-100" v-if="show" :style="{'padding-top':statusBarHeight()}">
 		<view class="pt-24 pl-20 mb-26">
 			<view @click.stop="close" class="x-left-arrow" />
 		</view>
@@ -30,6 +30,7 @@
 
 <script setup>
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
+	import { statusBarHeight } from '@/common/lib.js'
 	import { ref, inject, computed } from 'vue'
 	const show = ref(false)
 	const detail = inject('detail')

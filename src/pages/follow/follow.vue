@@ -16,9 +16,18 @@
 
 <script setup>
 	const back = () => uni.navigateBack()
-	const goHome = () => uni.switchTab({
-		url: '/pages/index/index'
-	})
+	const goHome = () => {
+		// #ifdef APP-PLUS
+		uni.redirectTo({
+			url: '/pages/index/index'
+		})
+		// #endif
+		// #ifdef H5
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+		// #endif
+	}
 	const copy = () => {
 		uni.setClipboardData({
 			data: '小熊心理测试',

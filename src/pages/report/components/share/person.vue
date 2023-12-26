@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg h-100 fixed w-100 top-0 left-0 z-9999" v-if="show">
+	<view class="x-bg h-100 fixed w-100 top-0 left-0 z-9999" v-if="show" :style="{'padding-top':statusBarHeight()}">
 		<view class="pt-24 pl-20 mb-26">
 			<view @click.stop="close" class="x-left-arrow" />
 		</view>
@@ -32,6 +32,7 @@
 
 <script setup>
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
+	import { statusBarHeight } from '@/common/lib.js'
 	import { inject, ref, computed } from 'vue'
 	const detail = inject('detail')
 	const show = ref(false)
@@ -52,7 +53,7 @@
 	}
 
 	.x-left-arrow {
-		background: url("data:image/svg+xml,%3Csvg width='12' height='20' viewBox='0 0 12 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 1L1 10l10 9' stroke='%23FFF' stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 0 0  / 100% 100% no-repeat;
+		background: url("data:image/svg+xml,%3Csvg width='12' height='20' viewBox='0 0 12 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 1L1 10l10 9' stroke='%23FFF' stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
 		width: 9px;
 		height: 15px;
 	}

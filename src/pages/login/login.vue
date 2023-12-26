@@ -27,7 +27,7 @@
 		<label class="color-b9c0c6 f6 mt-20 flex items-center agree" :class="{'active':form.check}">
 			<switch @change="agree" type="checkbox" hidden />
 			<view class="radio br-100 mr1"></view>
-			我已阅读并同意<view class="color-687b8a" @click="agreement">《用户协议》</view>
+			我已阅读并同意<view class="color-687b8a" @click="agreement">《用户协议》</view>和<view class="color-687b8a" @click="goPrivate">《隐私协议》</view>			
 		</label>
 		<!-- #ifdef APP-PLUS -->
 		<view class="f7 color-5e6173 tc mt-75">第三方登录</view>
@@ -84,7 +84,7 @@
 	})
 	const agreement = () => {
 		uni.navigateTo({
-			url: '/pages/article/article?hide=1&type=1&title=服务协议'
+			url:'/src/pages/webview/webview?url=https://res.vkunshan.com/config/depressed/user_agreement.html'
 		})
 	}
 	const login = async () => {
@@ -125,6 +125,11 @@
 				title: message[item]
 			})
 			return !!val
+		})
+	}
+	const goPrivate = () => {
+		uni.navigateTo({
+			url:'/src/pages/webview/webview?url=https://res.vkunshan.com/config/depressed/privacy_policy.html'
 		})
 	}
 	const sendCode = async () => {

@@ -46,6 +46,14 @@
 		},
 		{
 			"path": "pages/generate/generate"
+		},
+		{
+			"path" : "pages/webview/webview",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"tabBar": {

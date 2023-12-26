@@ -73,8 +73,7 @@
 	const range = ref([])
 	const userInfo = ref('')
 	onShow(() => {
-		userInfo.value = uni.getStorageSync('login_user')
-		console.log(userInfo.value)
+		userInfo.value = uni.getStorageSync('login_user')		
 	})
 	const locationUrl = (url) => {
 		uni.navigateTo({
