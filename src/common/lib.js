@@ -49,8 +49,8 @@ export const structuredClone = (argv) => {
 }
 export const wechatAppLogin = () => {
 	uni.login({
-		provider: 'weixin',		
-		async success(loginRes) {			
+		provider: 'weixin',
+		async success(loginRes) {
 			try {
 				const { data, code } = await appLogin({
 					access_token: loginRes.authResult.access_token,
@@ -77,5 +77,15 @@ export const wechatAppLogin = () => {
 				'content': JSON.stringify(err)
 			})
 		}
+	})
+}
+export const goPrivate = () => {
+	uni.navigateTo({
+		url: '/pages/webview/webview?url=https://res.vkunshan.com/config/depressed/privacy_policy.html'
+	})
+}
+export const agreement = () => {
+	uni.navigateTo({
+		url: '/pages/webview/webview?url=https://res.vkunshan.com/config/depressed/user_agreement.html'
 	})
 }
