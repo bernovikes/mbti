@@ -55,6 +55,7 @@
 	import { ref, onMounted, reactive, onUnmounted } from 'vue'
 	import { sendSms, phoneLogin } from '@/api/api.js'
 	import { HTTP_SUCCESS } from '@/enum/http.js'
+	import { compVersion } from '@/common/lib.js'
 	const popup = ref('')
 	const send = ref(false)
 	const countDown = ref(0)
@@ -69,8 +70,11 @@
 		{ name: '手机号登录', value: 'phone' },
 	]
 	const activeLoginType = ref('wechat')
-	onMounted(() => {
-		popup.value?.open()
+	onMounted(async () => {
+		const comp_version = await compVersion()
+		if (comp_version) {
+			popup.value?.open()
+		}
 	})
 	const switchChange = ({ detail: { value } }) => {
 		form.value.check = value

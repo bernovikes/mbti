@@ -36,7 +36,7 @@
 </template>
 <script setup>
 	import 'url-search-params-polyfill';
-	import { structuredClone, statusBarHeight } from '@/common/lib.js'
+	import { structuredClone, statusBarHeight, compVersion } from '@/common/lib.js'
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
@@ -187,6 +187,10 @@
 					options
 				},
 				visitor_code: tempUser
+			}
+			const comp_version = await compVersion()
+			if (comp_version) {
+				params['card_code'] = import.meta.env.VITE_APP_VERIFY_CARD
 			}
 			if (login_user) {
 				params['user_id'] = login_user?.id

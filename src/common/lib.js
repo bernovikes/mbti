@@ -1,5 +1,6 @@
 import { appLogin } from '@/api/api.js'
 import { HTTP_SUCCESS } from '@/enum/http';
+import { versionConfig } from '@/api/json/config.js'
 export const isWechat = () => {
 	// #ifdef H5
 	var ua = navigator.userAgent.toLowerCase();
@@ -88,4 +89,15 @@ export const agreement = () => {
 	uni.navigateTo({
 		url: '/pages/webview/webview?url=https://res.vkunshan.com/config/depressed/user_agreement.html'
 	})
+}
+// 版本比较
+export const compVersion = async () => {
+	const { version } = await versionConfig()
+	const channel = import.meta.env.VITE_APP_CHANNEL
+	const channel_version = version?.[channel]
+	if (channel_version) {
+		return +import.meta.env.VITE_APP_VERSION <= channel_version
+	} else {
+		return false
+	}
 }

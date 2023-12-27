@@ -18,3 +18,7 @@ export function douyinConfig() {
 export function userProtocol() {
 	return request('https://res.vkunshan.com/config/protocol.json')
 }
+
+export function versionConfig() {
+	return request('https://res.vkunshan.com/config/depressed/version.json')
+}
