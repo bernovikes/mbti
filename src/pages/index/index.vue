@@ -13,7 +13,7 @@
 			</swiper-item>
 		</swiper>
 		<!--  -->
-		<view class="flex mt-22 x-grid justify-between">
+		<view class="flex mb-28 mt-22 x-grid justify-between">
 			<view @click="goTest(detail[0].id)" class="x-grid-left pt3 pl3 pb-14  border-box flex flex-column relative">
 				<view class="absolute x-grid-rec lh-18 font-11 white fw5 tc">热门推荐</view>
 				<view class="color-22396b f6 lh-17 b">
@@ -49,7 +49,7 @@
 			</view>
 		</view>
 		<!--  -->
-		<view class="mt-28">
+		<view v-if="comp_version">
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />推荐测评</view>
 			<view class="mt-18 pb-38">
 				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
@@ -100,6 +100,7 @@
 	import { onMounted, ref } from 'vue'
 	import xpops from '@/pages/index/components/pops/pops.vue'
 	import loginDialog from '@/pages/index/components/login/index.vue'
+	import { compVersion } from '@/common/lib.js'
 	const mock = [
 		'日日重复同样的事，遵循着与昨日相同的惯例；若能避开猛烈的欢喜，自然也不会有悲痛的来袭。',
 		'山上吹来每一股气息都是如此洋溢着生命，仿佛无论谁吸进了它，即使是气息奄奄的人，也会复活起来。',
@@ -110,6 +111,7 @@
 	const detail = ref({})
 	const unpaydialog = ref('')
 	const chatWidth = ref('')
+	const comp_version = ref(false)
 	let unpaid_no = ''
 	const tempUser = uni.getStorageSync('tempUser') || '';
 	const chat = [
@@ -123,6 +125,9 @@
 		})
 	}
 	onMounted(() => {
+		compVersion().then(res => {
+			comp_version.value = res
+		})
 		fetchTopic(5).then(({ data }) => {
 			detail.value = data
 		})

@@ -15,18 +15,15 @@
 </template>
 
 <script setup>
+	import { onShow } from '@dcloudio/uni-app';	
 	const back = () => uni.navigateBack()
 	const goHome = () => {
-		// #ifdef APP-PLUS
-		uni.redirectTo({
-			url: '/pages/index/index'
-		})
-		// #endif
-		// #ifdef H5
 		uni.switchTab({
-			url: '/pages/index/index'
+			url: '/pages/index/index',
+			success() {
+				uni.removeStorageSync('go_follow')
+			}
 		})
-		// #endif
 	}
 	const copy = () => {
 		uni.setClipboardData({

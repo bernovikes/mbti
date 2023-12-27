@@ -80,10 +80,13 @@
 		redpackClose()
 	}
 	const goFollow = () => {
+		uni.setStorageSync('go_follow', true)
 		redpackClose()
-		uni.navigateTo({
-			url: '/pages/follow/follow'
-		})
+		setTimeout(() => {
+			uni.navigateTo({
+				url: '/pages/follow/follow'
+			})
+		}, 200)
 	}
 	const showRedpack = () => {
 		redpack1.value = false

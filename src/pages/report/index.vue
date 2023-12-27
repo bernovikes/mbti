@@ -135,7 +135,10 @@
 			backvoid()
 		})
 	})
-	onBeforeUnmount(() => {
+	onBeforeUnmount(() => {		
+		if (uni.getStorageSync('go_follow')) {
+			return false
+		}
 		if (!isMobile()) {
 			return false
 		}
