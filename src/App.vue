@@ -11,6 +11,9 @@
 		channel && uni.setStorageSync('channel', channel)
 	})
 	// #endif
+	// #ifdef APP-PLUS
+	import.meta.env.VITE_APP_CHANNEL && uni.setStorageSync('channel', import.meta.env.VITE_APP_CHANNEL)
+	// #endif
 	onLaunch(async () => {
 		uni.hideTabBar()
 		if (isWechat() && !getUserId()) {

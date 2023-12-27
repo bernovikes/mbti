@@ -188,10 +188,12 @@
 				},
 				visitor_code: tempUser
 			}
+			// #ifdef APP-PLUS
 			const comp_version = await compVersion()
 			if (comp_version) {
 				params['card_code'] = import.meta.env.VITE_APP_VERIFY_CARD
 			}
+			// #endif
 			if (login_user) {
 				params['user_id'] = login_user?.id
 			}
