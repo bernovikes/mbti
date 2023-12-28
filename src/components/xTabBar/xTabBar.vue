@@ -23,7 +23,9 @@
 		})
 	}
 	onMounted(() => {
+		// #ifdef H5 || APP-PLUS
 		uni.hideTabBar()
+		// #endif
 	})
 </script>
 

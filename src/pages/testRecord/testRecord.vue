@@ -13,7 +13,7 @@
 			<span :class="{'color-b0b0b0':item.order.length,'color-fe657a':!item.order.length}" class="f7 fw4  ml-auto">{{item.order.length ? '已支付':'未支付'}}</span>
 		</template>
 		<template v-if="virtualPayment" v-slot:btn="{item}">
-			<span @click="handle(item)">
+			<span class="btn white f7 fw5 lh-16" @click="handle(item)">
 				{{!item.order.length ? '去支付' : '查看报告'}}
 				<span v-if="!item.order.length" class="icon-arrow dib ml1" />
 			</span>
@@ -84,5 +84,11 @@
 		border-radius: 15px;
 		box-shadow: 0px 2px 11px 0px rgba(206, 208, 210, 0.3);
 		margin-top: 38px;
+	}
+
+	.btn {
+		background: linear-gradient(315deg, #5790FF 0%, #73A2FF 53%, #8EB4FF 100%);
+		border-radius: 2px;
+		padding: 5px 13px;
 	}
 </style>

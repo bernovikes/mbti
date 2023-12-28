@@ -15,7 +15,9 @@
 	import.meta.env.VITE_APP_CHANNEL && uni.setStorageSync('channel', import.meta.env.VITE_APP_CHANNEL)
 	// #endif
 	onLaunch(async () => {
+		// #ifdef H5 || APP-PLUS
 		uni.hideTabBar()
+		// #endif
 		if (isWechat() && !getUserId()) {
 			wechatNewAuth()
 		}

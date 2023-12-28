@@ -194,7 +194,7 @@
 			</template>
 			<template v-slot:body>
 				<view>
-					<view v-for="(item,index) in  factorList?.config" class="x-factor-item">
+					<view v-for="(item,index) in  factorList?.config" :key="index" class="x-factor-item">
 						<view class="flex items-center">
 							<view class="x-factor-title f6 fw6 lh-28 border-box pl-10 pr-10 width-fit color-5b92ff">{{item.factor}}<text class="ml2">均分{{item.avg}}分</text></view>
 							<view class="color-5b92ff b f6 lh-20 ml-auto">得分：{{item.sum}}</view>

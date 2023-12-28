@@ -59,7 +59,12 @@
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
 	const page = getCurrentPages().slice(-1)[0]
+	// #ifdef H5 || APP-PLUS
 	const route = { query: page.$page.options, route: page.route }
+	// #endif
+	// #ifdef MP-WEIXIN
+	const route = { query: page.options, route: page.route }
+	// #endif		
 	const detail = ref('')
 	const scan_url = ref('')
 	const speed = ref([
@@ -110,13 +115,12 @@
 			//TODO handle the exception
 		}
 	}
-	const queryString = new URLSearchParams({ ...route.query })
+	const queryString = () => new URLSearchParams({ ...route.query })
 	// 离开当前页面,弹出红包
 	const backvoid = () => {
 		try {
 			rmodelRef.value?.open()
 		} catch (e) {
-			console.log(e)
 			//TODO handle the exception
 		}
 	}
@@ -128,10 +132,9 @@
 			scan_url.value = url
 		}
 	})
-	onMounted(() => {
-		fetchDetail()
-	})
 	onLoad((options) => {
+		route.query = options
+		fetchDetail()
 		uni.$on('destroy', () => {
 			backvoid()
 		})
@@ -150,7 +153,7 @@
 			return false
 		}
 		uni.navigateTo({
-			url: `/pages/report/index?${queryString}`,
+			url: `/pages/report/index?${queryString()}`,
 			success(res) {
 				uni.$emit('destroy', { data: true })
 			}
@@ -197,7 +200,7 @@
 				const pay_res = await createPayConfig(pay_params)
 				createOrderIng = false
 				uni.hideLoading()
-				const urlparams_obj = queryString
+				const urlparams_obj = queryString()
 				const callback = `pages/callback/index?${urlparams_obj}`
 				const result = payGetWay(env, [pay_res.data, callback])
 				if (result instanceof Promise) {

@@ -126,7 +126,12 @@
 		// #ifdef APP-PLUS
 		list.splice(-1, 1)
 		// #endif
-		pay_type.value = list[0].type
+		// #ifdef MP-WEIXIN
+		list.splice(0, 3)
+		// #endif
+		if (list.length) {
+			pay_type.value = list[0].type
+		}
 		uni.$on('open_pay_dialog', () => {
 			pop.value?.open()
 		})

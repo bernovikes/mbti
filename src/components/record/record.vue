@@ -1,5 +1,5 @@
 <template>
-	<view class="min-h-100 bg-f5f6f7" :class="{'empty':!data.length && !loadding}">
+	<view class="x-container bg-f5f6f7" :class="{'empty':!data.length && !loadding}">
 		<view class="x-navbar" :style="{'padding-top':statusBarHeight()}">
 			<uni-nav-bar color="#fff" fixed="true" backgroundColor="transparent" :border="false" left-icon="back" :title="nav" @clickLeft="back" />
 		</view>
@@ -28,9 +28,7 @@
 				</view>
 				<!--  -->
 				<view class="tr mt2">
-					<span class="btn white f7 fw5 lh-16">
-						<slot name="btn" :item="item"></slot>
-					</span>
+					<slot name="btn" :item="item"></slot>
 				</view>
 			</view>
 		</view>
@@ -64,14 +62,13 @@
 	}
 </script>
 
-<style lang="scss" scoped>	
+<style lang="scss" scoped>
 	.empty.cm-record {
 		background: white;
 		padding: 0;
 	}
 
-	.x-navbar,
-	.btn {
+	.x-navbar {
 		background: linear-gradient(315deg, #5790FF 0%, #73A2FF 53%, #8EB4FF 100%);
 	}
 
@@ -88,8 +85,12 @@
 		height: 12px;
 	}
 
-	.btn {
-		border-radius: 2px;
-		padding: 5px 13px;
+	.x-container {
+		/* #ifdef H5 || APP-PLUS */
+		min-height: 100%;
+		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		min-height: 100vh;
+		/* #endif */
 	}
 </style>

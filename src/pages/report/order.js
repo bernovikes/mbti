@@ -8,6 +8,9 @@ export const payEnvCheck = (paymethod) => {
 		if (platform === 'app') {
 			return 'wechat_app'
 		}
+		if (platform === 'mp-weixin') {
+			return 'wechat_mini'
+		}
 	}
 	if (paymethod === 'alipay') {
 		if (platform === 'h5') {
@@ -20,6 +23,29 @@ export const payEnvCheck = (paymethod) => {
 	if (paymethod === 'wechat_scan') {
 		return 'wechat_scan';
 	}
+}
+/**
+ * 微信小程序支付
+ * @param {string} provider 支付渠道
+ * @param {object} data 支付渠道
+ */
+const wechatMini = (provider, data) => {
+	return new Promise((resolve, reject) => {
+		uni.requestPayment({
+			provider: provider,
+			timeStamp: data.timeStamp,
+			nonceStr: data.nonceStr,
+			package: data.package,
+			signType: 'MD5',
+			paySign: data.paySign,
+			success(res) {
+				resolve(res)
+			},
+			fail(err) {
+				reject(err)
+			}
+		})
+	})
 }
 /**
  * 微信h5支付
@@ -104,9 +130,10 @@ export const payGetWay = (type, argv) => {
 		wechat_jspay: wechatJsSdkPay,
 		alipay_website_pay: aliPayH5,
 		wechat_scan: wechatScanDialog,
+		wechat_mini: wechatMini,
 		wechat_app: () => androidPay('wxpay', ...argv),
 		alipay_app: () => {
-			const argvConfig = (data) => data?.h5			
+			const argvConfig = (data) => data?.h5
 			androidPay('alipay', argvConfig(...argv))
 		}
 	}

@@ -67,7 +67,7 @@
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />看Ta们说</view>
 			<view class="mt3 overflow-x-hidden x-comment relative">
 				<view :class="{'x-comment-move':chatWidth}" class="absolute x-comment-item" :style="{'--width':chatWidth}">
-					<view :style="[!index%2 ? '' :'margin-top:16px;margin-left:50px;']" class="x-bullet-chat flex items-center" v-for="(item,index) in chat">
+					<view :style="[!index%2 ? '' :'margin-top:16px;margin-left:50px;']" class="x-bullet-chat flex items-center" v-for="(item,index) in chat" :key="index">
 						<view class="x-bullet-chat-item pl3  mr3 pr3 pt2 pb2 f7 fw5 color-3e3f44 nowrap  bg-white width-fit flex items-center border-box" v-for="(citem,cindex) in item" :key="cindex">
 							<image :src="citem.img" class="img-avatar flex-shrink-0 br-100 mr1" />
 							{{citem.cp}}
@@ -146,7 +146,7 @@
 			})
 		}
 		// 
-		const query = uni.createSelectorQuery().in(this)
+		const query = uni.createSelectorQuery()
 		query.select('.x-comment-item').boundingClientRect(({ width }) => {
 			if (width) {
 				chatWidth.value = `-${width}px`
