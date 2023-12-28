@@ -90,6 +90,7 @@
 	provide('buyed', buyed)
 	provide('reportDesc', reportDesc)
 	provide('science', science)
+	const cachePrefix = () => `${route.query.no}_`
 	const fetchDetail = async () => {
 		try {
 			uni.showLoading({
@@ -122,7 +123,7 @@
 	uni.$on('close_pay_dialog', () => !detail.value?.is_pay && rmodelRef.value?.open())
 	uni.$on('wx_scan', (url) => {
 		if (url) {
-			uni.setStorageSync('scan', true)
+			uni.setStorageSync(`${cachePrefix()}scan`, true)
 			wxscan.value?.open('center')
 			scan_url.value = url
 		}
@@ -135,7 +136,7 @@
 			backvoid()
 		})
 	})
-	onBeforeUnmount(() => {		
+	onBeforeUnmount(() => {
 		if (uni.getStorageSync('go_follow')) {
 			return false
 		}
@@ -186,7 +187,9 @@
 			})
 			const { code, data } = await createOrder(params)
 			if (code === HTTP_SUCCESS) {
-				uni.setStorageSync('trace_no', data.trace_no)
+				// uni.setStorageSync('trace_no', data.trace_no)
+				uni.setStorageSync(`${cachePrefix()}trace_no`, data.trace_no)
+				uni.setStorageSync(`${cachePrefix()}pay_callback`, true)
 				const pay_params = { trace_no: data.trace_no, env, device: getDevice() }
 				if (user_id) {
 					pay_params['user_id'] = user_id
@@ -213,19 +216,20 @@
 	})
 	//轮询查询订单状态
 	//移动端非微信浏览器,发起支付成功或失败跳到callback页面由callback页面发起轮询通知，pc扫码支付打开页面发起通知
+	// #ifdef H5
 	if (!(isMobile() && isWechat()) && !payIntervalTimer) {
 		payIntervalTimer = setInterval(async () => {
-			const trace_no = uni.getStorageSync('trace_no')
-			const pay_callback = uni.getStorageSync('pay_callback')
-			const scan = uni.getStorageSync('scan')
+			const trace_no = uni.getStorageSync(`${cachePrefix()}trace_no`)
+			const pay_callback = uni.getStorageSync(`${cachePrefix()}pay_callback`)
+			const scan = uni.getStorageSync(`${cachePrefix()}scan`)
 			if (pay_callback || scan) {
 				try {
 					const { code, data } = await traceCheck(trace_no)
 					if (code === HTTP_SUCCESS && data?.pay_status) {
-						uni.removeStorageSync('pay_callback')
-						uni.removeStorageSync('scan')
+						uni.removeStorageSync(`${cachePrefix()}pay_callback`)
+						uni.removeStorageSync(`${cachePrefix()}scan`)
 						scan && wxscan.value?.close()
-						uni.removeStorageSync('trace_no')
+						uni.removeStorageSync(`${cachePrefix()}trace_no`)
 						fetchDetail()
 						clearInterval(payIntervalTimer)
 					}
@@ -235,6 +239,7 @@
 			}
 		}, 3000)
 	}
+	// #endif
 	// 
 	onUnload(() => {
 		uni.removeStorageSync('scan')

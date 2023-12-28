@@ -35,7 +35,7 @@
 	const show = ref(false)
 	const detail = inject('detail')
 	const domain = import.meta.env.VITE_DOMAIN
-	const qrcode = computed(() => `${domain}/pages/report/index?no=${detail.value?.order_no}`)
+	const qrcode = computed(() => `${domain}?channel=fenxiang`)
 	const uqrcode = ref('')
 	const date = computed(() => detail.value.created_date)
 	const close = () => {

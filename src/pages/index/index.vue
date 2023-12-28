@@ -49,7 +49,7 @@
 			</view>
 		</view>
 		<!--  -->
-		<view v-if="comp_version">
+		<view v-if="!comp_version">
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />推荐测评</view>
 			<view class="mt-18 pb-38">
 				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
@@ -125,9 +125,11 @@
 		})
 	}
 	onMounted(() => {
+		// #ifdef APP-PLUS
 		compVersion().then(res => {
 			comp_version.value = res
 		})
+		// #endif
 		fetchTopic(5).then(({ data }) => {
 			detail.value = data
 		})

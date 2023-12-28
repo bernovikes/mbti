@@ -53,19 +53,20 @@ export const wechatAppLogin = () => {
 		provider: 'weixin',
 		async success(loginRes) {
 			try {
-				const { data, code } = await appLogin({
+				const { data, code,msg } = await appLogin({
 					access_token: loginRes.authResult.access_token,
 					openid: loginRes.authResult.openid,
 				})
 				if (code === HTTP_SUCCESS) {
 					uni.setStorageSync('login_user', { id: data?.user_id, nickname: '微信用户' })
-					uni.switchTab({
-						url: '/pages/index/index'
-					})
-				} else {
 					uni.showToast({
 						icon: 'none',
-						title: res.msg,
+						title: msg,
+						success() {
+							uni.switchTab({
+								url: '/pages/index/index'
+							})
+						}
 					})
 				}
 			} catch (e) {

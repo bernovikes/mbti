@@ -123,6 +123,9 @@
 		if (isWechat()) {
 			list.splice(1, 1)
 		}
+		// #ifdef APP-PLUS
+		list.splice(-1, 1)
+		// #endif
 		pay_type.value = list[0].type
 		uni.$on('open_pay_dialog', () => {
 			pop.value?.open()
@@ -144,7 +147,7 @@
 		}
 		goods.value = goodsList.value[buyed.value ? 0 : 1]
 		const goods_type = buyed.value ? ['diff'] : ['lite', 'all']
-		const filter_goods_list = question_bank_goods.filter(item => goods_type.includes(item.type)).map((item, index) => {	
+		const filter_goods_list = question_bank_goods.filter(item => goods_type.includes(item.type)).map((item, index) => {
 			goodsList.value[index].id = item.goods_id
 			goodsList.value[index].type = item.type
 			goodsList.value[index].discount_price = item.goods.discount_price

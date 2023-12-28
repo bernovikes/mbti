@@ -37,7 +37,7 @@ export const wechatH5Pay = (data, redirect_url) => {
  */
 export const aliPayH5 = (data) => {
 	try {
-		uni.setStorageSync('pay_callback', true)
+		// uni.setStorageSync('pay_callback', true)
 		const div = document.createElement('div')
 		div.innerHTML = data.h5
 		document.body.append(div)

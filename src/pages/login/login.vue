@@ -100,6 +100,12 @@
 					})
 				}
 			} catch (e) {
+				if (e?.msg) {
+					uni.showToast({
+						title: e?.msg,
+						icon: 'none'
+					})
+				}
 				//TODO handle the exception
 			}
 		}

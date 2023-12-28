@@ -71,10 +71,15 @@
 	]
 	const activeLoginType = ref('wechat')
 	onMounted(async () => {
-		const comp_version = await compVersion()
-		if (comp_version) {
-			popup.value?.open()
+		// #ifdef APP-PLUS
+		const login_user = uni.getStorageSync('login_user')
+		if (!login_user) {
+			const comp_version = await compVersion()
+			if (comp_version) {
+				popup.value?.open()
+			}
 		}
+		// #endif		
 	})
 	const switchChange = ({ detail: { value } }) => {
 		form.value.check = value
@@ -88,11 +93,11 @@
 				},
 				async phone() {
 					const { phone, code: sms_code } = form.value
-					if (vaild()) {
-						popup.value?.close()
+					if (vaild()) {						
 						try {
 							const { code, msg, data } = await phoneLogin({ phone, code: sms_code })
 							if (code === HTTP_SUCCESS) {
+								popup.value?.close()
 								uni.setStorageSync('login_user', data)
 								uni.showToast({
 									icon: 'none',

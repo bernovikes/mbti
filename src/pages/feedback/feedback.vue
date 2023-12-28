@@ -1,9 +1,7 @@
 <template>
 	<view class="h-100 flex flex-column">
 		<view class="x-header">
-			<!--#ifdef H5-->
 			<uni-nav-bar color="white" backgroundColor="transparent" :border="false" :status-bar="true" left-icon="back" title="意见反馈" @clickLeft="back"></uni-nav-bar>
-			<!--#endif-->
 		</view>
 		<view class="pl-18 mt-18 pr-18">
 			<view class="f6 fw5 lh-20 color-3b3d40">问题与建议</view>
