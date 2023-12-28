@@ -27,7 +27,7 @@
 		<label class="color-b9c0c6 f6 mt-20 flex items-center agree" :class="{'active':form.check}">
 			<switch @change="agree" type="checkbox" hidden />
 			<view class="radio br-100 mr1"></view>
-			我已阅读并同意<view class="color-687b8a" @click="agreement">《用户协议》</view>和<view class="color-687b8a" @click="goPrivate">《隐私协议》</view>
+			我已阅读并同意<view class="color-687b8a" @click.stop="agreement">《用户协议》</view>和<view class="color-687b8a" @click.stop="goPrivate">《隐私协议》</view>
 		</label>
 		<!-- #ifdef APP-PLUS -->
 		<view class="f7 color-5e6173 tc mt-75">第三方登录</view>
