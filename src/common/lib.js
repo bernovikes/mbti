@@ -1,4 +1,4 @@
-import { appLogin } from '@/api/api.js'
+import { appLogin, miniLogin } from '@/api/api.js'
 import { HTTP_SUCCESS } from '@/enum/http';
 import { versionConfig } from '@/api/json/config.js'
 export const isWechat = () => {
@@ -53,7 +53,7 @@ export const wechatAppLogin = () => {
 		provider: 'weixin',
 		async success(loginRes) {
 			try {
-				const { data, code,msg } = await appLogin({
+				const { data, code, msg } = await appLogin({
 					access_token: loginRes.authResult.access_token,
 					openid: loginRes.authResult.openid,
 				})
@@ -101,4 +101,27 @@ export const compVersion = async () => {
 	} else {
 		return false
 	}
+}
+export const WechatMiniLogin = () => {
+	return new Promise((resolve, reject) => {
+		uni.login({
+			async success(res) {
+				const {
+					code
+				} = res
+				console.log(res)
+				// try {
+				// 	const lres = await miniLogin({ code, nickname: '小程序用户' })
+				// 	if (lres.code === HTTP_SUCCESS) {
+				// 		// cache.set('login', lres.data, 86400000)
+				// 		resolve(lres.data)
+				// 	} else {
+				// 		reject('login_error')
+				// 	}
+				// } catch (e) {
+				// 	//TODO handle the exception
+				// }
+			}
+		})
+	})
 }

@@ -1,7 +1,7 @@
 <script setup>
 	import { getVisitorToken } from '@/api/api'
 	import { onLaunch } from '@dcloudio/uni-app'
-	import { isWechat, wechatNewAuth, getUserId } from '@/common/lib.js'
+	import { isWechat, wechatNewAuth, getUserId, WechatMiniLogin } from '@/common/lib.js'
 	// #ifdef H5
 	import { useRoute } from 'vue-router'
 	import { watch } from 'vue'
@@ -15,6 +15,9 @@
 	import.meta.env.VITE_APP_CHANNEL && uni.setStorageSync('channel', import.meta.env.VITE_APP_CHANNEL)
 	// #endif
 	onLaunch(async () => {
+		// #ifdef MP-WEIXIN
+		WechatMiniLogin()
+		// #endif
 		// #ifdef H5 || APP-PLUS
 		uni.hideTabBar()
 		// #endif

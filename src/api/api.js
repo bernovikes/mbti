@@ -90,3 +90,11 @@ export function postFeedback(data) {
 export function appLogin(data) {
 	return request(`/api/login/app/login`, 'POST', data)
 }
+
+
+/** 
+ * 微信小程序登录
+ */
+export function miniLogin(data) {
+	return request(`/api/login/mini/login`, 'POST', data)
+}
