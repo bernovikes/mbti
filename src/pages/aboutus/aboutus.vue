@@ -5,10 +5,10 @@
 		</view>
 		<view class="pt-64 tc">
 			<image class="icon" src="https://res.vkunshan.com/static/ucenter/launch-icon.png" />
-			<view class="font-15 fw5 color-63686d">MBTI测试</view>
+			<view class="font-15 fw5 color-63686d">抑郁症测试</view>
 			<view class="mt-44">
 				<span class="icon-exclamation dib v-mid" />
-				<span class="dark-gray f6 fw4 ml2">当前版本：3.301</span>
+				<span class="dark-gray f6 fw4 ml2">上海缇帕电子商务工作室 备案号：沪ICP备2020027980号-6A</span>
 			</view>
 		</view>
 	</view>
