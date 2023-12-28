@@ -51,6 +51,7 @@
 			"path" : "pages/webview/webview",
 			"style" : 
 			{
+				"navigationStyle": "default",
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
