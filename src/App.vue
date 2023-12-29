@@ -53,4 +53,10 @@
 			margin: 0 auto;
 		}
 	}
+
+	/* #ifdef MP-WEIXIN */
+	page {
+		height: 100vh;
+	}
+	/* #endif */
 </style>

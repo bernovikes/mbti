@@ -24,7 +24,12 @@
 	import 'url-search-params-polyfill';
 	import { requestAnimationFrame } from '@/common/lib.js'
 	import { ref, reactive, onMounted } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
 	const curtab = ref(0)
+	let urlQuery = {}
+	onLoad((option) => {
+		urlQuery = option
+	})
 	const tab = reactive([{
 			label: '症状分析',
 			value: 0,
@@ -96,7 +101,7 @@
 		},
 	])
 	const goPay = () => {
-		const qs = new URLSearchParams(getCurrentPages().slice(-1)[0].$page.options)
+		const qs = new URLSearchParams(urlQuery)
 		uni.redirectTo({
 			url: `/pages/report/index?${qs}`
 		})
@@ -168,7 +173,7 @@
 		background: url(https://res.vkunshan.com/depressed/generate/bg.png?t=2) 0 0 / 100% 300px no-repeat;
 	}
 
-	.x-header {		
+	.x-header {
 		padding-top: 200px;
 	}
 

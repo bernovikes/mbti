@@ -1,5 +1,8 @@
 <template>
 	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}">
+		<!-- #ifdef MP-WEIXIN -->
+		<div class="mt-20"></div>
+		<!-- #endif -->
 		<view class="pt-22 flex">
 			<view @click="goSetting" class="icon-setting ml-auto" />
 		</view>

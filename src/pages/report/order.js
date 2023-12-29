@@ -29,15 +29,11 @@ export const payEnvCheck = (paymethod) => {
  * @param {string} provider 支付渠道
  * @param {object} data 支付渠道
  */
-const wechatMini = (provider, data) => {
+const wechatMini = (data) => {
 	return new Promise((resolve, reject) => {
 		uni.requestPayment({
-			provider: provider,
-			timeStamp: data.timeStamp,
-			nonceStr: data.nonceStr,
-			package: data.package,
-			signType: 'MD5',
-			paySign: data.paySign,
+			provider: 'wechat_mini',
+			...data,
 			success(res) {
 				resolve(res)
 			},

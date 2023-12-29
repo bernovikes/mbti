@@ -103,24 +103,28 @@ export const compVersion = async () => {
 	}
 }
 export const WechatMiniLogin = () => {
+	const cache = uni.getStorageSync('login_user')
+	if (cache) {
+		return Promise.resolve(cache)
+	}
 	return new Promise((resolve, reject) => {
 		uni.login({
-			async success(res) {
-				const {
-					code
-				} = res
-				console.log(res)
-				// try {
-				// 	const lres = await miniLogin({ code, nickname: '小程序用户' })
-				// 	if (lres.code === HTTP_SUCCESS) {
-				// 		// cache.set('login', lres.data, 86400000)
-				// 		resolve(lres.data)
-				// 	} else {
-				// 		reject('login_error')
-				// 	}
-				// } catch (e) {
-				// 	//TODO handle the exception
-				// }
+			async success({ code }) {
+				try {
+					const { code: lcode, data, msg } = await miniLogin({ code, nickname: '小程序用户' })
+					if (lcode === HTTP_SUCCESS) {
+						uni.setStorageSync('login_user', { id: data?.user_id, nickname: '微信用户' })
+						uni.showToast({
+							title: msg,
+							icon: 'none'
+						})
+						resolve(data)
+					} else {
+						reject('login_error')
+					}
+				} catch (e) {
+					//TODO handle the exception
+				}
 			}
 		})
 	})
