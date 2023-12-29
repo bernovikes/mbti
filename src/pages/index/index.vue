@@ -167,6 +167,11 @@
 		// #ifdef APP-PLUS
 		plus.runtime.openURL(url);
 		// #endif
+		// #ifdef MP-WEIXIN
+		uni.navigateToMiniProgram({
+			appId: 'wx116f5fb67a91c3fe'
+		})
+		// #endif
 	}
 	const goTest = (id) => {
 		uni.navigateTo({
