@@ -18,7 +18,7 @@
 					</view>
 				</view>
 				<view class="tr pr-20 x-qrcode mt-28">
-					<uQRCode class="dib" ref="uqrcode" :text="qrcode" :size="72"></uQRCode>
+					<uQRCode :id="qrcodeId" class="dib" :text="qrcode" :size="72"></uQRCode>
 				</view>
 			</view>
 		</view>
@@ -36,7 +36,13 @@
 	import { inject, ref, computed } from 'vue'
 	const detail = inject('detail')
 	const show = ref(false)
-	const open = () => show.value = true
+	const qrcodeId = ref('')
+	const open = () => {
+		show.value = true
+		setTimeout(() => {
+			qrcodeId.value = `${+new Date}_person`
+		}, 50)
+	}
 	const close = () => show.value = false
 	const empty = () => {}
 	defineExpose({
