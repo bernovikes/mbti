@@ -18,7 +18,7 @@
 						</view>
 						<view class="icon-arrow ml2" />
 						<view class="ml-auto">
-							<uQRCode ref="uqrcode" :text="qrcode" :size="56"></uQRCode>
+							<uQRCode :id="qrcodeId" ref="uqrcode" :text="qrcode" :size="56"></uQRCode>
 						</view>
 					</view>
 				</view>
@@ -31,12 +31,13 @@
 <script setup>
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import { statusBarHeight } from '@/common/lib.js'
-	import { ref, inject, computed } from 'vue'
+	import { ref, inject, computed, nextTick } from 'vue'
 	const show = ref(false)
 	const detail = inject('detail')
 	const domain = import.meta.env.VITE_DOMAIN
 	const qrcode = computed(() => `${domain}?channel=fenxiang`)
 	const uqrcode = ref('')
+	const qrcodeId = ref('')
 	const date = computed(() => detail.value.created_date)
 	const close = () => {
 		show.value = false
@@ -44,6 +45,9 @@
 	const empty = () => {}
 	const open = () => {
 		show.value = true
+		setTimeout(() => {
+			qrcodeId.value = `${+new Date}_postre`
+		}, 50)
 	}
 	defineExpose({
 		open
