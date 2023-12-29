@@ -136,6 +136,7 @@
         "setting" : {
             "urlCheck" : false
         },
+		"navigateToMiniProgramAppIdList": ["wx116f5fb67a91c3fe"],
         "usingComponents" : true
     },
     "mp-alipay" : {
