@@ -2,7 +2,7 @@
 	<view class="x-bg border-box h-100">
 		<view class="pl-27 white dib">
 			<view class="b   font-30">Hello！</view>
-			<view class="f6   mt3">很高兴认识您，欢迎来到小熊测试</view>
+			<view class="f6   mt3">很高兴认识您</view>
 		</view>
 		<view class="font-17 color-43464d  font-17 title-login">短信登录</view>
 		<label class="form-item mt-60 db">
