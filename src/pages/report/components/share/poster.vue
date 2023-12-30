@@ -17,7 +17,7 @@
 							<view>获取官方最新测试</view>
 						</view>
 						<view class="icon-arrow ml2" />
-						<view class="ml-auto">
+						<view class="ml-auto" v-if="qrcodeId">
 							<uQRCode :id="qrcodeId" ref="uqrcode" :text="qrcode" :size="56"></uQRCode>
 						</view>
 					</view>
@@ -41,13 +41,16 @@
 	const date = computed(() => detail.value.created_date)
 	const close = () => {
 		show.value = false
+		qrcodeId.value = ''
 	}
 	const empty = () => {}
 	const open = () => {
 		show.value = true
-		setTimeout(() => {
-			qrcodeId.value = `${+new Date}_postre`
-		}, 50)
+		nextTick(() => {
+			setTimeout(() => {
+				qrcodeId.value = `${+new Date}_postre`
+			}, 50)
+		})
 	}
 	defineExpose({
 		open

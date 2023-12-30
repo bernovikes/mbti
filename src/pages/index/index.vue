@@ -101,6 +101,7 @@
 	import xpops from '@/pages/index/components/pops/pops.vue'
 	import loginDialog from '@/pages/index/components/login/index.vue'
 	import { compVersion } from '@/common/lib.js'
+	const onShareAppMessage = () => {}
 	const mock = [
 		'日日重复同样的事，遵循着与昨日相同的惯例；若能避开猛烈的欢喜，自然也不会有悲痛的来袭。',
 		'山上吹来每一股气息都是如此洋溢着生命，仿佛无论谁吸进了它，即使是气息奄奄的人，也会复活起来。',

@@ -72,6 +72,7 @@
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import { onShow } from '@dcloudio/uni-app'
+	const onShareAppMessage = () => {}
 	const kefuRef = ref('')
 	const range = ref([])
 	const userInfo = ref('')

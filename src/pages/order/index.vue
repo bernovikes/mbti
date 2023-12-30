@@ -72,6 +72,7 @@
 	import { statusBarHeight } from '@/common/lib.js'
 	import { fetchOrderDetail } from '@/api/api.js'
 	import { ref } from 'vue'
+	const onShareAppMessage = () => {}
 	const order_sn = ref('')
 	const dpr = ref(2)
 	const tempUser = uni.getStorageSync('tempUser');

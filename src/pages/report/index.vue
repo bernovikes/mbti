@@ -58,6 +58,7 @@
 	import { HTTP_SUCCESS, REPEAT_PAY_ORDER } from '@/enum/http.js'
 	import { getDevice, isMobile, isWechat } from '@/common/lib.js'
 	import redpack from './components/redpack.vue'
+	const onShareAppMessage = () => {}
 	const page = getCurrentPages().slice(-1)[0]
 	// #ifdef H5 || APP-PLUS
 	const route = { query: page.$page.options, route: page.route }

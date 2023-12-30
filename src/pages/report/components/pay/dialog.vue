@@ -132,14 +132,18 @@
 		if (list.length) {
 			pay_type.value = list[0].type
 		}
-		uni.$on('open_pay_dialog', () => {
+		uni.$on('open_pay_dialog', async () => {
 			// #ifdef MP-WEIXIN
-			if (virtualPaymentCheck()) {
-				uni.setStorageSync('go_follow', true)
-				uni.navigateTo({
-					url: `/pages/order/create?answer_id=${detailData.value?.id}`
-				})
-			}
+			virtualPaymentCheck().then(res => {			
+				if (!res) {
+					uni.setStorageSync('go_follow', true)
+					uni.navigateTo({
+						url: `/pages/order/create?answer_id=${detailData.value?.id}`
+					})
+				} else {
+					pop.value?.open()
+				}
+			})
 			// #endif
 			// #ifndef MP-WEIXIN
 			pop.value?.open()

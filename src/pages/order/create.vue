@@ -67,14 +67,14 @@
 	const address = ref('')
 	const user = ref({})
 	const active = ref('all')
-	const goods = ref(goodsList[active.value ? 1 : 0])
+	const goods = ref(goodsList[active.value ? goodsList.length - 1 : 0])
 	let answerid = ''
 	onLoad(({ answer_id }) => {
 		answerid = answer_id
 	})
 	const changeCheck = ({ detail: { value } }) => {
 		active.value = value.join('')
-		goods.value = goodsList[active.value ? 1 : 0]
+		goods.value = goodsList[active.value ? goodsList.length - 1 : 0]
 	}
 	const chooseAddress = () => {
 		uni.chooseAddress({
@@ -120,8 +120,7 @@
 					goBack()
 				}, 1000)
 			}).catch(() => {})
-		} catch (e) {	
-		}
+		} catch (e) {}
 	}
 </script>
 
@@ -154,7 +153,7 @@
 	}
 
 	.active.x-goods-item {
-		background: url(https://res.vkunshan.com/depressed/order/create/check.png) 0 0 / 100% no-repeat;
+		background: url(https://res.vkunshan.com/depressed/order/create/check.png) 0 0 / 100%  100% no-repeat;
 
 	}
 

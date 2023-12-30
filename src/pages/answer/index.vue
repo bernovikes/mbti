@@ -41,7 +41,8 @@
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import { HTTP_SUCCESS } from '@/enum/http.js'
-	import dayjs from 'dayjs'
+	import dayjs from 'dayjs'	
+	const onShareAppMessage = () => {}
 	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
 	let yieldfnCall = ''

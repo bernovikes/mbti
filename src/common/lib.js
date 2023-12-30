@@ -1,6 +1,6 @@
 import { appLogin, miniLogin } from '@/api/api.js'
 import { HTTP_SUCCESS } from '@/enum/http';
-import { versionConfig } from '@/api/json/config.js'
+import { versionConfig, siteConfig } from '@/api/json/config.js'
 export const isWechat = () => {
 	// #ifdef H5
 	var ua = navigator.userAgent.toLowerCase();
@@ -133,8 +133,8 @@ export const WechatMiniLogin = () => {
 export const virtualPaymentCheck = async () => {
 	let check = true
 	try {
-		const { virtual_Payment_Check } = await siteConfig()
-		check = virtual_Payment_Check
+		const { yiyu_virtual_Payment_Check } = await siteConfig()
+		check = yiyu_virtual_Payment_Check
 	} catch (e) {
 		check = uni.getSystemInfoSync().platform == 'ios' ? true : false
 	}

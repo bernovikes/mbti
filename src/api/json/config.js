@@ -22,3 +22,6 @@ export function userProtocol() {
 export function versionConfig() {
 	return request('https://res.vkunshan.com/config/depressed/version.json')
 }
+export function siteConfig() {
+	return request('https://res.vkunshan.com/config/site.json')
+}

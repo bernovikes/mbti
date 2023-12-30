@@ -264,7 +264,9 @@
 	}
 	onMounted(() => {
 		watch(factorList, (nval) => {
-			setTimeout(() => drawradar(), 1000)
+			nextTick(() => {
+				setTimeout(() => drawradar(), 1000)
+			})
 		}, { immediate: true })
 	})
 </script>

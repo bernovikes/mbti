@@ -17,7 +17,7 @@
 						<view class="font-11 fw4 white ml-38 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
 					</view>
 				</view>
-				<view class="tr pr-20 x-qrcode mt-28">
+				<view class="tr pr-20 x-qrcode mt-28" v-if="qrcodeId">
 					<uQRCode :id="qrcodeId" class="dib" :text="qrcode" :size="72"></uQRCode>
 				</view>
 			</view>
@@ -33,17 +33,22 @@
 <script setup>
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import { statusBarHeight } from '@/common/lib.js'
-	import { inject, ref, computed } from 'vue'
+	import { inject, ref, computed, nextTick } from 'vue'
 	const detail = inject('detail')
 	const show = ref(false)
 	const qrcodeId = ref('')
 	const open = () => {
 		show.value = true
-		setTimeout(() => {
-			qrcodeId.value = `${+new Date}_person`
-		}, 50)
+		nextTick(() => {
+			setTimeout(() => {
+				qrcodeId.value = `${+new Date}_person`
+			}, 50)
+		})
 	}
-	const close = () => show.value = false
+	const close = () => {
+		show.value = false
+		qrcodeId.value = ''
+	}
 	const empty = () => {}
 	defineExpose({
 		open
