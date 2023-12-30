@@ -64,8 +64,8 @@
 	</uni-popup>
 </template>
 <script setup>
-	import { onMounted, ref, reactive, toRefs, watch, inject, computed } from 'vue'
-	import { isWechat, isMobile } from '@/common/lib.js'
+	import { onMounted, ref, reactive, toRefs, watch, inject, computed, toRaw } from 'vue'
+	import { isWechat, isMobile, virtualPaymentCheck } from '@/common/lib.js'
 	const detailData = inject('detail')
 	const btn_text = computed(() => {
 		const val = detailData.value
@@ -133,7 +133,17 @@
 			pay_type.value = list[0].type
 		}
 		uni.$on('open_pay_dialog', () => {
+			// #ifdef MP-WEIXIN
+			if (virtualPaymentCheck()) {
+				uni.setStorageSync('go_follow', true)
+				uni.navigateTo({
+					url: `/pages/order/create?answer_id=${detailData.value?.id}`
+				})
+			}
+			// #endif
+			// #ifndef MP-WEIXIN
 			pop.value?.open()
+			// #endif
 		})
 	})
 	const chooseGoods = ({ detail: { value } }) => {
@@ -158,6 +168,9 @@
 			goodsList.value[index].discount_price = item.goods.discount_price
 			goodsList.value[index].origin_price = item.goods.origin_price
 		})
+		// #ifdef MP-WEIXIN
+		uni.setStorageSync('mp_goodsList', toRaw(goodsList.value))
+		// #endif
 	}, { deep: true })
 	const submit = () => {
 		pop.value.close()

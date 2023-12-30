@@ -1,181 +1,186 @@
 {
-    "name" : "抑郁症测试",
-    "appid" : "__UNI__2F134F0",
-    "description" : "抑郁症，抑郁症测试，抑郁，焦虑，scl90、SAS抑郁程度测试",
-    "versionName" : "1.1.4",
-    "versionCode" : 114,
-    "transformPx" : false,
-    "h5" : {
-        "router" : {
-            "mode" : "history",
-            "base" : "/"
-        },
-        "optimization" : {
-            "treeShaking" : {
-                "enable" : true
-            }
-        },
-        "title" : "抑郁自评SCL90、SDS症状量表_焦虑测试_抑郁测试-抑郁与焦虑在线测试"
-    },
-    /* 5+App特有相关 */
-    "app-plus" : {
-        "usingComponents" : true,
-        "nvueStyleCompiler" : "uni-app",
-        "compilerVersion" : 3,
-        "splashscreen" : {
-            "alwaysShowBeforeRender" : true,
-            "waiting" : true,
-            "autoclose" : true,
-            "delay" : 0
-        },
-        /* 模块配置 */
-        "modules" : {
-            "Payment" : {},
-            "OAuth" : {}
-        },
-        /* 应用发布信息 */
-        "distribute" : {
-            /* android打包配置 */
-            "android" : {
-                "permissions" : [
-                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
-                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>"
-                ],
-                "permissionPhoneState" : {
-                    "request" : "none",
-                    "prompt" : "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
-                },
-                // 避免华为上架问题
-                "permissionExternalStorage" : {
-                    "request" : "none",
-                    "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
-                },
-                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
-                "autoSdkPermissions" : true,
-                "minSdkVersion" : 21,
-                "targetSdkVersion" : 30,
-                "excludePermissions" : [
-                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />"
-                ]
-            },
-            /* ios打包配置 *
-            "ios" : {
-                "dSYMs" : false
-            },
-            /* SDK配置 */
-            "sdkConfigs" : {
-                "payment" : {
-                    "weixin" : {
-                        "__platform__" : [ "android" ],
-                        "appid" : "wx6e8456bbca1370df",
-                        "appsecret" : "749c2c2facec9e2909c26f5e3370df38",
-                        "UniversalLinks" : ""
-                    },
-                    "alipay" : {
-                        "__platform__" : [ "android" ]
-                    }
-                },
-                "ad" : {},
-                "oauth" : {
-                    "weixin" : {
-                        "appid" : "wx6e8456bbca1370df",
-                        "appsecret" : "749c2c2facec9e2909c26f5e3370df38",
-                        "UniversalLinks" : ""
-                    }
-                }
-            },
-            "splashscreen" : {
-                "useOriginalMsgbox" : true,
-                "androidStyle" : "common"
-            },
-            "ios" : {
-                "dSYMs" : false,
-                "idfa" : false
-            },
-            "icons" : {
-                "android" : {
-                    "hdpi" : "C:/Users/Administrator/Desktop/启动图标/资源 41@3x@3x - 副本.png",
-                    "xhdpi" : "unpackage/res/icons/96x96.png",
-                    "xxhdpi" : "unpackage/res/icons/144x144.png",
-                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
-                },
-                "ios" : {
-                    "appstore" : "unpackage/res/icons/1024x1024.png",
-                    "ipad" : {
-                        "app" : "unpackage/res/icons/76x76.png",
-                        "app@2x" : "unpackage/res/icons/152x152.png",
-                        "notification" : "unpackage/res/icons/20x20.png",
-                        "notification@2x" : "unpackage/res/icons/40x40.png",
-                        "proapp@2x" : "unpackage/res/icons/167x167.png",
-                        "settings" : "unpackage/res/icons/29x29.png",
-                        "settings@2x" : "unpackage/res/icons/58x58.png",
-                        "spotlight" : "unpackage/res/icons/40x40.png",
-                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
-                    },
-                    "iphone" : {
-                        "app@2x" : "unpackage/res/icons/120x120.png",
-                        "app@3x" : "unpackage/res/icons/180x180.png",
-                        "notification@2x" : "unpackage/res/icons/40x40.png",
-                        "notification@3x" : "unpackage/res/icons/60x60.png",
-                        "settings@2x" : "unpackage/res/icons/58x58.png",
-                        "settings@3x" : "unpackage/res/icons/87x87.png",
-                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
-                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
-                    }
-                }
-            }
-        }
-    },
-    /* 快应用特有相关 */
-    "quickapp" : {},
-    /* 小程序特有相关 */
-    "mp-weixin" : {
-        "appid" : "",
-        "setting" : {
-            "urlCheck" : false
-        },
+	"name": "抑郁症",
+	"appid": "__UNI__2F134F0",
+	"description": "抑郁症，抑郁症测试，抑郁，焦虑，scl90、SAS抑郁程度测试",
+	"versionName": "1.1.4",
+	"versionCode": 114,
+	"transformPx": false,
+	"h5": {
+		"router": {
+			"mode": "history",
+			"base": "/"
+		},
+		"optimization": {
+			"treeShaking": {
+				"enable": true
+			}
+		},
+		"title": "抑郁自评SCL90、SDS症状量表_焦虑测试_抑郁测试-抑郁与焦虑在线测试"
+	},
+	/* 5+App特有相关 */
+	"app-plus": {
+		"usingComponents": true,
+		"nvueStyleCompiler": "uni-app",
+		"compilerVersion": 3,
+		"splashscreen": {
+			"alwaysShowBeforeRender": true,
+			"waiting": true,
+			"autoclose": true,
+			"delay": 0
+		},
+		/* 模块配置 */
+		"modules": {
+			"Payment": {},
+			"OAuth": {}
+		},
+		/* 应用发布信息 */
+		"distribute": {
+			/* android打包配置 */
+			"android": {
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>"
+				],
+				"permissionPhoneState": {
+					"request": "none",
+					"prompt": "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
+				},
+				// 避免华为上架问题
+				"permissionExternalStorage": {
+					"request": "none",
+					"prompt": "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+				},
+				"abiFilters": ["armeabi-v7a", "arm64-v8a", "x86"],
+				"autoSdkPermissions": true,
+				"minSdkVersion": 21,
+				"targetSdkVersion": 30,
+				"excludePermissions": [
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />"
+				]
+			},
+			/* ios打包配置 *
+			"ios" : {
+			    "dSYMs" : false
+			},
+			/* SDK配置 */
+			"sdkConfigs": {
+				"payment": {
+					"weixin": {
+						"__platform__": ["android"],
+						"appid": "wx6e8456bbca1370df",
+						"appsecret": "749c2c2facec9e2909c26f5e3370df38",
+						"UniversalLinks": ""
+					},
+					"alipay": {
+						"__platform__": ["android"]
+					}
+				},
+				"ad": {},
+				"oauth": {
+					"weixin": {
+						"appid": "wx6e8456bbca1370df",
+						"appsecret": "749c2c2facec9e2909c26f5e3370df38",
+						"UniversalLinks": ""
+					}
+				}
+			},
+			"splashscreen": {
+				"useOriginalMsgbox": true,
+				"androidStyle": "common"
+			},
+			"ios": {
+				"dSYMs": false,
+				"idfa": false
+			},
+			"icons": {
+				"android": {
+					"hdpi": "C:/Users/Administrator/Desktop/启动图标/资源 41@3x@3x - 副本.png",
+					"xhdpi": "unpackage/res/icons/96x96.png",
+					"xxhdpi": "unpackage/res/icons/144x144.png",
+					"xxxhdpi": "unpackage/res/icons/192x192.png"
+				},
+				"ios": {
+					"appstore": "unpackage/res/icons/1024x1024.png",
+					"ipad": {
+						"app": "unpackage/res/icons/76x76.png",
+						"app@2x": "unpackage/res/icons/152x152.png",
+						"notification": "unpackage/res/icons/20x20.png",
+						"notification@2x": "unpackage/res/icons/40x40.png",
+						"proapp@2x": "unpackage/res/icons/167x167.png",
+						"settings": "unpackage/res/icons/29x29.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"spotlight": "unpackage/res/icons/40x40.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png"
+					},
+					"iphone": {
+						"app@2x": "unpackage/res/icons/120x120.png",
+						"app@3x": "unpackage/res/icons/180x180.png",
+						"notification@2x": "unpackage/res/icons/40x40.png",
+						"notification@3x": "unpackage/res/icons/60x60.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"settings@3x": "unpackage/res/icons/87x87.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"spotlight@3x": "unpackage/res/icons/120x120.png"
+					}
+				}
+			}
+		}
+	},
+	/* 快应用特有相关 */
+	"quickapp": {},
+	/* 小程序特有相关 */
+	"mp-weixin": {
+		"appid": "wxf3779a19c561a3e9",
+		"setting": {
+			"urlCheck": true,
+			"es6": true,
+			"postcss": true,
+			"minified": true
+		},
 		"navigateToMiniProgramAppIdList": ["wx116f5fb67a91c3fe"],
-        "usingComponents" : true
-    },
-    "mp-alipay" : {
-        "usingComponents" : true
-    },
-    "mp-baidu" : {
-        "usingComponents" : true
-    },
-    "mp-toutiao" : {
-        "usingComponents" : true
-    },
-    "uniStatistics" : {
-        "enable" : false
-    },
-    "channel_list" : [
-        {
-            "id" : "baidu",
-            "name" : "百度应用市场"
-        },
-        {
-            "id" : "meizu",
-            "name" : "魅族应用市场"
-        },
-        {
-            "id" : "uc",
-            "name" : "uc应用市场"
-        },
-        {
-            "id" : "sougou",
-            "name" : "搜狗应用市场"
-        }
-    ],
-    "vueVersion" : "3",
-    "locale" : "zh-Hans",
-    "fallbackLocale" : "zh-Hans"
+		"usingComponents": true,
+		"permission": {},
+		"requiredPrivateInfos": [
+			"chooseAddress"
+		]
+	},
+	"mp-alipay": {
+		"usingComponents": true
+	},
+	"mp-baidu": {
+		"usingComponents": true
+	},
+	"mp-toutiao": {
+		"usingComponents": true
+	},
+	"uniStatistics": {
+		"enable": false
+	},
+	"channel_list": [{
+			"id": "baidu",
+			"name": "百度应用市场"
+		},
+		{
+			"id": "meizu",
+			"name": "魅族应用市场"
+		},
+		{
+			"id": "uc",
+			"name": "uc应用市场"
+		},
+		{
+			"id": "sougou",
+			"name": "搜狗应用市场"
+		}
+	],
+	"vueVersion": "3",
+	"locale": "zh-Hans",
+	"fallbackLocale": "zh-Hans"
 }
 /* ios打包配置 *
             "ios" : {
                 "dSYMs" : false
             },
             /* SDK配置 */
-

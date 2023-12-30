@@ -52,7 +52,7 @@
 	import bottom from './components/bottom.vue'
 	import payDialog from './components/pay/dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
-	import { onLoad, onUnload } from '@dcloudio/uni-app'
+	import { onLoad, onShow, onUnload } from '@dcloudio/uni-app'
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import { HTTP_SUCCESS, REPEAT_PAY_ORDER } from '@/enum/http.js'
@@ -139,6 +139,11 @@
 			backvoid()
 		})
 	})
+	// #ifdef MP-WEIXIN
+	onShow(() => {
+		fetchDetail()
+	})
+	// #endif
 	onBeforeUnmount(() => {
 		if (uni.getStorageSync('go_follow')) {
 			return false

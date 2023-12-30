@@ -35,9 +35,17 @@ const wechatMini = (data) => {
 			provider: 'wechat_mini',
 			...data,
 			success(res) {
+				uni.showToast({
+					title: '支付成功',
+					icon: 'none'
+				})
 				resolve(res)
 			},
 			fail(err) {
+				uni.showToast({
+					title: '支付失败',
+					icon: 'none'
+				})
 				reject(err)
 			}
 		})

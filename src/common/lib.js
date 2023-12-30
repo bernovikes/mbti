@@ -129,3 +129,20 @@ export const WechatMiniLogin = () => {
 		})
 	})
 }
+
+export const virtualPaymentCheck = async () => {
+	let check = true
+	try {
+		const { virtual_Payment_Check } = await siteConfig()
+		check = virtual_Payment_Check
+	} catch (e) {
+		check = uni.getSystemInfoSync().platform == 'ios' ? true : false
+	}
+	return !check
+}
+export function NotCanPay() {
+	showModal({
+		title: '提示',
+		content: '由于相关规范，iOS功能暂不可用'
+	})
+}
