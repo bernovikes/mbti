@@ -1,9 +1,9 @@
 <template>
-	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}">
+	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}" :class="[themeStyle]">
 		<view class="pt-30 flex justify-between">
 			<view class="white">
 				<view class="font-20 b x-title lh-28">{{title}}</view>
-				<view class="f7 lh-17">测试去了解最真实的自己</view>
+				<view class="f7 lh-17 x-subtitle">{{subtitle}}</view>
 			</view>
 			<image class="icon-emoji" src="https://res.vkunshan.com/depressed/index/emoji.png"></image>
 		</view>
@@ -11,7 +11,7 @@
 		<!--  -->
 		<view class="bg-white x-body mt-26">
 			<view class="b font-18 lh-25 color-dcdcde">
-				<text class="color-1874cd lh-25">{{currentIndex}}</text>/{{total}}
+				<text class="color-1874cd x-current-number lh-25">{{currentIndex}}</text>/{{total}}
 			</view>
 			<!--  -->
 			<view class="bg-f5f6fa x-progress-bar mt2">
@@ -21,7 +21,7 @@
 				<img v-if="rule_type==='sds'" class="img-cover-sds db w-100" src="https://res.vkunshan.com/depressed/answer/sds.png" />
 				<img v-if="rule_type==='scl90'" class="img-cover-scl90 db w-100" src="https://res.vkunshan.com/depressed/answer/scl90.png" />
 			</view>
-			<view class="mt-22 font-17 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
+			<view class="mt-22 f5 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
 			<!--  -->
 			<view class="mt-24">
 				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
@@ -41,7 +41,7 @@
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import { HTTP_SUCCESS } from '@/enum/http.js'
-	import dayjs from 'dayjs'	
+	import dayjs from 'dayjs'
 	const onShareAppMessage = () => {}
 	const login_user = uni.getStorageSync('login_user')
 	let initHistory = ref([])
@@ -54,6 +54,7 @@
 	const chooseHistory = ref([])
 	const choose_value = ref('')
 	const rule_type = ref('')
+	const themeStyle = computed(() => `x_theme_${rule_type.value}`)
 	let disable_submit = false
 	let timer = ''
 	let detail = ''
@@ -61,6 +62,7 @@
 	const tempUser = uni.getStorageSync('tempUser')
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
 	const entry_time = dayjs()
+	const subtitle = computed(() => rule_type.value === 'eq' ? '广泛流行的国际标准情商测试题' : '测试去了解最真实的自己')
 	const fetchDetail = async (id) => {
 		try {
 			const { data, code } = await getQuestionBank(id)
@@ -322,5 +324,36 @@
 	.img-cover-scl90,
 	.img-cover-sds {
 		height: 171px;
+	}
+
+	// eq theme
+	.x_theme_eq.x-bg {
+		background: url(https://res.vkunshan.com/depressed/answer/eq-bg.png) 0 0 / 100% no-repeat #F4F6FC;
+	}
+
+	.x_theme_eq {
+		.x-progress {
+			background: linear-gradient(315deg, #7DBDFF 0%, #5EADFF 46%, #3598FF 100%);
+		}
+
+		.x-answer-item {
+			background: linear-gradient(315deg, #8FC6FF 0%, #75B8FF 46%, #3598FF 100%) 0 0 / var(--width) 100% no-repeat #f0f7fc;
+		}
+
+		.icon-emoji {
+			display: none;
+		}
+
+		.btn-submit {
+			background: linear-gradient(315deg, #7DBDFF 0%, #5EADFF 46%, #3598FF 100%);
+		}
+
+		.x-subtitle {
+			opacity: .8;
+		}
+
+		.x-current-number {
+			color: #57A9FF
+		}
 	}
 </style>

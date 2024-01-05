@@ -1,5 +1,5 @@
 <template>
-	<view class="min-vh-100 pt-65 pb-30 x-bg">
+	<view class="min-vh-100 pt-65 pb-30 x-bg" :class="[themeStyle]">
 		<template v-if="isMobile()">
 			<share />
 			<bulletChat />
@@ -17,6 +17,10 @@
 			<template v-if="detail.rule_type==='sds'">
 				<sds></sds>
 			</template>
+			<template v-if="detail.rule_type==='eq'">
+				<eq />
+			</template>
+			<!--  -->
 			<!--  -->
 			<comment />
 			<bottom />
@@ -45,6 +49,7 @@
 	import bulletChat from './components/bullet-chat.vue'
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
+	import eq from './eq.vue'
 	import share from './components/share.vue'
 	import scl90Page from './scl90.vue'
 	import payBtn from './components/pay/btn.vue'
@@ -65,7 +70,8 @@
 	// #endif
 	// #ifdef MP-WEIXIN
 	const route = { query: page.options, route: page.route }
-	// #endif		
+	// #endif
+	const themeStyle = computed(() => `x_theme_${detail.value.rule_type}`)
 	const detail = ref('')
 	const scan_url = ref('')
 	const speed = ref([
@@ -312,5 +318,9 @@
 		background: linear-gradient(transparent 50%, #CECECE 50%) left bottom / 100% 1px no-repeat;
 		padding-bottom: 30px;
 		margin-bottom: 20px;
+	}
+
+	.x_theme_eq.x-bg {
+		background: url(https://res.vkunshan.com/depressed/report/eq/bg.png) 0 0 / 100% no-repeat #F4F6FC;
 	}
 </style>
