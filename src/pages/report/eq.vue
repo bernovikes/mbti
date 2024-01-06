@@ -8,7 +8,7 @@
 		</div>
 		<!-- end -->
 		<!--  -->
-		<ui-block :lock="!detail.is_pay">
+		<ui-block :lock="false">
 			<template v-slot:h1>
 				<view>作答情况</view>
 			</template>
@@ -184,7 +184,7 @@
 			</template>
 			<template v-slot:body>
 				<view class="font-13 mt-22 pre-wrap color-50545e lh-25  fw4">
-					<block v-for="(item,index) in refer.section" :key="index">						
+					<block v-for="(item,index) in refer.section" :key="index">
 						<view v-if="item.content" class="mb3">{{item.content}}</view>
 					</block>
 				</view>
@@ -220,7 +220,9 @@
 			const indicator = factorTable.value.map(item => {
 				return { name: item.name, max: maxNumber }
 			})
-			radar([{ value: charData }], maxNumber, chart?.value, indicator)
+			setTimeout(() => {
+				radar([{ value: charData }], maxNumber, chart?.value, indicator)
+			}, 1000)
 		})
 	})
 </script>
@@ -262,8 +264,9 @@
 		background: linear-gradient(90deg, #2E94FF 0%, #5BABFF 100%);
 		width: var(--width);
 	}
+
 	:deep(.x-body-eq-h1) {
-		background: url(https://res.vkunshan.com/depressed/report/eq/title-bg.png) 0 0 / 100% no-repeat;
+		background: url(https://res.vkunshan.com/depressed/report/eq/title-bg_v2.png) 0 0 / 100% 100% no-repeat;
 		padding: 5px 29px;
 	}
 </style>
