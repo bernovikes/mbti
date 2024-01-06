@@ -20,7 +20,7 @@
 
 <script setup>
 	import { ref } from 'vue'
-	import { comment } from '../mock.js'	
+	import { comment } from '../mock.js'
 	const currentSwiper = ref(0)
 	const changeSwiper = ({ detail: { current } }) => {
 		currentSwiper.value = current
@@ -46,5 +46,15 @@
 	.x-comment-avatar {
 		width: 64px;
 		height: 64px;
+	}
+
+	.x_theme_eq {
+		.x-comment-title {
+			color: #2E94FF;
+		}
+
+		.icon-comment-circle {
+			background: url("data:image/svg+xml,%3Csvg width='13' height='13' viewBox='0 0 13 13' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='50%25' y1='0%25' x2='50%25' y2='100%25' id='a'%3E%3Cstop stop-color='%232E94FF' offset='0%25'/%3E%3Cstop stop-color='%232E94FF' stop-opacity='.556' offset='57.525%25'/%3E%3Cstop stop-color='%23BBB2F7' stop-opacity='0' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='167.5' cy='4508.5' r='6.5' transform='translate(-161 -4502)' fill='url(%23a)' fill-rule='evenodd' opacity='.459'/%3E%3C/svg%3E");
+		}
 	}
 </style>
