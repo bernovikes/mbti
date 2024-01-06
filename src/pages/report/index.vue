@@ -30,7 +30,8 @@
 			</template>
 			<!--  -->
 			<template v-if="!detail?.all_unlock">
-				<pay-dialog></pay-dialog>
+				<singleDialog />
+				<!-- <pay-dialog></pay-dialog> -->
 			</template>
 		</view>
 		<!--  -->
@@ -55,7 +56,8 @@
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import bottom from './components/bottom.vue'
-	import payDialog from './components/pay/dialog.vue'
+	// import payDialog from './components/pay/dialog.vue'
+	import singleDialog from './components/pay/single_dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
 	import { onLoad, onShow, onUnload } from '@dcloudio/uni-app'
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
