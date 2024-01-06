@@ -38,12 +38,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-	.x-body-eq-h1 {
-		background: url(https://res.vkunshan.com/depressed/report/eq/title-bg.png) 0 0 / 100% no-repeat;
-		padding: 5px 29px;
-	}
-
+<style lang="scss" scoped>	
 	.x-block-bg {
 		border-radius: 12px;
 		box-shadow: 3px 6px 12px 0px rgba(0, 86, 179, 0.06);
