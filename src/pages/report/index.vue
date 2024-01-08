@@ -42,6 +42,7 @@
 			</view>
 		</uni-popup>
 		<rmodel ref="rmodelRef" @cancel="redpackRef.open" title="温馨提示" content="获得解读只差最后一步，96%的用户对报告准确率比较认可，请您认真对待自己的身心健康！" confirmText="还在考虑" cancelText="退出销毁" />
+		<image v-if="showScrollTopIcon" @click="toScrollTop" class="icon-to-top fixed z-3" src="https://res.vkunshan.com/depressed/report/eq/icon-to-top.png"></image>
 	</view>
 </template>
 <script setup>
@@ -59,7 +60,7 @@
 	// import payDialog from './components/pay/dialog.vue'
 	import singleDialog from './components/pay/single_dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
-	import { onLoad, onShow, onUnload } from '@dcloudio/uni-app'
+	import { onLoad, onShow, onUnload, onPageScroll } from '@dcloudio/uni-app'
 	import { ref, computed, provide, onMounted, onBeforeUnmount, watch } from 'vue'
 	import { payEnvCheck, payGetWay } from './order.js'
 	import { HTTP_SUCCESS, REPEAT_PAY_ORDER } from '@/enum/http.js'
@@ -90,6 +91,7 @@
 	const user_id = login_user?.id
 	const buyed = ref('')
 	const wxscan = ref('wxscan')
+	const showScrollTopIcon = ref(false)
 	const factorList = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'factor'))
 	const illustrate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'illustrate'))
 	const appendix = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'appendix'))
@@ -262,6 +264,20 @@
 		uni.removeStorageSync('scan')
 		clearInterval(payIntervalTimer)
 	})
+	onPageScroll(({ scrollTop }) => {
+		const base = 500
+		if (scrollTop > base && !showScrollTopIcon.value) {
+			showScrollTopIcon.value = true
+		}
+		if (scrollTop < base && showScrollTopIcon.value) {
+			showScrollTopIcon.value = false
+		}
+	})
+	const toScrollTop = () => {
+		uni.pageScrollTo({
+			scrollTop: 0
+		})
+	}
 </script>
 <style lang="scss" scoped>
 	.x-bg {
@@ -324,5 +340,12 @@
 
 	.x_theme_eq.x-bg {
 		background: url(https://res.vkunshan.com/depressed/report/eq/bg.png) 0 0 / 100% no-repeat #F4F6FC;
+	}
+
+	.icon-to-top {
+		width: 32px;
+		height: 32px;
+		bottom: 150px;
+		right: 14px;
 	}
 </style>
