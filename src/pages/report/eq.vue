@@ -191,11 +191,14 @@
 			</template>
 		</ui-block>
 		<!--  -->
+		<btns />
+		<!--  -->
 	</div>
 </template>
 
 <script setup>
 	import uiBlock from './components/eq/ui-block.vue'
+	import btns from './components/eq/btn.vue'
 	import { inject, computed, watch, ref, onMounted, nextTick, toRaw } from 'vue'
 	import { radar } from './eq/radar.js'
 	const reportDesc = inject('reportDesc')

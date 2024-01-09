@@ -26,7 +26,7 @@
 			<bottom />
 			<!--  -->
 			<template v-if="!detail?.all_unlock">
-				<pay-btn></pay-btn>
+				<!-- <pay-btn></pay-btn> -->
 			</template>
 			<!--  -->
 			<template v-if="!detail?.all_unlock">
