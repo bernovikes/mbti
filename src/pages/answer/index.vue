@@ -8,8 +8,9 @@
 			<image class="icon-emoji" src="https://res.vkunshan.com/depressed/index/emoji.png"></image>
 		</view>
 		<!--  -->
+		<ageChoose :show="IQAgeChoose" @start="closePage" />
 		<!--  -->
-		<view class="bg-white x-body mt-26">
+		<view class="bg-white x-body mt-26" v-if="!IQAgeChoose">
 			<view class="b font-18 lh-25 color-dcdcde">
 				<text class="color-1874cd x-current-number lh-25">{{currentIndex}}</text>/{{total}}
 			</view>
@@ -22,9 +23,18 @@
 				<img v-if="rule_type==='scl90'" class="img-cover-scl90 db w-100" src="https://res.vkunshan.com/depressed/answer/scl90.png" />
 			</view>
 			<view class="mt-22 f5 fw5 lh-30 color-27282b">{{ask_item.name}}</view>
+			<view v-if="ask_item.img_url" class="tc mt3">
+				<image class="x-ask-question-cover" :src="ask_item.img_url" />
+			</view>
 			<!--  -->
-			<view class="mt-24">
+			<view class="mt-24" v-if="ask_item.display_type==='text'">
 				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" v-for="(item,index) in ask_item.question_option" :key="item.id" class="x-answer-item flex pl-27 items-center fw5 f6 lh-20">{{item.title}}</view>
+			</view>
+			<!--  -->
+			<view v-if="ask_item.display_type==='image'" class="flex mt-24 flex-wrap justify-between">
+				<view :class="{'active':choose_value===ask_item.id+'_'+item.value+'_'+index}" @click="chooseAnswer(ask_item.id,item.value,index)" class="x-option-img bg-white width-fit dib" v-for="(item,index) in ask_item.question_option" :key="item.id">
+					<image class="img-option" :src="item.img_url" />
+				</view>
 			</view>
 			<!--  -->
 			<view class="flex items-center justify-between mt-38">
@@ -36,6 +46,7 @@
 </template>
 <script setup>
 	import 'url-search-params-polyfill';
+	import ageChoose from './componets/age.vue'
 	import { structuredClone, statusBarHeight, compVersion } from '@/common/lib.js'
 	import { getQuestionBank, postAnswerData } from '@/api/api.js'
 	import { reactive, ref, computed, toRaw, watch } from 'vue'
@@ -50,10 +61,12 @@
 	let total = ref(0)
 	let currentIndex = ref(0)
 	const clickPrev = ref(false)
+	const IQAgeChoose = ref(false)
 	const doned = ref(false)
 	const chooseHistory = ref([])
 	const choose_value = ref('')
 	const rule_type = ref('')
+	let iq_age_ratio = 0 //iq年龄系数
 	const themeStyle = computed(() => `x_theme_${rule_type.value}`)
 	let disable_submit = false
 	let timer = ''
@@ -71,7 +84,8 @@
 				title.value = data.title
 				const { question } = data
 				total.value = question.length
-				rule_type.value = data.rule_type
+				rule_type.value = data.rule_type.toLocaleLowerCase()
+				IQAgeChoose.value = rule_type.value === 'iq'
 				initStack(question)
 				getQuestionList()
 			}
@@ -187,9 +201,12 @@
 				rule_type: detail.rule_type,
 				options_data: {
 					finish_time,
-					options
+					options,
 				},
 				visitor_code: tempUser
+			}
+			if (rule_type.value === 'iq') {
+				params['iq_age_ratio'] = iq_age_ratio
 			}
 			// #ifdef APP-PLUS
 			const comp_version = await compVersion()
@@ -253,6 +270,10 @@
 			})
 		}
 	})
+	const closePage = (val) => {
+		IQAgeChoose.value = false
+		iq_age_ratio = val
+	}
 </script>
 <style lang="scss" scoped>
 	.x-bg {
@@ -327,11 +348,13 @@
 	}
 
 	// eq theme
-	.x_theme_eq.x-bg {
+	.x_theme_eq.x-bg,
+	.x_theme_iq.x-bg {
 		background: url(https://res.vkunshan.com/depressed/answer/eq-bg.png) 0 0 / 100% no-repeat #F4F6FC;
 	}
 
-	.x_theme_eq {
+	.x_theme_eq,
+	.x_theme_iq {
 		.x-progress {
 			background: linear-gradient(315deg, #7DBDFF 0%, #5EADFF 46%, #3598FF 100%);
 		}
@@ -354,6 +377,36 @@
 
 		.x-current-number {
 			color: #57A9FF
+		}
+	}
+
+	.x-ask-question-cover {
+		width: 215px;
+		height: 117px;
+	}
+
+	.img-option {
+		width: 73px;
+		height: 38px;
+	}
+
+	.x-option-img {
+		border-radius: 6px;
+		border: 1px solid #F3F3F3;
+		padding: 12px 13px;
+		margin-bottom: 13px;
+	}
+
+	.active.x-option-img {
+		background: linear-gradient(#8DC5FF, #54A8FF);
+	}
+
+	.x_theme_iq {
+		padding: 0 13px  13px;
+
+		.x-body {
+			padding-left: 17px;
+			padding-right: 17px;
 		}
 	}
 </style>
