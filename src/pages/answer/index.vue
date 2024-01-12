@@ -206,7 +206,7 @@
 				visitor_code: tempUser
 			}
 			if (rule_type.value === 'iq') {
-				params['iq_age_ratio'] = iq_age_ratio
+				params['options_data']['iq_age_ratio'] = iq_age_ratio
 			}
 			// #ifdef APP-PLUS
 			const comp_version = await compVersion()
