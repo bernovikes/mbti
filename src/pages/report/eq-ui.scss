@@ -1,0 +1,12 @@
+.x-eq-text-line {
+	background: linear-gradient(to left, #b6daff, #9bccff, #8ac3ff) left bottom / 100% 5px no-repeat;
+}
+.x-eq-answer-body {
+	background: #f5f8fb;
+	border-radius: 6px;
+}
+:deep(.x-body-eq-h1) {
+	background: url(https://res.vkunshan.com/depressed/report/eq/title-bg_v2.png) 0 0 / 100% 100%
+		no-repeat;
+	padding: 5px 29px;
+}

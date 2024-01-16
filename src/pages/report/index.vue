@@ -20,6 +20,9 @@
 			<template v-if="detail.rule_type==='eq'">
 				<eq />
 			</template>
+			<template v-if="detail.rule_type==='iq'">
+				<iq />
+			</template>
 			<!--  -->
 			<!--  -->
 			<comment />
@@ -52,6 +55,7 @@
 	import uQRCode from '@/components/uqrcode/uqrcode.vue'
 	import sds from './sds.vue'
 	import eq from './eq.vue'
+	import iq from './iq.vue'
 	import share from './components/share.vue'
 	import scl90Page from './scl90.vue'
 	import payBtn from './components/pay/btn.vue'
@@ -338,7 +342,8 @@
 		margin-bottom: 20px;
 	}
 
-	.x_theme_eq.x-bg {
+	.x_theme_eq.x-bg,
+	.x_theme_iq.x-bg {
 		background: url(https://res.vkunshan.com/depressed/report/eq/bg.png) 0 0 / 100% no-repeat #F4F6FC;
 	}
 
