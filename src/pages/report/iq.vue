@@ -7,7 +7,9 @@
 			</template>
 			<template v-slot:body>
 				<view class="mt-28 flex items-center">
-					<view class="x-accuracy-chart br-100 flex-shrink-0" :style="{'--radio':'80%'}" />
+					<view class="x-accuracy-chart br-100 flex items-center justify-center font-13 color-28292c b flex-shrink-0" :style="{'--radio':detail.report.countNotIgnoreRate+'%'}">
+						{{detail.report.countNotIgnoreRate}}%
+					</view>
 					<view class="ml-35 w-100">
 						<view class="bg-f5f8fb mb-6 x-answer-accuracy flex justify-center flex-column pl-13">
 							<view class="font-11 fw5 lh-15 mb2 color-4c5264">
@@ -15,8 +17,8 @@
 								答题率
 							</view>
 							<view class="font-13 fw6 color-28292c lh-14">
-								<text>75%</text>
-								<text class="ml-55">56题</text>
+								<text>{{detail.report.countIgnoreRate}}%</text>
+								<text class="ml-55">{{detail.report.countIgnore}}题</text>
 							</view>
 						</view>
 						<view class="bg-f5f8fb mb-6 x-answer-accuracy flex justify-center flex-column pl-13">
@@ -25,8 +27,8 @@
 								答题率
 							</view>
 							<view class="font-13 fw6 color-28292c lh-14">
-								<text>75%</text>
-								<text class="ml-55">56题</text>
+								<text>{{detail.report.countNotIgnoreRate}}%</text>
+								<text class="ml-55">{{detail.report.countNotIgnore}}题</text>
 							</view>
 						</view>
 					</view>
