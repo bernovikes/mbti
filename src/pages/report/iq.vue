@@ -6,11 +6,35 @@
 				<view>作答情况</view>
 			</template>
 			<template v-slot:body>
-				<view class="f6 fw5 color-28292c mb3 x-eq-text-line width-fit">游客</view>
-				<view class="x-eq-answer-body pl-18 pr-28 pt-14 pb-14">
-					<view v-for="(item,index) in speed" :key="index" class="f6  flex items-center justify-between" :class="{'mb-18':(index+1)<speed.length}">
-						<view class="color-4c5264 lh-26 fw5">{{item.label}}</view>
-						<view class="lh-17 color-3a9bff">{{item.value}}</view>
+				<view class="mt-28 flex items-center">
+					<view class="x-accuracy-chart br-100 flex-shrink-0" :style="{'--radio':'80%'}" />
+					<view class="ml-35 w-100">
+						<view class="bg-f5f8fb mb-6 x-answer-accuracy flex justify-center flex-column pl-13">
+							<view class="font-11 fw5 lh-15 mb2 color-4c5264">
+								<text class="x-accuracy-correct-color v-mid dib" />
+								答题率
+							</view>
+							<view class="font-13 fw6 color-28292c lh-14">
+								<text>75%</text>
+								<text class="ml-55">56题</text>
+							</view>
+						</view>
+						<view class="bg-f5f8fb mb-6 x-answer-accuracy flex justify-center flex-column pl-13">
+							<view class="font-11 fw5 lh-15 mb2 color-4c5264">
+								<text class="x-accuracy-error-color v-mid dib" />
+								答题率
+							</view>
+							<view class="font-13 fw6 color-28292c lh-14">
+								<text>75%</text>
+								<text class="ml-55">56题</text>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="pl-18 pr-28 mt-30">
+					<view v-for="(item,index) in speedList" :key="index" class="font-13 lh-17 flex items-center justify-between" :class="{'mb-18':(index+1)<speedList.length}">
+						<view class="color-4c5264 fw5">{{item.label}}</view>
+						<view class="color-3a9bff">{{item.value}}</view>
 					</view>
 				</view>
 			</template>
@@ -218,6 +242,7 @@
 	const iq_improve = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'iq_improve'))
 	const iq_accurate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'iq_accurate'))
 	const iq_inheritance = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'iq_inheritance'))
+	const speedList = computed(() => speed.value.slice(1))
 </script>
 
 <style scoped lang="scss">
@@ -260,5 +285,32 @@
 
 	.x-cover-image {
 		height: 154px;
+	}
+
+	.x-answer-accuracy {
+		height: 50px;
+		border-radius: 4px;
+	}
+
+	.x-accuracy-error-color,
+	.x-accuracy-correct-color {
+		width: 12px;
+		height: 12px;
+		border-radius: 4px;
+	}
+
+	.x-accuracy-correct-color {
+		background: linear-gradient(#6CCBFF, #3A9BFF);
+	}
+
+	.x-accuracy-error-color {
+		background: linear-gradient(#FFBEDB, #FF89B4);
+	}
+
+	.x-accuracy-chart {
+		background: radial-gradient(circle, white 45%, white 46%, transparent 47%), conic-gradient(#3A9BFF var(--radio, 10%), transparent 0), radial-gradient(circle, #FFBEDB, #FF89B4 65%, white 66%, transparent 51%);
+		background-repeat: no-repeat;
+		width: 106px;
+		height: 106px;
 	}
 </style>
