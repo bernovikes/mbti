@@ -43,12 +43,12 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>你的智商值</view>
 			</template>
 			<template v-slot:body>
-				<view class="tc font-38 lh-54 b color-e2772e">{{detail.report.total_sum}}</view>
+				<view class="tc mt-23 font-38 lh-54 b color-e2772e">{{detail.report.total_sum}}</view>
 				<view class="color-e2772e tc lh-24 mt2 fw5">{{iq_value.config.result}}</view>
 				<view class="x-iq-progress-bar white mt-25 flex items-center pl-20 pr-20">
 					<image src="https://res.vkunshan.com/depressed/report/iq/icon-cup.png" class="icon-cup" />
@@ -76,7 +76,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>相同智商天赋从事的职业</view>
 			</template>
@@ -102,11 +102,18 @@
 				<view>智力维度分布图</view>
 			</template>
 			<template v-slot:body>
+				<l-echart ref="chart"></l-echart>
+				<view class="grid x-eq-grid tc">
+					<view v-for="(item,index) in factorTable" :key="index">
+						<view class="f7 fw5 color-4c5264 lh-40">{{item.name}}</view>
+						<view class="f7 fw5 color-4c5264 lh-44">{{item.sum}}</view>
+					</view>
+				</view>
 			</template>
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false" v-for="(item,index) in factorList.config" :key="index">
+		<ui-block :lock="!detail.is_pay" v-for="(item,index) in factorList.config" :key="index">
 			<template v-slot:h1>
 				<view>{{item.factor}}</view>
 			</template>
@@ -148,7 +155,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>如何理解测试所得到的智商分数</view>
 			</template>
@@ -161,7 +168,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>影响智商的七种能力因素</view>
 			</template>
@@ -177,7 +184,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>提高智力的方法</view>
 			</template>
@@ -193,7 +200,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>瑞文智力到底准不准？</view>
 			</template>
@@ -211,7 +218,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>智商与遗传的关系？</view>
 			</template>
@@ -226,14 +233,17 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<btns />
+		<block v-if="detail.is_pay">
+			<btns />
+		</block>
 	</view>
 </template>
 
 <script setup>
 	import uiBlock from './components/eq/ui-block.vue'
 	import btns from './components/iq/btn.vue'
-	import { inject, computed } from 'vue'
+	import { radar } from './eq/radar.js'
+	import { inject, computed, onMounted, ref } from 'vue'
 	const detail = inject('detail')
 	const speed = inject('speed')
 	const factorList = inject('factorList')
@@ -245,6 +255,22 @@
 	const iq_accurate = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'iq_accurate'))
 	const iq_inheritance = computed(() => detail.value?.report?.detail.find(item => item.componentName === 'iq_inheritance'))
 	const speedList = computed(() => speed.value.slice(1))
+	const chart = ref('')
+	const factorTable = computed(() => {
+		return factorList.value.config.map(item => {
+			return { name: item.factor, sum: item.sum }
+		})
+	})
+	onMounted(() => {
+		const charData = factorTable.value.map(item => item.sum).sort((a, b) => a - b)
+		const maxNumber = Math.max(...charData)
+		const indicator = factorTable.value.map(item => {
+			return { name: item.name, max: maxNumber }
+		})
+		setTimeout(() => {
+			radar([{ value: charData }], maxNumber, chart?.value, indicator)
+		}, 1000)
+	})
 </script>
 
 <style scoped lang="scss">
@@ -314,5 +340,11 @@
 		background-repeat: no-repeat;
 		width: 106px;
 		height: 106px;
+	}
+
+	.x-eq-grid {
+		grid-template-columns: repeat(5, 1fr);
+		border-radius: 6px;
+		background: linear-gradient(to bottom, #E2F0FF 40px, #F7FAFD 44px) 0 0 / 100% 100% no-repeat;
 	}
 </style>
