@@ -45,23 +45,31 @@
 			"path": "pages/login/oauth"
 		},
 		{
+			"path": "pages/order/send"
+		},
+		{
 			"path": "pages/generate/generate"
 		},
 		{
-			"path" : "pages/webview/webview",
-			"style" : 
-			{
+			"path": "pages/webview/webview",
+			"style": {
 				"navigationStyle": "default",
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path" : "pages/order/create",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
+			"path": "pages/order/create",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/send/index",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "赠送详情"
 			}
 		}
 	],

@@ -74,7 +74,8 @@
 			uni.$emit('callpay', {
 				pay_method: 'wechat', //支付渠道 微信或支付宝						
 				redpack: redpack_type,
-				goods_id
+				goods_id,
+				goods_type: 'all'
 			})
 		}
 		redpackClose()

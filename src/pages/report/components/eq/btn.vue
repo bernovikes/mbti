@@ -1,12 +1,14 @@
 <template>
 	<view class="flex font-15 white fw5 fixed x-eq-btns tc border-box pl-15 pr-15 justify-between left-0 z-3 w-100">
 		<view class="btn-left pt2 pb2">测一测你的智商多高</view>
-		<view class="btn-right pt2 pb2 ">赠测Ta</view>
+		<view @click="openPayDialog" class="btn-right pt2 pb2 ">赠测Ta</view>
 	</view>
 </template>
 
 <script setup>
-
+	const openPayDialog = () => {
+		uni.$emit('open_pay_dialog', 'friend')
+	}
 </script>
 
 <style scoped lang="scss">

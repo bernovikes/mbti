@@ -97,7 +97,7 @@
 		</ui-block>
 		<!--  -->
 		<!--  -->
-		<ui-block :lock="false">
+		<ui-block :lock="!detail.is_pay">
 			<template v-slot:h1>
 				<view>智力维度分布图</view>
 			</template>

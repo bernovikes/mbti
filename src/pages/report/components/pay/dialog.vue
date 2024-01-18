@@ -134,7 +134,7 @@
 		}
 		uni.$on('open_pay_dialog', async () => {
 			// #ifdef MP-WEIXIN
-			virtualPaymentCheck().then(res => {			
+			virtualPaymentCheck().then(res => {
 				if (!res) {
 					uni.setStorageSync('go_follow', true)
 					uni.navigateTo({
@@ -180,6 +180,7 @@
 		pop.value.close()
 		uni.$emit('callpay', {
 			goods_id: goods.value?.id,
+			goods_type: goods.value?.type,
 			pay_method: pay_type.value
 		})
 	}

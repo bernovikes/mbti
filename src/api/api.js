@@ -98,3 +98,10 @@ export function appLogin(data) {
 export function miniLogin(data) {
 	return request(`/api/login/mini/login`, 'POST', data)
 }
+
+/** 
+ * 赠送订单查询
+ */
+export function fetchFriendOrder(data) {
+	return request(`/api/answer/friend_list`, 'GET', data)
+}

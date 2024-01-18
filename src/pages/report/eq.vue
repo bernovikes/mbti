@@ -191,7 +191,9 @@
 			</template>
 		</ui-block>
 		<!--  -->
-		<btns />
+		<block v-if="detail.is_pay">
+			<btns />
+		</block>
 		<!--  -->
 	</div>
 </template>

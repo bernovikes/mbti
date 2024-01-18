@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}">
+	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}" :class="[theme]">
 		<!-- #ifdef MP-WEIXIN -->
 		<div class="mt-20"></div>
 		<!-- #endif -->
@@ -8,7 +8,7 @@
 		</view>
 		<view class="pt-65">
 			<view @click="userInfo.nickname ? '' : goLogin()">
-				<image src="https://res.vkunshan.com/static/ucenter/avatar.png" lazy-load class="avatar br-100 v-mid" />
+				<view class="avatar br-100 v-mid dib"></view>
 				<span class="font-17 fw5 dark-gray lh-24 ml3">{{userInfo.nickname ? userInfo.nickname : '点击登录账号'}}</span>
 			</view>
 			<!--  -->
@@ -16,7 +16,8 @@
 				<view class="x-label-record bg-e7efff" @click="goRecord">
 					<view class="x-label-record-padding">
 						<view class="flex items-center">
-							<image class="icon-pc" src="https://res.vkunshan.com/depressed/ucenter/pc.png" />
+							<view class="icon-pc"></view>
+							<!-- <image class="icon-pc" src="https://res.vkunshan.com/depressed/ucenter/pc.png" /> -->
 							<view class="ml-10">
 								<view class="f6 fw6 color-304071 lh-20">测评记录</view>
 								<view class="font-10 fw4 color-8a94b3">专属测试报告</view>
@@ -24,7 +25,7 @@
 						</view>
 						<!--  -->
 						<view class="mt3 fw5 font-10 color-679bff flex">
-							<span>我留下的痕迹</span>
+							<span class="x-leave-text">我留下的痕迹</span>
 							<span class="bg-white lh-14 x-label-btn ml-auto">
 								进入<uni-icons color="#ABAFFF" size="8" type="forward"></uni-icons>
 							</span>
@@ -33,9 +34,10 @@
 				</view>
 				<!--  -->
 				<view class="x-label-order bg-e7efff" @click="goOrder">
-					<view class="x-label-order-padding">
+					<view class="x-label-record-padding">
 						<view class="flex items-center">
-							<image class="icon-search" src="https://res.vkunshan.com/depressed/ucenter/search.png" />
+							<view class="icon-search"></view>
+							<!-- <image class="icon-search" src="https://res.vkunshan.com/depressed/ucenter/search.png" /> -->
 							<view class="ml-10">
 								<view class="f6 fw6 color-304071 lh-20">找回报告</view>
 								<view class="font-10 fw4 color-8a94b3">通过订单号查询</view>
@@ -43,7 +45,7 @@
 						</view>
 						<!--  -->
 						<view class="mt3 fw5 font-10 color-679bff flex">
-							<span>查找测试记录</span>
+							<span class="x-find-order-text">查找测试记录</span>
 							<span class="bg-white lh-14 x-label-btn ml-auto">
 								查找<uni-icons color="#ABAFFF" size="8" type="forward"></uni-icons>
 							</span>
@@ -69,6 +71,7 @@
 </template>
 
 <script setup>
+	const theme = `x_theme_${import.meta.env.VITE_APP_THEME}`
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import { onShow } from '@dcloudio/uni-app'
@@ -77,7 +80,7 @@
 	const range = ref([])
 	const userInfo = ref('')
 	onShow(() => {
-		userInfo.value = uni.getStorageSync('login_user')		
+		userInfo.value = uni.getStorageSync('login_user')
 	})
 	const locationUrl = (url) => {
 		uni.navigateTo({
@@ -85,6 +88,12 @@
 		})
 	}
 	const menu = reactive([{
+			label: '赠送记录',
+			arrow: true,
+			icon: 3,
+			fn: () => locationUrl('/pages/order/send')
+		},
+		{
 			label: '联系客服',
 			arrow: true,
 			icon: 4,
@@ -140,6 +149,7 @@
 	.avatar {
 		width: 61px;
 		height: 61px;
+		background: url(https://res.vkunshan.com/static/ucenter/avatar.png) 0 0 / 100% no-repeat;
 	}
 
 	.icon {
@@ -190,6 +200,7 @@
 	.icon-pc {
 		width: 46px;
 		height: 37px;
+		background: url(https://res.vkunshan.com/depressed/ucenter/pc.png) 0 0 / 100% no-repeat;
 	}
 
 	.x-label-btn {
@@ -200,5 +211,38 @@
 	.icon-search {
 		width: 33px;
 		height: 33px;
+		background: url(https://res.vkunshan.com/depressed/ucenter/search.png) 0 0 / 100% no-repeat;
+	}
+
+	.x_theme_eq {
+		.avatar {
+			background: url(https://res.vkunshan.com/depressed/ucenter/eq_avatar.png) 0 0 / 100% no-repeat;
+		}
+
+		.x-label-record,
+		.x-label-order {
+			background: linear-gradient(135deg, #ECF4FF 0%, #FFF0F7 100%);
+		}
+
+		.icon-pc {
+			background: url(https://res.vkunshan.com/depressed/ucenter/eq_pc.png) 0 0 / 100% no-repeat;
+		}
+
+		.icon-search {
+			background: url(https://res.vkunshan.com/depressed/ucenter/eq_order.png) 0 0 / 100% no-repeat;
+		}
+
+		.x-leave-text,
+		.x-find-order-text {
+			color: #3A9BFF;
+		}
+
+		.x-label-btn {
+			color: #59A9FF;
+		}
+	}
+
+	.x_theme_eq.x-bg {
+		background: url(https://res.vkunshan.com/depressed/ucenter/eq_bg.png) 0 0 / 100% 50% no-repeat #F7FAFC;
 	}
 </style>

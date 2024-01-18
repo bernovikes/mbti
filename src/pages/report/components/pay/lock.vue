@@ -47,7 +47,8 @@
 		height: 16px;
 	}
 
-	.x_theme_eq {
+	.x_theme_eq,
+	.x_theme_iq {
 		.btn {
 			background: linear-gradient(to left, #9CD3FF, #5EADFF) no-repeat;
 		}

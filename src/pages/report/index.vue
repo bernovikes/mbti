@@ -29,10 +29,10 @@
 			<bottom />
 			<!--  -->
 			<template v-if="!detail?.all_unlock">
-				<!-- <pay-btn></pay-btn> -->
+				<pay-btn></pay-btn>
 			</template>
 			<!--  -->
-			<template v-if="!detail?.all_unlock">
+			<template v-if="['iq','eq'].includes(detail.rule_type) && detail">
 				<singleDialog />
 				<!-- <pay-dialog></pay-dialog> -->
 			</template>
@@ -122,10 +122,14 @@
 			speed.value[1].value = data.report.finish_time
 			const { question_bank_goods } = data
 			const dict = { all: 2, lite: 1, diff: 1 }
-			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] : 0).reduce((p, c) => p + c)
+			const permissions = question_bank_goods.map((item) => item.paid_order ? dict[item.type] || 0 : 0).reduce((p, c) => p + c)
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
+			if (data.all_unlock) {
+				uni.removeStorageSync(`${cachePrefix()}pay_callback`)
+				uni.removeStorageSync(`${cachePrefix()}scan`)
+			}
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -188,13 +192,13 @@
 			})
 			return false
 		}
-		const { goods_id, pay_method } = argv
+		const { goods_id, pay_method, goods_type = '' } = argv
 		const env = payEnvCheck(pay_method)
 		const params = {
 			answer_id: detail.value.id,
 			visitor_code: tempUser,
 			goods_id,
-			pay_method
+			pay_method,
 		}
 		if (argv?.redpack) {
 			params['coupon_id'] = argv.redpack
@@ -210,9 +214,10 @@
 			})
 			const { code, data } = await createOrder(params)
 			if (code === HTTP_SUCCESS) {
-				// uni.setStorageSync('trace_no', data.trace_no)
-				uni.setStorageSync(`${cachePrefix()}trace_no`, data.trace_no)
-				uni.setStorageSync(`${cachePrefix()}pay_callback`, true)
+				if (goods_type !== 'friend') {
+					uni.setStorageSync(`${cachePrefix()}trace_no`, data.trace_no)
+					uni.setStorageSync(`${cachePrefix()}pay_callback`, true)
+				}
 				const pay_params = { trace_no: data.trace_no, env, device: getDevice() }
 				if (user_id) {
 					pay_params['user_id'] = user_id
@@ -221,7 +226,13 @@
 				createOrderIng = false
 				uni.hideLoading()
 				const urlparams_obj = queryString()
-				const callback = `pages/callback/index?${urlparams_obj}`
+				let callback = ''
+				if (goods_type === 'friend') {
+					const query_argv = new URLSearchParams({ trace_no: data.trace_no })
+					callback = `pages/send/index/${query_argv}`
+				} else {
+					callback = `pages/callback/index${urlparams_obj}`
+				}
 				const result = payGetWay(env, [pay_res.data, callback])
 				if (result instanceof Promise) {
 					result.then((res) => {
