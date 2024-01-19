@@ -1,7 +1,9 @@
 <template>
-	<view class="x-bg min-h-100">
+	<view class="x-bg min-h-100" :class="['x_theme_'+theme]">
 		<view class="x-header flex justify-center flex-column items-center">
-			<view class="white x-title f6 color-606670">您的心理健康报告报告正在生成中<view class="x-loadding dib">...</view>
+			<view class="x-title f6 color-606670">
+				{{title}}
+				<view class="x-loadding dib">...</view>
 			</view>
 		</view>
 		<!--  -->
@@ -21,85 +23,29 @@
 </template>
 
 <script setup>
+	import { yiyu as yiYuConfig, iq as iqConfig, eq as eqConfig } from './mock.js'
 	import 'url-search-params-polyfill';
 	import { requestAnimationFrame } from '@/common/lib.js'
-	import { ref, reactive, onMounted } from 'vue'
+	import { ref, reactive, onMounted, computed } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	const curtab = ref(0)
+	const theme = ref('')
+	const tab = ref([])
+	const title = computed(() => {
+		if (!['iq', 'eq'].includes(theme.value)) {
+			tab.value = yiYuConfig
+			return '您的心理健康报告报告正在生成中'
+		}
+		const config = { iq: iqConfig, eq: eqConfig }
+		tab.value = config?.[theme.value] || yiYuConfig
+		const dict = { iq: '您的智商报告正在生成中…', eq: '您的情商商报告正在生成中…' }
+		return dict[theme.value]
+	})
 	let urlQuery = {}
 	onLoad((option) => {
-		urlQuery = option
+		urlQuery = { no: option?.no, tempUser: option?.tempUser }		
+		theme.value = option?.theme
 	})
-	const tab = reactive([{
-			label: '症状分析',
-			value: 0,
-			ask: [{
-					ask: '正在分析您的抑郁症状指标',
-					progress: 0
-				}, {
-					ask: '正在分析您的焦虑症状指标',
-					progress: 0
-				}, {
-					ask: '正在分析您的恐惧心理症状指标',
-					progress: 0
-				},
-				{
-					ask: '正在分析您的强迫心症状指标',
-					progress: 0
-				},
-				{
-					ask: '正在分析您是否存在思维异常情况',
-					progress: 0
-				}
-			]
-		},
-		{
-			label: '影响分析',
-			value: 1,
-			ask: [{
-					ask: '正在生成您的各项因子',
-					progress: 0
-				}, {
-					ask: '正在生成您的精神性因子',
-					progress: 0
-				}, {
-					ask: '正在生成您的躯体性障碍因子',
-					progress: 0
-				},
-				{
-					ask: '正在生成您的运动性障碍因子',
-					progress: 0
-				},
-				{
-					ask: '正在生成您的抑郁心理障碍因子',
-					progress: 0
-				}
-			]
-		},
-		{
-			label: '评估建议',
-			value: 2,
-			ask: [{
-					ask: '正在评估您的抑郁食疗建议',
-					progress: 0
-				}, {
-					ask: '正在评估您的睡眠剥夺疗法',
-					progress: 0
-				}, {
-					ask: '正在评估您的认知行为疗法',
-					progress: 0
-				},
-				{
-					ask: '正在评估您的预防建议',
-					progress: 0
-				},
-				{
-					ask: '报告生成结束...',
-					progress: 0
-				}
-			]
-		},
-	])
 	const goPay = () => {
 		const qs = new URLSearchParams(urlQuery)
 		uni.redirectTo({
@@ -107,7 +53,7 @@
 		})
 	}
 	const runing = () => {
-		const last_ask = tab[tab.length - 1].ask
+		const last_ask = tab.value[tab.value.length - 1].ask
 		const finsh = 100 //进度条完成
 		// 所有tab下的问题都完成时,停时调用
 		if (last_ask[last_ask.length - 1].progress === finsh) {
@@ -116,7 +62,7 @@
 		}
 		let current = 0
 		// 获取不同tab下的问题列表
-		let question = tab[curtab.value].ask
+		let question = tab.value[curtab.value].ask
 		const state = (handle) => {
 			return new Promise((resolve) => {
 				let i = 0;
@@ -237,5 +183,17 @@
 	.x-bg-icon {
 		width: 131px;
 		height: 128px;
+	}
+
+	.x_theme_eq,
+	.x_theme_iq {
+		.x-title {
+			color: white;
+		}
+	}
+
+	.x_theme_eq.x-bg,
+	.x_theme_iq.x-bg {
+		background: url(https://res.vkunshan.com/depressed/generate/eq-bg.png) 0 0 / 100% 338px no-repeat;
 	}
 </style>

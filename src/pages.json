@@ -80,6 +80,13 @@
 			{ "pagePath": "pages/ucenter/ucenter", "visible": false }
 		]
 	},
+	"subPackages": [{
+		"root": "pagesIQ",
+		"pages": [
+			{ "path": "index/index" },
+			{ "path": "ucenter/index" }
+		]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#F8F8F8",

@@ -10,15 +10,35 @@
 </template>
 
 <script setup>
+	const props = defineProps({
+		theme: {
+			type: String,
+			default: 'yiyu'
+		}
+	})
 	import { reactive, ref, onMounted } from 'vue'
 	const page = getCurrentPages().slice(-1)[0]
 	const currentUrl = ref(`/${page.route}`)
-	const menu = reactive([
-		{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
-		{ label: '我的', icon: 'icon-user', url: '/pages/ucenter/ucenter' }
-	])
+	const menuConfig = {
+		yiyu: {
+			pages: [
+				{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
+				{ label: '我的', icon: 'icon-user', url: '/pages/ucenter/ucenter' }
+			],
+			method: 'switchTab'
+		},
+		iq: {
+			pages: [
+				{ label: '首页', icon: 'icon-index', url: '/pagesIQ/index/index' },
+				{ label: '我的', icon: 'icon-user', url: '/pagesIQ/ucenter/index' }
+			],
+			method: 'redirectTo'
+		}
+	}
+	const themeMenu = menuConfig[props.theme]
+	const menu = themeMenu.pages
 	const goPage = (url) => {
-		uni.switchTab({
+		uni[themeMenu.method]({
 			url
 		})
 	}

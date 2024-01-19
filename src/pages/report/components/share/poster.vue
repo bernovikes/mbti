@@ -7,11 +7,13 @@
 			<view class="pl-22 pr-22">
 				<view @click.stop="empty" class="bg-white pl-10 pr-10 pt-10 x-body">
 					<view class="relative">
-						<image mode="widthFix" class="db w-100 center" src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image>
+						<view class="x-poster-illustration w-100 center"></view>
+						<!-- <image mode="widthFix" class="db w-100 center" src="https://res.vkunshan.com/depressed/report/poster/bg.png"></image> -->
 						<view class="f7 absolute x-date-text fw4 white lh-17">{{date}}</view>
 					</view>
 					<view class="flex items-center">
-						<image class="x-logo" src="https://res.vkunshan.com/depressed/report/poster/logo.png" />
+						<view class="x-logo"></view>
+						<!-- <image class="x-logo" src="https://res.vkunshan.com/depressed/report/poster/logo.png" /> -->
 						<view class="font-11 lh-18 color-656565">
 							<view>关注公众号<text class="color-2b2b2b b">@小熊心理测试</text></view>
 							<view>获取官方最新测试</view>
@@ -69,6 +71,7 @@
 	.x-logo {
 		width: 71px;
 		height: 71px;
+		background: url("https://res.vkunshan.com/depressed/report/poster/logo.png");
 	}
 
 	.icon-arrow {
@@ -86,5 +89,21 @@
 	.x-date-text {
 		bottom: 15%;
 		left: 18px;
+	}
+
+	.x-poster-illustration {
+		background: url(https://res.vkunshan.com/depressed/report/poster/bg.png) 0 0 / 100% no-repeat;
+		height: 391px;
+	}
+
+	.x_theme_eq,
+	.x_theme_iq {
+		.x-poster-illustration {
+			background: url(https://res.vkunshan.com/depressed/report/eq/poster/share.png) 0 0 / 100% no-repeat;
+		}
+
+		.x-logo {
+			background: url(https://res.vkunshan.com/depressed/report/eq/small-logo.png) center / 39px 39px no-repeat;
+		}
 	}
 </style>

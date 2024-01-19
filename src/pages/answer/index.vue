@@ -222,7 +222,8 @@
 			disable_submit = false
 			const qs = new URLSearchParams({
 				no: data,
-				tempUser
+				tempUser,
+				theme: rule_type.value
 			})
 			if (code === HTTP_SUCCESS) {
 				uni.redirectTo({
@@ -402,7 +403,7 @@
 	}
 
 	.x_theme_iq {
-		padding: 0 13px  13px;
+		padding: 0 13px 13px;
 
 		.x-body {
 			padding-left: 17px;
