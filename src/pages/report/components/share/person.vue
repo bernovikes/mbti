@@ -5,7 +5,8 @@
 		</view>
 		<view class="relative width-fit center" @click.stop="empty">
 			<view class="tc">
-				<image mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/person-bg.png?v=2" />
+				<image class="x-poster-normal" mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/person-bg.png?v=2" />
+				<image class="x-poster-eq" mode="widthFix" src="https://res.vkunshan.com/depressed/report/poster/iq-person-bg.png" />
 			</view>
 			<view class="absolute top-0 pt-90 x-content left-0">
 				<view class="pr-38 pl-38">
@@ -13,8 +14,9 @@
 						<view class="font-18 lh-25 b">测试结果：{{detail?.report?.total_avg_text}}</view>
 						<view class="f7 white-90 lh-17 tl">{{detail?.created_at}}</view>
 					</view>
-					<view class="x-bottom-text flex items-center">
-						<view class="font-11 fw4 white ml-38 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
+					<view class="x-bottom-text flex items-center font-11">
+						<view class="x-poster-title__noraml fw4 white ml-38 lh-18">愿大家在这里找到自我放下抑郁焦虑吧下抑郁焦虑吧</view>
+						<view class="x-poster-title__eq fw4 white ml-38 lh-18">永远不要说我已经尽力了，只有胜利者才能赢得赞美。</view>
 					</view>
 				</view>
 				<view class="tr pr-20 x-qrcode mt-28" v-if="qrcodeId">
@@ -84,5 +86,22 @@
 
 	.x-footer {
 		margin-top: 5vw;
+	}
+
+	.x-poster-eq,
+	.x-poster-title__eq {
+		display: none;
+	}
+
+	.x_theme_eq,
+	.x_theme_iq {
+		.x-poster-normal,
+		.x-poster-title__noraml {
+			display: none;
+		}
+		.x-poster-eq,
+		.x-poster-title__eq {
+			display: block
+		}
 	}
 </style>
