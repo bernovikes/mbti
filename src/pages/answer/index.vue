@@ -61,12 +61,12 @@
 	let total = ref(0)
 	let currentIndex = ref(0)
 	const clickPrev = ref(false)
-	const IQAgeChoose = ref(false)
 	const doned = ref(false)
 	const chooseHistory = ref([])
 	const choose_value = ref('')
 	const rule_type = ref('')
-	let iq_age_ratio = 0 //iq年龄系数
+	let iq_age_ratio = +uni.getStorageSync('iq_age_ratio') //iq年龄系数
+	const IQAgeChoose = ref(false)
 	const themeStyle = computed(() => `x_theme_${rule_type.value}`)
 	let disable_submit = false
 	let timer = ''
@@ -76,6 +76,7 @@
 	const progress = computed(() => `${Math.floor((chooseHistory.value.length/initHistory.value.length)*100)}%`)
 	const entry_time = dayjs()
 	const subtitle = computed(() => rule_type.value === 'eq' ? '广泛流行的国际标准情商测试题' : '测试去了解最真实的自己')
+	let pay_redeem_code = ''
 	const fetchDetail = async (id) => {
 		try {
 			const { data, code } = await getQuestionBank(id)
@@ -85,7 +86,9 @@
 				const { question } = data
 				total.value = question.length
 				rule_type.value = data.rule_type.toLocaleLowerCase()
-				IQAgeChoose.value = rule_type.value === 'iq'
+				if (!iq_age_ratio) {
+					IQAgeChoose.value = rule_type.value === 'iq'
+				}
 				initStack(question)
 				getQuestionList()
 			}
@@ -217,6 +220,9 @@
 			if (login_user) {
 				params['user_id'] = login_user?.id
 			}
+			if (pay_redeem_code) {
+				params['pay_redeem_code'] = pay_redeem_code
+			}
 			uni.removeStorageSync(_cache_key(detail.id))
 			const { code, msg, data } = await postAnswerData(params)
 			disable_submit = false
@@ -250,6 +256,7 @@
 	}
 	const _cache_key = (id) => `quesIndex_${id}_history`
 	onLoad((option) => {
+		pay_redeem_code = option?.pay_redeem_code
 		fetchDetail(option?.id)
 		const history = uni.getStorageSync(_cache_key(option?.id))
 		watch(chooseHistory, (val) => {
@@ -274,6 +281,7 @@
 	const closePage = (val) => {
 		IQAgeChoose.value = false
 		iq_age_ratio = val
+		uni.setStorageSync('iq_age_ratio', val)
 	}
 </script>
 <style lang="scss" scoped>
@@ -394,7 +402,7 @@
 	.x-option-img {
 		border-radius: 6px;
 		border: 1px solid #F3F3F3;
-		padding: 12px 13px;
+		padding: 12px 3vw;
 		margin-bottom: 13px;
 	}
 

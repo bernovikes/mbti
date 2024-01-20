@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}" :class="[theme]">
+	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pb-50 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}" :class="[theme]">
 		<!-- #ifdef MP-WEIXIN -->
 		<div class="mt-20"></div>
 		<!-- #endif -->
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-	const theme = `x_theme_${import.meta.env.VITE_APP_THEME}`
+	const theme = `x_theme_eq`
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import { onShow } from '@dcloudio/uni-app'

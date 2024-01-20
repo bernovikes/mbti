@@ -105,3 +105,10 @@ export function miniLogin(data) {
 export function fetchFriendOrder(data) {
 	return request(`/api/answer/friend_list`, 'GET', data)
 }
+
+/*
+ * 兑换码订单查询
+ */
+export function fetchRedeemOrderDetail(no) {
+	return request(`/api/order/redeem_code/${no}`, 'GET')
+}

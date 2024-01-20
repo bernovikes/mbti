@@ -34,7 +34,9 @@
 			<!--  -->
 			<template v-if="['iq','eq'].includes(detail.rule_type) && detail">
 				<singleDialog />
-				<!-- <pay-dialog></pay-dialog> -->
+			</template>
+			<template v-else>				
+				<pay-dialog></pay-dialog>
 			</template>
 		</view>
 		<!--  -->
@@ -61,7 +63,7 @@
 	import payBtn from './components/pay/btn.vue'
 	import comment from './components/comment.vue'
 	import bottom from './components/bottom.vue'
-	// import payDialog from './components/pay/dialog.vue'
+	import payDialog from './components/pay/dialog.vue'
 	import singleDialog from './components/pay/single_dialog.vue'
 	import { fetchAnswerData, createOrder, createPayConfig, traceCheck } from '@/api/api.js'
 	import { onLoad, onShow, onUnload, onPageScroll } from '@dcloudio/uni-app'
@@ -229,9 +231,9 @@
 				let callback = ''
 				if (goods_type === 'friend') {
 					const query_argv = new URLSearchParams({ trace_no: data.trace_no })
-					callback = `pages/send/index/${query_argv}`
+					callback = `pages/send/index?${query_argv}`
 				} else {
-					callback = `pages/callback/index${urlparams_obj}`
+					callback = `pages/callback/index?${urlparams_obj}`
 				}
 				const result = payGetWay(env, [pay_res.data, callback])
 				if (result instanceof Promise) {

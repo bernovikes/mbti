@@ -16,11 +16,7 @@
 
 <script setup>
 	import { statusBarHeight } from '@/common/lib.js'
-	const back = () => {
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
-	}
+	const back = () => uni.navigateBack()
 </script>
 
 <style scoped lang="scss">

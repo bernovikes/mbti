@@ -1,7 +1,7 @@
 <template>
 	<view class="fixed w-100 bottom-0 left-0">
 		<view class="bg-white cm-tabbar  flex">
-			<view @click="goPage(item.url)" v-for="(item,index) in menu" :key="index" class="w-50 tc h-100 flex items-center flex-column justify-center">
+			<view @click="goPage(item.url)" v-for="(item,index) in menuConfig[theme].pages" :key="index" class="w-50 tc h-100 flex items-center flex-column justify-center">
 				<view :class="[item.icon,currentUrl===item.url?'active' : '']" class="icon center" />
 				<view class="f7 fw4 lh-16">{{item.label}}</view>
 			</view>
@@ -25,20 +25,19 @@
 				{ label: '首页', icon: 'icon-index', url: '/pages/index/index' },
 				{ label: '我的', icon: 'icon-user', url: '/pages/ucenter/ucenter' }
 			],
-			method: 'switchTab'
+			method: uni.switchTab
 		},
 		iq: {
 			pages: [
 				{ label: '首页', icon: 'icon-index', url: '/pagesIQ/index/index' },
 				{ label: '我的', icon: 'icon-user', url: '/pagesIQ/ucenter/index' }
 			],
-			method: 'redirectTo'
+			method: uni.redirectTo
 		}
 	}
-	const themeMenu = menuConfig[props.theme]
-	const menu = themeMenu.pages
+
 	const goPage = (url) => {
-		uni[themeMenu.method]({
+		menuConfig?.[props.theme]?.method({
 			url
 		})
 	}

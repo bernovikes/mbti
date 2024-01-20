@@ -49,9 +49,7 @@
 			}
 		})
 	}
-	const back = () => uni.switchTab({
-		url: '/pages/index/index'
-	})
+	const back = () => uni.navigateBack()
 	const submit = async () => {
 		if (vaild()) {
 			try {

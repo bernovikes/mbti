@@ -34,9 +34,7 @@
 		})
 	}
 	const goHome = () => {
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
+		uni.navigateBack()
 	}
 	const logout = (title) => {
 		uni.removeStorageSync('login_user')

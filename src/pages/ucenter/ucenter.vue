@@ -71,7 +71,6 @@
 </template>
 
 <script setup>
-	const theme = `x_theme_${import.meta.env.VITE_APP_THEME}`
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import { onShow } from '@dcloudio/uni-app'
@@ -88,12 +87,6 @@
 		})
 	}
 	const menu = reactive([{
-			label: '赠送记录',
-			arrow: true,
-			icon: 3,
-			fn: () => locationUrl('/pages/order/send')
-		},
-		{
 			label: '联系客服',
 			arrow: true,
 			icon: 4,

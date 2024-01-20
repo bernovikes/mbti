@@ -2,16 +2,16 @@
 	<view class="x-bg min-vh-100 pl-17 pr-17 pt-30 pb-60">
 		<view class="font-19 color-282a2c lh-27">智商—情商测试</view>
 		<view class="f7 lh-16 color-5a5c62">智商决定下限，情商却能提高上限</view>
-		<view class="x-blue-iq mt-27 flex flex-column border-box">
+		<view @click="goTest(topic[1].id)" class="x-blue-iq mt-27 flex flex-column border-box">
 			<view class="white">
 				<view class="b">智商测试</view>
 				<view class="f7 fw5 lh-16 mt2">IQ TEST</view>
 			</view>
 			<view class="font-11 mt-auto color-7766ff bg-d7d1ff width-fit x-question-num lh-17 pl-12 pr-12">60题</view>
 		</view>
-		<view class="x-blue-iq x-blue-eq mt-13 flex flex-column border-box">
+		<view @click="goTest(topic[0].id)" class="x-blue-iq x-blue-eq mt-13 flex flex-column border-box">
 			<view class="white">
-				<view class="b">智商测试</view>
+				<view class="b">情商测试</view>
 				<view class="f7 fw5 lh-16 mt2">EQ TEST</view>
 			</view>
 			<view class="font-11 mt-auto color-ff4c89 bg-ffe0eb width-fit x-question-num lh-17 pl-12 pr-12">60题</view>
@@ -20,7 +20,7 @@
 		<image class="x-rec-title mt-33" src="https://res.vkunshan.com/depressed/iq/title.png"></image>
 		<!--  -->
 		<view class="mt-23">
-			<view class="bg-white x-list-item mb-12 pt-12 pb-13 pl-12 pr-12 flex" v-for="(item,index) in list" :key="index">
+			<view @click="callfn(item.fn)" class="bg-white x-list-item mb-12 pt-12 pb-13 pl-12 pr-12 flex" v-for="(item,index) in list" :key="index">
 				<image :src="item.img" class="x-list-item__cover flex-shrink-0"></image>
 				<view class="ml-13 flex w-100 flex-column">
 					<view class="flex items-center">
@@ -54,7 +54,9 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
+	import { ref, onMounted } from 'vue'
+	const topic = ref([])
 	const list = [{
 			img: 'https://res.vkunshan.com/depressed/iq/avatar1.png',
 			title: '抑郁测试',
@@ -64,6 +66,11 @@
 			people: '22827人已测',
 			username: 'Depression test',
 			avatar: 'https://res.vkunshan.com/depressed/iq/list-avatar.png',
+			fn() {
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+			}
 		},
 		{
 			img: 'https://res.vkunshan.com/depressed/iq/avatar2.png',
@@ -100,6 +107,19 @@
 		uni.navigateTo({
 			url: '/pages/order/index'
 		})
+	}
+	onMounted(() => {
+		fetchTopic(6).then(({ data }) => {
+			topic.value = data
+		})
+	})
+	const goTest = (id) => {
+		uni.navigateTo({
+			url: `/pages/answer/index?id=${id}`
+		})
+	}
+	const callfn = (fn) => {
+		fn()
 	}
 </script>
 
@@ -154,6 +174,7 @@
 		width: 14px;
 		height: 14px;
 	}
+
 	.x-order-btn {
 		background: rgba(207, 231, 255, 1);
 		border-radius: 14px;

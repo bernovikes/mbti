@@ -30,7 +30,7 @@
 	import { onLoad } from '@dcloudio/uni-app'
 	const curtab = ref(0)
 	const theme = ref('')
-	const tab = ref([])
+	const tab = ref(iqConfig)
 	const title = computed(() => {
 		if (!['iq', 'eq'].includes(theme.value)) {
 			tab.value = yiYuConfig
@@ -88,7 +88,7 @@
 			 * 如果当前为最后一题,则 切换到下一个tab的问题列表
 			 */
 			if (current >= question.length) {
-				if (curtab.value < tab.length - 1) {
+				if (curtab.value < tab.value.length - 1) {
 					curtab.value++
 				}
 				runing()
