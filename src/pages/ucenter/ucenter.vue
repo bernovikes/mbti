@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}" :class="[theme]">
+	<view class="x-bg absolute left-0 right-0 top-0 bottom-0 pl-18 pr-18" :style="{'padding-top':statusBarHeight()}">
 		<!-- #ifdef MP-WEIXIN -->
 		<div class="mt-20"></div>
 		<!-- #endif -->
@@ -205,37 +205,5 @@
 		width: 33px;
 		height: 33px;
 		background: url(https://res.vkunshan.com/depressed/ucenter/search.png) 0 0 / 100% no-repeat;
-	}
-
-	.x_theme_eq {
-		.avatar {
-			background: url(https://res.vkunshan.com/depressed/ucenter/eq_avatar.png) 0 0 / 100% no-repeat;
-		}
-
-		.x-label-record,
-		.x-label-order {
-			background: linear-gradient(135deg, #ECF4FF 0%, #FFF0F7 100%);
-		}
-
-		.icon-pc {
-			background: url(https://res.vkunshan.com/depressed/ucenter/eq_pc.png) 0 0 / 100% no-repeat;
-		}
-
-		.icon-search {
-			background: url(https://res.vkunshan.com/depressed/ucenter/eq_order.png) 0 0 / 100% no-repeat;
-		}
-
-		.x-leave-text,
-		.x-find-order-text {
-			color: #3A9BFF;
-		}
-
-		.x-label-btn {
-			color: #59A9FF;
-		}
-	}
-
-	.x_theme_eq.x-bg {
-		background: url(https://res.vkunshan.com/depressed/ucenter/eq_bg.png) 0 0 / 100% 50% no-repeat #F7FAFC;
 	}
 </style>

@@ -1,12 +1,12 @@
 <template>
-	<view  v-if="show">
+	<view v-if="show">
 		<view class="bg-white x-age-choose">
 			<view class="color-27282b f6 fw5">你的性别为</view>
-			<view class="flex items-center x-choose mt-13">
+			<view class="flex items-center  x-choose mt-13">
 				<view :class="{'active':sexActive===index}" @click="chooseSex(index)" class="x-choose-item width-fit font-13 fw5" v-for="(item,index) in sex" :key="index">{{item.name}}</view>
 			</view>
 			<view class="color-27282b f6 fw5 mt-37">你的年龄为</view>
-			<view class="flex items-center x-choose mt-13 flex-wrap">
+			<view class="flex items-center  x-choose mt-13 flex-wrap">
 				<view :class="{'active':ageActive===index}" @click="chooseAge(index)" class="x-choose-item width-fit font-13 fw5" v-for="(item,index) in age" :key="index">{{item.name}}</view>
 			</view>
 		</view>
@@ -66,6 +66,10 @@
 		padding: 8px 30px;
 		background: #F4F6FC;
 		color: #8B8D91;
+		/* #ifdef APP-PLUS */
+		margin-bottom: 25px;
+		margin-right: 23px;
+		/* #endif */
 	}
 
 	.active.x-choose-item {

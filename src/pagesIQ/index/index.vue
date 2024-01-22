@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg min-vh-100 pl-17 pr-17 pt-30 pb-60">
+	<view class="x-bg min-vh-100 pl-17 pr-17  pb-60">
 		<view class="font-19 color-282a2c lh-27">智商—情商测试</view>
 		<view class="f7 lh-16 color-5a5c62">智商决定下限，情商却能提高上限</view>
 		<view @click="goTest(topic[1].id)" class="x-blue-iq mt-27 flex flex-column border-box">
@@ -56,6 +56,7 @@
 <script setup>
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { ref, onMounted } from 'vue'
+	import { statusBarHeight } from '@/common/lib.js'
 	const topic = ref([])
 	const list = [{
 			img: 'https://res.vkunshan.com/depressed/iq/avatar1.png',
@@ -125,7 +126,13 @@
 
 <style lang="scss" scoped>
 	.x-bg {
-		background: url(https://res.vkunshan.com/depressed/iq/bg.png) 0 0 / 100% 256px no-repeat #F4F6FC;
+		background: url(https://res.vkunshan.com/depressed/iq/bg.png) 0 0 / 100% 256px no-repeat #F4F6FC;		
+		/* #ifndef APP-PLUS */
+		padding-top: 30px;
+		/* #endif */
+		/* #ifdef APP-PLUS */
+		padding-top: 60px;
+		/* #endif */
 	}
 
 	.x-blue-iq {

@@ -182,6 +182,7 @@
 	}
 	// 提交数据
 	const submit = async () => {
+		uni.removeStorageSync('iq_age_ratio')
 		const minute = dayjs().diff(entry_time, 'minute')
 		const second = dayjs().subtract(minute, 'minute').diff(entry_time, 'second')
 		const finish_time = `${minute}分${second}秒`
@@ -273,6 +274,7 @@
 					chooseHistory.value = history
 					initHistoryOperate()
 				} else {
+					uni.removeStorageSync('iq_age_ratio')
 					uni.removeStorageSync(_cache_key(option?.id))
 				}
 			})

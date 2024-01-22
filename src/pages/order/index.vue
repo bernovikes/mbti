@@ -80,11 +80,7 @@
 		title,
 		icon: 'none'
 	})
-	const back = () => {
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
-	}
+	const back = () => uni.navigateBack()
 	const bindOrder = async () => {
 		if (!order_sn.value) {
 			return toast('请输入查询的订单号')

@@ -56,9 +56,7 @@
 		}
 	})
 	const back = () => {
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
+		uni.navigateBack()
 	}
 </script>
 
