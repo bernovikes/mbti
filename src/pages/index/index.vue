@@ -127,6 +127,13 @@
 	}
 	onMounted(() => {
 		// #ifdef APP-PLUS
+		const env = import.meta.env
+		if (env.VITE_APP_HOME !== '/pages/index/index') {
+			uni[env.VITE_APP_HOME_METHOD]({
+				url: env.VITE_APP_HOME
+			})
+			return false
+		}
 		compVersion().then(res => {
 			comp_version.value = res
 		})

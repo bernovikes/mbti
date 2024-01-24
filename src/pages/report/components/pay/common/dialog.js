@@ -22,6 +22,7 @@ export const list = reactive([{
 ])
 export const pop = ref('')
 export const goods = ref({})
+export const openPayDialogVal = ref('')
 export const detailData = () => inject('detail')
 export const close = () => {
 	pop.value?.close()
@@ -40,24 +41,22 @@ export const submit = () => {
 	})
 }
 export const OpenPayDialog = () => {
-	return new Promise((resolve, reject) => {
-		uni.$on('open_pay_dialog', async (val) => {
-			resolve(val)
-			// #ifdef MP-WEIXIN
-			virtualPaymentCheck().then(res => {
-				if (!res) {
-					uni.setStorageSync('go_follow', true)
-					uni.navigateTo({
-						url: `/pages/order/create?answer_id=${detailData().value?.id}`
-					})
-				} else {
-					pop.value?.open()
-				}
-			})
-			// #endif
-			// #ifndef MP-WEIXIN
-			pop.value?.open()
-			// #endif
+	uni.$on('open_pay_dialog', async (val) => {
+		openPayDialogVal.value = val
+		// #ifdef MP-WEIXIN
+		virtualPaymentCheck().then(res => {
+			if (!res) {
+				uni.setStorageSync('go_follow', true)
+				uni.navigateTo({
+					url: `/pages/order/create?answer_id=${detailData().value?.id}`
+				})
+			} else {
+				pop.value?.open()
+			}
 		})
+		// #endif
+		// #ifndef MP-WEIXIN
+		pop.value?.open()
+		// #endif
 	})
 }

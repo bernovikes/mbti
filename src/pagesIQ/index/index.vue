@@ -130,7 +130,7 @@
 		/* #ifndef APP-PLUS */
 		padding-top: 30px;
 		/* #endif */
-		/* #ifdef APP-PLUS */
+		/* #ifdef APP-PLUS || MP-WEIXIN */
 		padding-top: 60px;
 		/* #endif */
 	}

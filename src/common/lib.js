@@ -146,3 +146,7 @@ export function NotCanPay() {
 		content: '由于相关规范，iOS功能暂不可用'
 	})
 }
+
+export const goHone = () => {
+	
+}

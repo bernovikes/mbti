@@ -21,7 +21,7 @@
 				<view class="pb-safe">
 					<view class="pl-68 pr-68">
 						<view class="x-pay-dialog__goods pt-22 relative  tc" v-for="(item,index) in goodsList" :key="index">
-							<view class="white font-11 x-pay-dialog-friend__mark absolute lh-20">赠送特权</view>
+							<view v-if="dialogType==='friend'" class="white font-11 x-pay-dialog-friend__mark absolute lh-20">赠送特权</view>
 							<view class="f6 fw6 lh-20 color-616161">{{item.t1}}</view>
 							<view class="font-26 color-3d8dff font-dina b"><text class="f6">¥</text>{{item.discount_price}}</view>
 							<view class="f7 lh-20 fw5 color-c3c3c3 strike">¥{{item.origin_price}}</view>
@@ -47,7 +47,7 @@
 <script setup>
 	import { watch, ref } from 'vue';
 	import { onMounted } from 'vue';
-	import { list, close, OpenPayDialog, submit, detailData, goods, pop, choosePayMethod, pay_type } from './common/dialog.js'
+	import { list, close, OpenPayDialog, submit, detailData, goods, pop, choosePayMethod, pay_type, openPayDialogVal } from './common/dialog.js'
 	const dialogType = ref('all')
 	const goodsList = ref([{
 		t1: '完整解析报告',
@@ -57,7 +57,9 @@
 	}])
 	onMounted(() => {
 		const detail = detailData()
-		OpenPayDialog().then(res => {
+		OpenPayDialog()
+		watch(openPayDialogVal, (res) => {
+			console.log('openPayDialogVal', res)
 			const type = res === 'friend' ? 'friend' : 'all'
 			dialogType.value = type
 			const { question_bank_goods } = detail.value
@@ -68,7 +70,7 @@
 				goodsList.value[index].origin_price = item.goods.origin_price
 			})
 			goods.value = goodsList.value[0]
-		})
+		}, { immediate: true })
 	})
 	// watch(detailData(), (nval) => {
 	// 	const { question_bank_goods } = nval

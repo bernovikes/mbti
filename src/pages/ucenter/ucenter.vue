@@ -74,6 +74,14 @@
 	import { reactive, ref } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import { onShow } from '@dcloudio/uni-app'
+	// #ifdef APP-PLUS
+	const env = import.meta.env
+	if (env.VITE_APP_UCENTER !== '/pages/ucenter/ucenter') {
+		uni[env.VITE_APP_UCENTER_METHOD]({
+			url: env.VITE_APP_UCENTER
+		})
+	}
+	// #endif
 	const onShareAppMessage = () => {}
 	const kefuRef = ref('')
 	const range = ref([])
