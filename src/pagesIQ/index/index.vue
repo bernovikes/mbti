@@ -48,6 +48,7 @@
 		<!--  -->
 		<view class="font-11 fw4 color-cedef3 lh-18 tc">本测评可免费作答 测评结果需付费查看，测评为虚拟商品服务 购买后概不退费，敬请谅解</view>
 		<!--  -->
+		<loginDialog url="https://res.vkunshan.com/depressed/iq/lit-launch.png" title="智商/情商测试" />
 		<!--  -->
 		<xTabBar theme="iq" />
 	</view>
@@ -57,6 +58,7 @@
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { ref, onMounted } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
+	import loginDialog from '@/pages/index/components/login/index.vue'
 	const topic = ref([])
 	const list = [{
 			img: 'https://res.vkunshan.com/depressed/iq/avatar1.png',
@@ -126,7 +128,7 @@
 
 <style lang="scss" scoped>
 	.x-bg {
-		background: url(https://res.vkunshan.com/depressed/iq/bg.png) 0 0 / 100% 256px no-repeat #F4F6FC;		
+		background: url(https://res.vkunshan.com/depressed/iq/bg.png) 0 0 / 100% 256px no-repeat #F4F6FC;
 		/* #ifndef APP-PLUS */
 		padding-top: 30px;
 		/* #endif */

@@ -3,8 +3,8 @@
 		<div class="bg-white x-login-dialog pl-20 pr-20 pb-20">
 			<div class="absolute w-100 left-0">
 				<view class="x-top lh-48 f6 white  tc center">
-					<img class="icon-launch v-mid mr-13" src="https://res.vkunshan.com/depressed/index/lit-launch.png" />
-					抑郁测试
+					<img class="icon-launch v-mid mr-13" :src="url" />
+					{{title}}
 				</view>
 			</div>
 			<div class="x-login-body">
@@ -56,6 +56,16 @@
 	import { sendSms, phoneLogin } from '@/api/api.js'
 	import { HTTP_SUCCESS } from '@/enum/http.js'
 	import { compVersion } from '@/common/lib.js'
+	const props = defineProps({
+		url: {
+			type: String,
+			default: 'https://res.vkunshan.com/depressed/index/lit-launch.png'
+		},
+		title: {
+			type: String,
+			default: '抑郁测试'
+		}
+	})
 	const popup = ref('')
 	const send = ref(false)
 	const countDown = ref(0)
@@ -93,7 +103,7 @@
 				},
 				async phone() {
 					const { phone, code: sms_code } = form.value
-					if (vaild()) {						
+					if (vaild()) {
 						try {
 							const { code, msg, data } = await phoneLogin({ phone, code: sms_code })
 							if (code === HTTP_SUCCESS) {
