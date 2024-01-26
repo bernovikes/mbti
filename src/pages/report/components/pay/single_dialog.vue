@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-	import { watch, ref } from 'vue';
+	import { watch, ref, toRaw } from 'vue';
 	import { onMounted } from 'vue';
 	import { list, close, OpenPayDialog, submit, detailData, goods, pop, choosePayMethod, pay_type, openPayDialogVal } from './common/dialog.js'
 	const dialogType = ref('all')
@@ -57,20 +57,28 @@
 	}])
 	onMounted(() => {
 		const detail = detailData()
-		OpenPayDialog()
-		watch(openPayDialogVal, (res) => {			
-			const type = res === 'friend' ? 'friend' : 'all'
-			dialogType.value = type
-			const { question_bank_goods } = detail.value
-			question_bank_goods.filter(item => item.type === type).map((item, index) => {
-				goodsList.value[index].id = item.goods_id
-				goodsList.value[index].type = item.type
-				goodsList.value[index].discount_price = item.goods.discount_price
-				goodsList.value[index].origin_price = item.goods.origin_price
-			})
-			goods.value = goodsList.value[0]
+		OpenPayDialog(detail)
+		watch(openPayDialogVal, (res) => {
+			try {
+				const type = res === 'friend' ? 'friend' : 'all'
+				dialogType.value = type
+				const { question_bank_goods } = detail.value
+				question_bank_goods.filter(item => item.type === type).map((item, index) => {
+					goodsList.value[index].id = item.goods_id
+					goodsList.value[index].type = item.type
+					goodsList.value[index].discount_price = item.goods.discount_price
+					goodsList.value[index].origin_price = item.goods.origin_price
+				})
+				goods.value = goodsList.value[0]
+				// #ifdef MP-WEIXIN
+				uni.setStorageSync('mp_goodsList', toRaw(goodsList.value.slice(0, 1)))
+				// #endif
+			} catch (e) {
+				console.log(e)
+				//TODO handle the exception
+			}
 		}, { immediate: true })
-	})	
+	})
 </script>
 
 <style scoped lang="scss">

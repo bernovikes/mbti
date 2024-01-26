@@ -23,7 +23,7 @@
 				</view>
 				<!--  -->
 				<checkbox-group class="flex x-goods mt3" @change="changeCheck">
-					<label :class="{active:!index || item.type===active}" v-for="(item,index) in goodsList" class=" w-50 relative  flex flex-column justify-center items-center x-goods-item">
+					<label :class="{active:!index || item.type===active}" :key="index" v-for="(item,index) in goodsList" class=" w-50 relative  flex flex-column justify-center items-center x-goods-item">
 						<view v-if="index" class="absolute x-abs-mark color-ff645e font-10 lh-15 bg-ffe8e8 pl-5 pr-5">超值加购</view>
 						<view class="font-15 b font-dina lh-20">¥{{item.discount_price}}</view>
 						<view :class="{'color-464646':index}" class="f7 lh-20 fw5">基础版报告</view>
@@ -153,7 +153,7 @@
 	}
 
 	.active.x-goods-item {
-		background: url(https://res.vkunshan.com/depressed/order/create/check.png) 0 0 / 100%  100% no-repeat;
+		background: url(https://res.vkunshan.com/depressed/order/create/check.png) 0 0 / 100% 100% no-repeat;
 
 	}
 

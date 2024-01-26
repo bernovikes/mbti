@@ -40,7 +40,7 @@ export const submit = () => {
 		pay_method: pay_type.value
 	})
 }
-export const OpenPayDialog = () => {
+export const OpenPayDialog = (detail) => {
 	uni.$on('open_pay_dialog', async (val) => {
 		openPayDialogVal.value = val
 		// #ifdef MP-WEIXIN
@@ -48,7 +48,7 @@ export const OpenPayDialog = () => {
 			if (!res) {
 				uni.setStorageSync('go_follow', true)
 				uni.navigateTo({
-					url: `/pages/order/create?answer_id=${detailData().value?.id}`
+					url: `/pages/order/create?answer_id=${detail.value?.id}`
 				})
 			} else {
 				pop.value?.open()
