@@ -404,7 +404,8 @@
 	.x-option-img {
 		border-radius: 6px;
 		border: 1px solid #F3F3F3;
-		padding: 12px 3vw;
+		// padding: 12px 3vw;
+		padding: 12px 4%;
 		margin-bottom: 13px;
 	}
 

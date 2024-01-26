@@ -58,8 +58,7 @@
 	onMounted(() => {
 		const detail = detailData()
 		OpenPayDialog()
-		watch(openPayDialogVal, (res) => {
-			console.log('openPayDialogVal', res)
+		watch(openPayDialogVal, (res) => {			
 			const type = res === 'friend' ? 'friend' : 'all'
 			dialogType.value = type
 			const { question_bank_goods } = detail.value
@@ -71,17 +70,7 @@
 			})
 			goods.value = goodsList.value[0]
 		}, { immediate: true })
-	})
-	// watch(detailData(), (nval) => {
-	// 	const { question_bank_goods } = nval
-	// 	question_bank_goods.filter(item => item.type !== 'friend').map((item, index) => {
-	// 		goodsList.value[index].id = item.goods_id
-	// 		goodsList.value[index].type = item.type
-	// 		goodsList.value[index].discount_price = item.goods.discount_price
-	// 		goodsList.value[index].origin_price = item.goods.origin_price
-	// 	})
-	// 	goods.value = goodsList.value[0]
-	// }, { immediate: true })
+	})	
 </script>
 
 <style scoped lang="scss">
