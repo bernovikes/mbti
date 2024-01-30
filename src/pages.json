@@ -6,7 +6,10 @@
 			"path": "pages/answer/index"
 		},
 		{
-			"path": "pages/report/index"
+			"path": "pages/report/index",
+			"style": {				
+				"navigationBarTitleText": "报告详情"
+			}
 		},
 		{
 			"path": "pages/callback/index"
