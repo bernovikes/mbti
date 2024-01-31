@@ -1,5 +1,8 @@
 <template>
 	<view class="min-vh-100 pt-65 pb-30 x-bg" :class="[themeStyle]">
+		<!--为了解决子组件inject响应丢失  -->
+		<span class="o-0">{{detail.is_pay}}</span>
+		<!--  -->
 		<template v-if="isMobile()">
 			<share />
 			<bulletChat />
