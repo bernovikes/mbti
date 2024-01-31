@@ -19,8 +19,9 @@
 		<!--  -->
 		<image class="x-rec-title mt-33" src="https://res.vkunshan.com/depressed/iq/title.png"></image>
 		<!--  -->
-		<view class="mt-23">
-			<view @click="callfn(item.fn)" class="bg-white x-list-item mb-12 pt-12 pb-13 pl-12 pr-12 flex" v-for="(item,index) in list" :key="index">
+		<view class="mt-18">
+			<xlinks :links="links" />
+			<!-- 	<view @click="callfn(item.fn)" class="bg-white x-list-item mb-12 pt-12 pb-13 pl-12 pr-12 flex" v-for="(item,index) in list" :key="index">
 				<image :src="item.img" class="x-list-item__cover flex-shrink-0"></image>
 				<view class="ml-13 flex w-100 flex-column">
 					<view class="flex items-center">
@@ -40,7 +41,7 @@
 						<view class="x-blue-tag ml-6 lh-13 pl1 pr1 width-fit bg-d1f1ff">{{item.tag}}</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!--  -->
 		<!--  -->
@@ -59,6 +60,31 @@
 	import { ref, onMounted } from 'vue'
 	import { statusBarHeight } from '@/common/lib.js'
 	import loginDialog from '@/pages/index/components/login/index.vue'
+	import xlinks from '@/pages/index/components/links.vue'
+	const gombti = () => {
+		const url = 'https://mbti.xinli10.com/#/?channel=yiyu'
+		// #ifdef H5
+		window.open(url)
+		// #endif
+		// #ifdef APP-PLUS
+		plus.runtime.openURL(url);
+		// #endif
+		// #ifdef MP-WEIXIN
+		uni.navigateToMiniProgram({
+			appId: 'wx116f5fb67a91c3fe'
+		})
+		// #endif
+	}
+	const goHome = () => {
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+	}
+	const links = [
+		{ icon: 'https://res.vkunshan.com/logo/mbti-logo.png', title: 'MBTI人格测试', desc: '深入地了解自己的人格类型', fn: gombti },
+		{ icon: 'https://res.vkunshan.com/logo/yiyu.png', title: '抑郁焦虑测试', desc: '放下抑郁，愿您在这里找到自我', fn: goHome },
+		{ icon: 'https://res.vkunshan.com/logo/mbti-girl.png', title: 'MBTI恋爱测试', desc: '据说能够测试出什么人格更适合你', fn: gombti },
+	]
 	const topic = ref([])
 	const list = [{
 			img: 'https://res.vkunshan.com/depressed/iq/avatar1.png',

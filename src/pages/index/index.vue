@@ -52,14 +52,15 @@
 		<view v-if="!comp_version">
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />推荐测评</view>
 			<view class="mt-18 pb-38">
-				<view @click="gombti" v-for="(item,index) in 1" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
-					<img src="https://res.vkunshan.com/depressed/index/logo.png" class="img-index-item db">
-					<view>
-						<view class="color-22396b f6 b lh-18">MBTI人格测试</view>
-						<view class="font-11 fw4 color-aeb1b8">深入地了解自己的人格类型</view>
+				<xlinks :links="links"/>
+				<!-- <view @click="item.fn" v-for="(item,index) in links" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
+					<img :src="item.icon" class="img-index-item db">
+					<view class="ml-12">
+						<view class="color-22396b f6 b lh-18">{{item.title}}</view>
+						<view class="font-11 fw4 color-aeb1b8">{{item.desc}}</view>
 					</view>
 					<view class="color-6fa7ff f7 ml-auto fw5 lh-25 pl-12 pr-12 btn-index-item bg-e5f2ff">进入测试</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!--  -->
@@ -95,6 +96,7 @@
 </template>
 
 <script setup>
+	import xlinks from './components/links.vue'
 	import { comment } from '@/pages/report/mock.js'
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { onMounted, ref } from 'vue'
@@ -102,6 +104,30 @@
 	import loginDialog from '@/pages/index/components/login/index.vue'
 	import { compVersion } from '@/common/lib.js'
 	const onShareAppMessage = () => {}
+	const gombti = () => {
+		const url = 'https://mbti.xinli10.com/#/?channel=yiyu'
+		// #ifdef H5
+		window.open(url)
+		// #endif
+		// #ifdef APP-PLUS
+		plus.runtime.openURL(url);
+		// #endif
+		// #ifdef MP-WEIXIN
+		uni.navigateToMiniProgram({
+			appId: 'wx116f5fb67a91c3fe'
+		})
+		// #endif
+	}
+	const goIQEQ = () => {
+		uni.navigateTo({
+			url: '/pagesIQ/index/index'
+		})
+	}
+	const links = [
+		{ icon: 'https://res.vkunshan.com/logo/mbti-logo.png', title: 'MBTI人格测试', desc: '深入地了解自己的人格类型', fn: gombti },
+		{ icon: 'https://res.vkunshan.com/depressed/iq/lit-launch.png', title: '智商/情商测试', desc: '智商决定下限，情商提高上限', fn: goIQEQ },
+		{ icon: 'https://res.vkunshan.com/logo/mbti-girl.png', title: 'MBTI恋爱测试', desc: '据说能够测试出什么人格更适合你', fn: gombti },		
+	]
 	const mock = [
 		'日日重复同样的事，遵循着与昨日相同的惯例；若能避开猛烈的欢喜，自然也不会有悲痛的来袭。',
 		'山上吹来每一股气息都是如此洋溢着生命，仿佛无论谁吸进了它，即使是气息奄奄的人，也会复活起来。',
@@ -166,20 +192,6 @@
 			url: `/pages/report/index?no=${unpaid_no}`
 		})
 		unpaydialog.value.close()
-	}
-	const gombti = () => {
-		const url = 'https://mbti.xinli10.com/#/?channel=yiyu'
-		// #ifdef H5
-		window.open(url)
-		// #endif
-		// #ifdef APP-PLUS
-		plus.runtime.openURL(url);
-		// #endif
-		// #ifdef MP-WEIXIN
-		uni.navigateToMiniProgram({
-			appId: 'wx116f5fb67a91c3fe'
-		})
-		// #endif
 	}
 	const goTest = (id) => {
 		uni.navigateTo({
@@ -261,24 +273,6 @@
 	.x-order-btn {
 		background: rgba(157, 205, 255, .9);
 		border-radius: 15px;
-	}
-
-	.img-index-item {
-		width: 54px;
-		height: 54px;
-	}
-
-	.x-index-item {
-		box-shadow: 3px 3px 5px 0px rgba(7, 40, 104, 0.06);
-		border-radius: 8px;
-	}
-
-	.x-index-item:not(:last-child) {
-		margin-bottom: 12px;
-	}
-
-	.btn-index-item {
-		border-radius: 12px;
 	}
 
 	.cm-dialog-btn {
