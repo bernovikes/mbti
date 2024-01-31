@@ -131,12 +131,12 @@
 		})
 	}
 	const goRecord = () => {
-		uni.redirectTo({
+		uni.navigateTo({
 			url: '/pages/testRecord/testRecord'
 		})
 	}
 	const goOrder = () => {
-		uni.redirectTo({
+		uni.navigateTo({
 			url: '/pages/order/index'
 		})
 	}

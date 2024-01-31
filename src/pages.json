@@ -3,7 +3,10 @@
 			"path": "pages/index/index"
 		},
 		{
-			"path": "pages/answer/index"		
+			"path": "pages/answer/index",
+			"style": {
+				"navigationBarTitleText": "量表测试"
+			}
 		},
 		{
 			"path": "pages/report/index",
@@ -15,16 +18,28 @@
 			"path": "pages/callback/index"
 		},
 		{
-			"path": "pages/ucenter/ucenter"
+			"path": "pages/ucenter/ucenter",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
 		},
 		{
-			"path": "pages/order/index"
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "找回报告"
+			}
 		},
 		{
-			"path": "pages/testRecord/testRecord"
+			"path": "pages/testRecord/testRecord",
+			"style": {
+				"navigationBarTitleText": "测评记录"
+			}
 		},
 		{
-			"path": "pages/login/login"
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
 		},
 		{
 			"path": "pages/article/article",
@@ -33,25 +48,43 @@
 			}
 		},
 		{
-			"path": "pages/setting/setting"
+			"path": "pages/setting/setting",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
 		},
 		{
-			"path": "pages/aboutus/aboutus"
+			"path": "pages/aboutus/aboutus",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
 		},
 		{
-			"path": "pages/feedback/feedback"
+			"path": "pages/feedback/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
+			}
 		},
 		{
-			"path": "pages/follow/follow"
+			"path": "pages/follow/follow",
+			"style": {
+				"navigationBarTitleText": "关注公众号"
+			}
 		},
 		{
 			"path": "pages/login/oauth"
 		},
 		{
-			"path": "pages/order/send"
+			"path": "pages/order/send",
+			"style": {
+				"navigationBarTitleText": "赠送好友"
+			}
 		},
 		{
-			"path": "pages/generate/generate"
+			"path": "pages/generate/generate",
+			"style": {
+				"navigationBarTitleText": "等待生成报告"
+			}
 		},
 		{
 			"path": "pages/webview/webview",
@@ -87,11 +120,16 @@
 		"root": "pagesIQ",
 		"pages": [{
 				"path": "index/index",
-				"style": {					
+				"style": {
 					"navigationBarTitleText": "智商情商量表自评"
 				}
 			},
-			{ "path": "ucenter/index" }
+			{
+				"path": "ucenter/index",
+				"style": {
+					"navigationBarTitleText": "个人中心"
+				}
+			}
 		]
 	}],
 	"globalStyle": {

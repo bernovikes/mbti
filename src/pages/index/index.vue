@@ -118,7 +118,7 @@
 		})
 		// #endif
 	}
-	const goIQEQ = () => {
+	const goIQEQ = () => {	
 		uni.navigateTo({
 			url: '/pagesIQ/index/index'
 		})
