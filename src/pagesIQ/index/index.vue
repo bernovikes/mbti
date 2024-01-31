@@ -14,7 +14,7 @@
 				<view class="b">情商测试</view>
 				<view class="f7 fw5 lh-16 mt2">EQ TEST</view>
 			</view>
-			<view class="font-11 mt-auto color-ff4c89 bg-ffe0eb width-fit x-question-num lh-17 pl-12 pr-12">60题</view>
+			<view class="font-11 mt-auto color-ff4c89 bg-ffe0eb width-fit x-question-num lh-17 pl-12 pr-12">50题</view>
 		</view>
 		<!--  -->
 		<image class="x-rec-title mt-33" src="https://res.vkunshan.com/depressed/iq/title.png"></image>

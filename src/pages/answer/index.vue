@@ -1,5 +1,6 @@
 <template>
 	<view class="x-bg min-vh-100 pl-18 pr-18 " :style="{'padding-top':statusBarHeight()}" :class="[themeStyle]">
+		<navigation-bar :title="title"/>
 		<view class="pt-30 flex justify-between">
 			<view class="white">
 				<view class="font-20 b x-title lh-28">{{title}}</view>

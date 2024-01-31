@@ -55,7 +55,7 @@
 					<view class="ml2 w-100">
 						<view class="font-11 white fw5 lh-15">{{iq_value.config.ranking_progress_text}}</view>
 						<view class="relative x-iq-progress-track">
-							<view class="x-iq-progress-wrap flex items-center">
+							<view class="x-iq-progress-wrap flex items-center" :style="{'--width':iq_value.config.progress_percent}">
 								<view class="w-100 bg-bfeafe x-iq-progress"></view>
 							</view>
 						</view>
@@ -129,7 +129,7 @@
 						<view class="ml2 w-100">
 							<view class="font-11 white fw5 lh-15">你：{{item.sum}}分</view>
 							<view class="relative x-iq-progress-track">
-								<view class="x-iq-progress-wrap flex items-center">
+								<view class="x-iq-progress-wrap flex items-center" :style="{'--width':Math.ceil((item.sum/12)*100)+'%'}">
 									<view class="w-100 bg-bfeafe x-iq-progress"></view>
 								</view>
 							</view>
@@ -303,7 +303,7 @@
 	}
 
 	.x-iq-progress-wrap {
-		width: 100px;
+		width: var(--width, 10%);
 		background: url(https://res.vkunshan.com/depressed/report/iq/progress-light.png) top right / 19px 16px no-repeat;
 	}
 

@@ -3,11 +3,11 @@
 			"path": "pages/index/index"
 		},
 		{
-			"path": "pages/answer/index"
+			"path": "pages/answer/index"		
 		},
 		{
 			"path": "pages/report/index",
-			"style": {				
+			"style": {
 				"navigationBarTitleText": "报告详情"
 			}
 		},
@@ -85,8 +85,12 @@
 	},
 	"subPackages": [{
 		"root": "pagesIQ",
-		"pages": [
-			{ "path": "index/index" },
+		"pages": [{
+				"path": "index/index",
+				"style": {					
+					"navigationBarTitleText": "智商情商量表自评"
+				}
+			},
 			{ "path": "ucenter/index" }
 		]
 	}],
@@ -97,14 +101,12 @@
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom"
 	},
-	"condition" : { //模式配置，仅开发期间生效
+	"condition": { //模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [
-			{
-				"name": "", //模式名称
-				"path": "", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
-			}
-		]
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
 	}
 }

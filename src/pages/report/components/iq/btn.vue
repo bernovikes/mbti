@@ -1,7 +1,7 @@
 <template>
 	<view class="fixed w-100 z-3 left-0 x-eq-btns-fixed">
 		<view class="flex font-15 white fw5 x-eq-btns center  tc border-box pl-15 pr-15 justify-between   ">
-			<view @click="goTest" class="btn-left pt2 pb2">测一测你的情商商多高</view>
+			<view @click="goTest" class="btn-left pt2 pb2">测一测你的情商有多高</view>
 			<view @click="openPayDialog" class="btn-right pt2 pb2">赠测Ta</view>
 		</view>
 	</view>
