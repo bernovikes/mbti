@@ -19,8 +19,9 @@ export const wechatNewAuth = () => {
 	if (!uni.getStorageSync('call_auth')) {
 		uni.setStorageSync('call_auth', +new Date())
 		const env = import.meta.env
+		const refer = encodeURIComponent(location.href)
 		const page = `${env.VITE_DOMAIN}/pages/login/oauth`
-		location.href = `${env.VITE_APP_BASE_API}/wechat/login/oauth?redirect=${page}`
+		location.href = `${env.VITE_APP_BASE_API}/wechat/login/oauth?redirect=${page}&refer=${refer}`
 	}
 }
 const _requestAnimationFrame = (callback) => {
@@ -148,5 +149,5 @@ export function NotCanPay() {
 }
 
 export const goHone = () => {
-	
+
 }
