@@ -133,11 +133,18 @@
 			data.all_unlock = permissions === dict.all
 			buyed.value = data.is_pay = !!permissions
 			detail.value = data
+			const reload_page = uni.getStorageSync(`${cachePrefix()}reload`)
+			// #ifdef H5
+			if (reload_page === 'ready') {
+				uni.removeStorageSync(`${cachePrefix()}reload`)
+				location.reload()
+			}
+			// #endif
 			if (data.all_unlock) {
 				uni.removeStorageSync(`${cachePrefix()}pay_callback`)
 				uni.removeStorageSync(`${cachePrefix()}scan`)
 			}
-		} catch (e) {
+		} catch (e) {	
 			//TODO handle the exception
 		}
 	}
@@ -263,7 +270,6 @@
 		payIntervalTimer = setInterval(async () => {
 			const trace_no = uni.getStorageSync(`${cachePrefix()}trace_no`)
 			const pay_callback = uni.getStorageSync(`${cachePrefix()}pay_callback`)
-			const reload_page = uni.getStorageSync(`${cachePrefix()}reload`)
 			const scan = uni.getStorageSync(`${cachePrefix()}scan`)
 			if (pay_callback || scan) {
 				try {
@@ -273,12 +279,6 @@
 						uni.removeStorageSync(`${cachePrefix()}scan`)
 						scan && wxscan.value?.close()
 						uni.removeStorageSync(`${cachePrefix()}trace_no`)
-						// #ifdef H5
-						if (reload_page === 'ready') {
-							uni.removeStorageSync(`${cachePrefix()}reload`)
-							location.reload()							
-						}
-						// #endif
 						fetchDetail()
 						clearInterval(payIntervalTimer)
 					}
