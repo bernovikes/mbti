@@ -47,6 +47,7 @@
 <script setup>
 	import { watch, ref, toRaw } from 'vue';
 	import { onMounted } from 'vue';
+	import { isWechat, isMobile } from '@/common/lib.js'
 	import { list, close, OpenPayDialog, submit, detailData, goods, pop, choosePayMethod, pay_type, openPayDialogVal } from './common/dialog.js'
 	const dialogType = ref('all')
 	const goodsList = ref([{
@@ -56,6 +57,21 @@
 		bottom: '因子详细解析',
 	}])
 	onMounted(() => {
+		if (!isMobile()) {
+			list.splice(0, 1)
+		}
+		if (isWechat()) {
+			list.splice(1, 1)
+		}
+		// #ifdef APP-PLUS
+		list.splice(-1, 1)
+		// #endif
+		// #ifdef MP-WEIXIN
+		list.splice(0, 3)
+		// #endif
+		if (list.length) {
+			pay_type.value = list[0].type
+		}
 		const detail = detailData()
 		OpenPayDialog(detail)
 		watch(openPayDialogVal, (res) => {
