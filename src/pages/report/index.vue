@@ -224,6 +224,7 @@
 				if (goods_type !== 'friend') {
 					uni.setStorageSync(`${cachePrefix()}trace_no`, data.trace_no)
 					uni.setStorageSync(`${cachePrefix()}pay_callback`, true)
+					uni.setStorageSync(`${cachePrefix()}reload`, 'ready')
 				}
 				const pay_params = { trace_no: data.trace_no, env, device: getDevice() }
 				if (user_id) {
@@ -262,6 +263,7 @@
 		payIntervalTimer = setInterval(async () => {
 			const trace_no = uni.getStorageSync(`${cachePrefix()}trace_no`)
 			const pay_callback = uni.getStorageSync(`${cachePrefix()}pay_callback`)
+			const reload_page = uni.getStorageSync(`${cachePrefix()}reload`)
 			const scan = uni.getStorageSync(`${cachePrefix()}scan`)
 			if (pay_callback || scan) {
 				try {
@@ -271,6 +273,12 @@
 						uni.removeStorageSync(`${cachePrefix()}scan`)
 						scan && wxscan.value?.close()
 						uni.removeStorageSync(`${cachePrefix()}trace_no`)
+						// #ifdef H5
+						if (reload_page === 'ready') {
+							uni.removeStorageSync(`${cachePrefix()}reload`)
+							location.reload()							
+						}
+						// #endif
 						fetchDetail()
 						clearInterval(payIntervalTimer)
 					}
