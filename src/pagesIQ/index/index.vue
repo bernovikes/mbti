@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg min-vh-100 pl-17 pr-17  pb-60">
+	<view class="x-bg min-vh-100 pl-17 pr-17  pb-tabbar">
 		<view class="font-19 color-282a2c lh-27">智商—情商测试</view>
 		<view class="f7 lh-16 color-5a5c62">智商决定下限，情商却能提高上限</view>
 		<view @click="goTest(topic[1].id)" class="x-blue-iq mt-27 flex flex-column border-box">

@@ -23,3 +23,6 @@
 	padding-bottom: calc(constant(safe-area-inset-bottom));
 	padding-bottom: calc(env(safe-area-inset-bottom));
 }
+.pb-tabbar {
+	padding-bottom: 200rpx;
+}

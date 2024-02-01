@@ -1,5 +1,5 @@
 <template>
-	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-50">
+	<view class="x-bg min-vh-100 pl3 pr3 pt-58 pb-tabbar">
 		<view class="flex justify-between">
 			<view>
 				<view class="font-18 color-414141 lh-25 b">Hi，今天又是美好的一天</view>
