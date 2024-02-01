@@ -52,19 +52,12 @@
 		<view v-if="!comp_version">
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />推荐测评</view>
 			<view class="mt-18 pb-38">
-				<xlinks :links="links"/>
-				<!-- <view @click="item.fn" v-for="(item,index) in links" :key="index" class="bg-white x-index-item pt-13 pb-13 pl3 pr3 flex items-center">
-					<img :src="item.icon" class="img-index-item db">
-					<view class="ml-12">
-						<view class="color-22396b f6 b lh-18">{{item.title}}</view>
-						<view class="font-11 fw4 color-aeb1b8">{{item.desc}}</view>
-					</view>
-					<view class="color-6fa7ff f7 ml-auto fw5 lh-25 pl-12 pr-12 btn-index-item bg-e5f2ff">进入测试</view>
-				</view> -->
+				<xlinks :links="links" />
 			</view>
 		</view>
 		<!--  -->
-		<view>
+		<commentChat :chat="chat" />
+		<!-- <view>
 			<view class="font-18 fw6 color-27282b"><text class="x-list-line v-mid mr1 dib" />看Ta们说</view>
 			<view class="mt3 overflow-x-hidden x-comment relative">
 				<view :class="{'x-comment-move':chatWidth}" class="absolute x-comment-item" :style="{'--width':chatWidth}">
@@ -76,7 +69,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!--  -->
 		<view @click="goOrderQuery" class="white fw5 lh-17 center font-10 x-order-btn width-fit pl-12 pr-12 mb2">报告丢失 点击此处找回</view>
 		<!--  -->
@@ -97,6 +90,7 @@
 
 <script setup>
 	import xlinks from './components/links.vue'
+	import commentChat from './components/comment.vue'
 	import { comment } from '@/pages/report/mock.js'
 	import { fetchTopic, fetchAnswerList } from '@/api/api.js'
 	import { onMounted, ref } from 'vue'
@@ -118,7 +112,7 @@
 		})
 		// #endif
 	}
-	const goIQEQ = () => {	
+	const goIQEQ = () => {
 		uni.navigateTo({
 			url: '/pagesIQ/index/index'
 		})
@@ -126,7 +120,7 @@
 	const links = [
 		{ icon: 'https://res.vkunshan.com/logo/mbti-logo.png', title: 'MBTI人格测试', desc: '深入地了解自己的人格类型', fn: gombti },
 		{ icon: 'https://res.vkunshan.com/depressed/iq/lit-launch.png', title: '智商/情商测试', desc: '智商决定下限，情商提高上限', fn: goIQEQ },
-		{ icon: 'https://res.vkunshan.com/logo/mbti-girl.png', title: 'MBTI恋爱测试', desc: '据说能够测试出什么人格更适合你', fn: gombti },		
+		{ icon: 'https://res.vkunshan.com/logo/mbti-girl.png', title: 'MBTI恋爱测试', desc: '据说能够测试出什么人格更适合你', fn: gombti },
 	]
 	const mock = [
 		'日日重复同样的事，遵循着与昨日相同的惯例；若能避开猛烈的欢喜，自然也不会有悲痛的来袭。',
@@ -137,7 +131,6 @@
 	]
 	const detail = ref({})
 	const unpaydialog = ref('')
-	const chatWidth = ref('')
 	const comp_version = ref(false)
 	let unpaid_no = ''
 	const tempUser = uni.getStorageSync('tempUser') || '';
@@ -180,12 +173,7 @@
 			})
 		}
 		// 
-		const query = uni.createSelectorQuery()
-		query.select('.x-comment-item').boundingClientRect(({ width }) => {
-			if (width) {
-				chatWidth.value = `-${width}px`
-			}
-		}).exec()
+
 	})
 	const goUnpayOrder = () => {
 		uni.navigateTo({
@@ -280,31 +268,6 @@
 		box-shadow: 0 2px 7px 0 rgba(100, 100, 197, 0.13);
 		border-radius: 14px;
 		padding: 5px 44px;
-	}
-
-	.img-avatar {
-		width: 14px;
-		height: 14px;
-	}
-
-	.x-bullet-chat-item {
-		box-shadow: 0 2px 8px 0px rgba(173, 177, 186, 0.16);
-		border-radius: 20px;
-	}
-
-	.x-comment {
-		height: 130px;
-	}
-
-	@keyframes move {
-		to {
-			transform: translateX(var(--width));
-		}
-	}
-
-	.x-comment-move {
-		left: 100%;
-		animation: 20s linear 0s move infinite;
 	}
 
 	.x-header-swiper {

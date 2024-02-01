@@ -21,29 +21,11 @@
 		<!--  -->
 		<view class="mt-18">
 			<xlinks :links="links" />
-			<!-- 	<view @click="callfn(item.fn)" class="bg-white x-list-item mb-12 pt-12 pb-13 pl-12 pr-12 flex" v-for="(item,index) in list" :key="index">
-				<image :src="item.img" class="x-list-item__cover flex-shrink-0"></image>
-				<view class="ml-13 flex w-100 flex-column">
-					<view class="flex items-center">
-						<view class="color-262939 font-13 lh-19">{{item.title}}</view>
-						<view class="ml-auto  color-55565b f7 lh-13">
-							<image class="icon-star v-mid" src="https://res.vkunshan.com/depressed/iq/stat.png" />
-							4.7
-						</view>
-					</view>
-					<view class="color-9c9ea7 font-10">
-						<image class="x-list-avatar v-mid mr1" :src="item.avatar"></image>
-						{{item.username}}
-					</view>
-					<view class="font-11 lh-15 color-7a7c84 mt2">{{item.desc}}</view>
-					<view class="font-10 color-1ccaff mt-auto flex items-center">
-						<view class="x-blue-tag x-people-icon lh-13  pr1 width-fit">{{item.tag}}</view>
-						<view class="x-blue-tag ml-6 lh-13 pl1 pr1 width-fit bg-d1f1ff">{{item.tag}}</view>
-					</view>
-				</view>
-			</view> -->
 		</view>
 		<!--  -->
+		<view class="mt-18">
+			<commentChat :chat="chat" />
+		</view>
 		<!--  -->
 		<view @click="goOrderQuery" class="white fw5 mt-20 lh-17 center font-10 x-order-btn width-fit pl-12 pr-12 mb2">报告丢失 点击此处找回</view>
 		<!--  -->
@@ -61,6 +43,13 @@
 	import { statusBarHeight } from '@/common/lib.js'
 	import loginDialog from '@/pages/index/components/login/index.vue'
 	import xlinks from '@/pages/index/components/links.vue'
+	import commentChat from '@/pages/index/components/comment.vue'
+	import { comment } from './mock.js'
+	const chat = [
+		[],
+		[]
+	]
+	comment.map((item, index) => chat[index % 2].push(item))
 	const gombti = () => {
 		const url = 'https://mbti.xinli10.com/#/?channel=yiyu'
 		// #ifdef H5
