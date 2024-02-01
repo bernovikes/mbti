@@ -55,36 +55,34 @@
 		background: var(--img) center / 100% 100% no-repeat;
 	}
 
-	.active.icon-index {
-		width: 25px;
-		height: 26px;
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-home-check.png);
+	.active.icon-index {	
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-home-check.png?v=1);
 	}
 
 	.icon-index {
-		width: 25px;
-		height: 24px;
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-home-no-check.png);
+		width: 26px;
+		height: 26px;
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-home-no-check.png?v=1);
 	}
 
 	.icon-user {
-		width: 25px;
-		height: 25px;
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-ucenter-no-check.png);
+		width: 26px;
+		height: 26px;
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-ucenter-no-check.png?v=1);
 	}
 
 	.icon-iqeq {
-		width: 22px;
-		height: 23px;
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-iqeq-no-check.png);
+		width: 26px;
+		height: 26px;
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-iqeq-no-check.png?v=1);
 	}
 
 	.active.icon-iqeq {
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-iqeq-check.png);
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-iqeq-check.png?v=1);
 	}
 
 	.active.icon-user {
-		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-ucenter-check.png);
+		--img: url(https://res.vkunshan.com/depressed/tabbar/icon-ucenter-check.png?v=1);
 	}
 
 	@media screen and (min-width: 768px) {
