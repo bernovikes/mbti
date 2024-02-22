@@ -5,7 +5,14 @@
 		<!--  -->
 		<template v-if="isMobile()">
 			<share />
-			<bulletChat />
+			<block v-if="!detail.all_unlock">
+				<block v-if="['iq','eq'].includes(detail.rule_type)">
+					<bulletChat />
+				</block>
+				<block v-if="!['iq','eq'].includes(detail.rule_type)">
+					<bulletChat />
+				</block>
+			</block>
 		</template>
 		<view class="pl-14 white">
 			<view class="font-22 lh-30 b">{{detail?.question_bank_title}}</view>
@@ -144,7 +151,7 @@
 				uni.removeStorageSync(`${cachePrefix()}pay_callback`)
 				uni.removeStorageSync(`${cachePrefix()}scan`)
 			}
-		} catch (e) {	
+		} catch (e) {
 			//TODO handle the exception
 		}
 	}
