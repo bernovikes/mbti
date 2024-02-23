@@ -7,8 +7,8 @@
 				</view>
 				<view class="white pl-20 lh-19">
 					<block v-if="dialogType==='all'">
-						<view>解锁永久版</view>
-						<view>专业EQ情商测试报告</view>
+						<view>解锁专业分析报告</view>
+						<view>即可 永久保存及转发</view>
 					</block>
 					<block v-if="dialogType==='friend'">
 						<view>赠送Ta的专属解读</view>

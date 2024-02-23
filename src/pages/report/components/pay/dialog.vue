@@ -5,9 +5,9 @@
 				<view class="tr">
 					<view @click="close" class="x-close dib tc white f7 inline-flex items-center justify-center">✕</view>
 				</view>
-				<view class="white pl-20 lh-19">
-					<view>解锁永久版</view>
-					<view>专属深度分析报告</view>
+				<view class="white pl-20 lh-19">					
+					<view>解锁专业分析报告</view>
+					<view>即可 永久保存及转发</view>
 				</view>
 			</view>
 			<!--  -->
